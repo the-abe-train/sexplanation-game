@@ -9,6 +9,9 @@ module.exports = {
       },
       spacing: {
         'line-height': '25px'
+      },
+      lineHeight: {
+        'line-height': '25px'
       }
     },
   },

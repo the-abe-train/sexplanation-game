@@ -1,24 +1,32 @@
 /* styling paper */
 .paper {
-  width: clamp(200px, 100%, 1000px);
-  height: 700px;
+  width: clamp(200px, calc(100% - 24px), 1000px);
+  height: 800px;
   position: relative;
   margin: 20px auto;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 0;
   background-color: white;
   box-shadow: 0px 0px 5px 0px #888;
 }
 
+@media only screen and (min-width: 1000px) {
+  .paper {
+    margin-top: 40px;
+  }
+}
+
 /* styling red vertical line */
-.paper::before {
-  content: "";
-  width: 2px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 40px;
-  background-color: rgba(255, 0, 0, 0.6);
+
+@media only screen and (min-width: 600px) {
+  .paper::before {
+    content: "";
+    width: 2px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    background-color: rgba(255, 0, 0, 0.6);
+  }
 }
 
 /* styling blue horizontal lines */
@@ -30,12 +38,21 @@
 /* styling text content */
 .content {
   padding-top: 25px;
-  padding-left: 56px;
+  padding-left: 16px;
   padding-right: 16px;
   line-height: 25px;
   font-size: 19px;
   letter-spacing: 1px;
   word-spacing: 5px;
+  /* height: 700px; */
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+  .content {
+    padding-left: 56px;
+  }
 }
 
 .header {

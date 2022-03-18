@@ -1,5 +1,23 @@
 import styles from "../styles/button.module.css";
 
-export default function Button() {
-  return <button className={styles.button}>Test</button>;
+type Props = {
+  text: string;
+  colour: string;
+  inverted: boolean;
+};
+
+const { button, bg, bgInverted, centred } = styles;
+
+export default function Button({ text, colour, inverted }: Props) {
+  return (
+    <button className={button}>
+      <span>{text}</span>
+      <div
+        className={inverted ? bgInverted : bg}
+        style={{ backgroundColor: colour }}
+      >
+        <span className={centred}>{text}</span>
+      </div>
+    </button>
+  );
 }
