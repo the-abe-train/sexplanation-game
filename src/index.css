@@ -14,8 +14,8 @@ radial-gradient(ellipse at bottom, pink 50%, rgba(132, 75, 53, 0.8)); */
 /* linear-gradient(to bottom, #f6e1ec50, #d472a680), */
 
 body {
-  background: linear-gradient(#ffffff40, #ffffff40),
-    radial-gradient(ellipse, #f6e1ec50, #f77dbe60), url("./images/wood.jpg");
+  background: linear-gradient(#ffffff70, #ffffff80),
+    radial-gradient(ellipse, #f6e1ecc0, #f77dbec0), url("./images/wood.jpg");
   background-size: cover;
   min-height: 100vh;
 }
