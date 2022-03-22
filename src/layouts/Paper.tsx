@@ -1,5 +1,6 @@
 import styles from "../styles/paper.module.css";
-import { ReactComponent as Home } from "../images/home.svg";
+import { ReactComponent as Home } from "../images/icons/home.svg";
+import { ReactComponent as Stats } from "../images/icons/stats.svg";
 import { Link } from "react-router-dom";
 
 export default function Paper({ children }: any) {
@@ -13,7 +14,7 @@ export default function Paper({ children }: any) {
           <h1 className="text-center text-3xl underline">
             A Sexplanation: The Game
           </h1>
-          <Home className="invisible mb-2 h-4" />
+          <Stats className="mb-2 h-4" />
         </header>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>

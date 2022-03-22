@@ -6,7 +6,7 @@ export default function Doodles({ children }: any) {
   const [doodles, setDoodles] = useState<string[]>([]);
   const [count, setCount] = useState(1);
 
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     if (count <= data.length) {
       setCount(count + 1);
     }
@@ -15,6 +15,9 @@ export default function Doodles({ children }: any) {
   useEffect(() => {
     const paths = data.map((p) => p.path);
     setDoodles(paths.slice(0, count));
+    return () => {
+      clearTimeout(timer);
+    };
   }, [count]);
 
   return (

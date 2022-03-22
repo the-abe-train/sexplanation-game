@@ -1,9 +1,12 @@
 import { useState } from "react";
-import vagina from "../images/female_internal.png";
+import diagram from "../images/Female internal/Diagram.png";
+// import ovary from "../images/Female internal/Ovary label.png";
+import labels from "../images/Female internal";
 import { today } from "../util/dates";
 import type { FormEvent } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "../componenets/Button";
+import parts from "../data/parts.json";
 
 type StoredGuesses = {
   day: string;
@@ -28,12 +31,21 @@ export default function Game() {
 
   function runChecks() {
     const userGuess = guessName.trim().toLowerCase();
-    const alreadyGuessed = guesses.find((guess) => guess === userGuess);
+    const alreadyGuessed = guesses.find((guess) => {
+      return guess.toLowerCase() === userGuess;
+    });
     if (alreadyGuessed) {
       setError("Already guessed");
       return;
     }
-    const validGuess = answers.find((guess) => guess === userGuess);
+    const validGuess = parts.find((guess) => {
+      return (
+        guess.name.toLowerCase() === userGuess ||
+        guess.alternate_names
+          .map((alt) => alt.toLowerCase())
+          .includes(userGuess)
+      );
+    });
     if (!validGuess) {
       setError("Invalid guess");
       return;
@@ -49,14 +61,14 @@ export default function Game() {
     setError("");
     let validGuess = runChecks();
     if (validGuess) {
-      setGuesses([...guesses, validGuess]);
+      setGuesses([...guesses, validGuess.name]);
       setGuessName("");
     }
   }
 
   return (
     <div>
-      <form onSubmit={addGuess} className="my-8 space-y-4">
+      <form onSubmit={addGuess} className="mt-5 mb-8 space-y-4">
         <div className="flex justify-center">
           <input
             type="text"
@@ -77,7 +89,42 @@ export default function Game() {
         {!!error && <p className="text-center">{error}</p>}
         {!!win && <p className="text-center">{win}</p>}
       </form>
-      <img src={vagina} alt="Female Internal" />
+      <div className="relative h-[300px]">
+        <img
+          src={diagram}
+          alt="Female Internal"
+          className="absolute top-0 left-0"
+        />
+        {guesses.length >= 1 &&
+          guesses.map((guess, idx) => {
+            if (guess in labels) {
+              return (
+                <img
+                  key={idx}
+                  src={labels[guess]}
+                  alt={guess}
+                  className="absolute top-0 left-0"
+                  style={{ filter: "contrast(20%)" }}
+                />
+              );
+            }
+          })}
+      </div>
+      <ul className="grid grid-cols-3 md:grid-cols-4 gap-3">
+        {guesses &&
+          guesses.map((guess) => {
+            return <li>{guess}</li>;
+          })}
+      </ul>
+      <button
+        onClick={() => {
+          setGuesses([]);
+          setWin("");
+        }}
+        className="mt-10 text-red-700"
+      >
+        Clear list
+      </button>
     </div>
   );
 }
