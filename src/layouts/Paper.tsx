@@ -11,36 +11,14 @@ export default function Paper({ children }: any) {
           <Link to="/">
             <Home className="mb-2 h-4" />
           </Link>
-          <h1 className="text-center text-3xl underline">
+          <h1 className="text-center text-2xl sm:text-3xl underline">
             A Sexplanation: The Game
           </h1>
-          <Stats className="mb-2 h-4" />
+          <Link to="stats">
+            <Stats className="mb-2 h-4" />
+          </Link>
         </header>
         <div className={styles.content}>{children}</div>
-        <footer className={styles.footer}>
-          <p>
-            From the creators of{" "}
-            <a className="underline" href="/">
-              Globle
-            </a>{" "}
-            and{" "}
-            <a href="/" className="underline">
-              A Sexplanation
-            </a>
-            .
-          </p>
-          <p>
-            View the{" "}
-            <a href="/" className="underline">
-              privacy policy
-            </a>{" "}
-            or the{" "}
-            <a href="/" className="underline">
-              open-source code
-            </a>
-            .
-          </p>
-        </footer>
       </div>
     </div>
   );

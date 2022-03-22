@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import data from "../data/doodles_categorized.json";
-import styles from "../styles/doodle.module.css";
+import styles from "../styles/transition.module.css";
 
 export default function Doodles({ children }: any) {
   const [doodles, setDoodles] = useState<string[]>([]);

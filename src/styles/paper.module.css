@@ -1,12 +1,27 @@
+:root {
+  --line-spacing: 26px;
+  --red-margin: 40px;
+}
+
 /* styling paper */
 .paper {
-  width: clamp(200px, calc(100% - 24px), 1000px);
-  height: 800px;
+  width: clamp(365px, calc(100% - 24px), 1000px);
+  height: fit-content;
+  min-height: 800px;
   position: relative;
   margin: 20px auto;
   padding: 40px 0;
   background-color: white;
   box-shadow: 0px 0px 5px 0px #888;
+}
+
+@media only screen and (max-width: 400px) {
+  .paper {
+    /* width: 100%; */
+    margin: 15px auto;
+    height: fit-content;
+    min-height: 100vh;
+  }
 }
 
 @media only screen and (min-width: 1000px) {
@@ -24,7 +39,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    left: 40px;
+    left: var(--red-margin);
     background-color: rgba(255, 0, 0, 0.6);
   }
 }
@@ -32,15 +47,20 @@
 /* styling blue horizontal lines */
 .pattern {
   height: 100%;
-  background-image: repeating-linear-gradient(white 0px, white 24px, teal 25px);
+  min-height: 750px;
+  background-image: repeating-linear-gradient(
+    white 0px,
+    white 25px,
+    teal var(--line-spacing)
+  );
 }
 
 /* styling text content */
 .content {
-  padding-top: 25px;
+  padding-top: 26px;
   padding-left: 16px;
   padding-right: 16px;
-  line-height: 25px;
+  line-height: 26px;
   font-size: 19px;
   letter-spacing: 1px;
   word-spacing: 5px;
@@ -68,8 +88,8 @@
 
 .footer {
   position: absolute;
-  bottom: 60px;
-  left: 40px;
+  bottom: 34px;
+  left: var(--red-margin);
   height: 50px;
   right: 0;
   padding: 0 1rem;
@@ -78,5 +98,16 @@
   justify-content: space-between;
   width: 100%;
   font-size: small;
-  line-height: 25px;
+  line-height: var(--line-spacing);
+}
+
+@media only screen and (max-width: 600px) {
+  .header,
+  .footer {
+    left: 0;
+  }
+
+  .footer {
+    bottom: 44px;
+  }
 }

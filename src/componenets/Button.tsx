@@ -6,6 +6,7 @@ type Props = {
   inverted: boolean;
   size: "small" | "large";
   disabled?: boolean;
+  fn?: () => void;
 };
 
 const { button, buttonSmall, bg, bgInverted, centred, disabled } = styles;
@@ -16,11 +17,13 @@ export default function Button({
   inverted,
   size,
   disabled = false,
+  fn,
 }: Props) {
   return (
     <button
       className={size === "small" ? buttonSmall : button}
       disabled={disabled}
+      onClick={fn}
     >
       <span>{text}</span>
       <div

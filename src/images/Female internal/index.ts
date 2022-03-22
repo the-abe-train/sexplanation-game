@@ -13,7 +13,7 @@ const pictures: PictureIndex = {
   "Fallopian tubes": fallopian,
   "Labia minora": labiaMinora,
   Ovary: ovary,
-  "Uterine Lining": uterineLining,
+  "Uterine lining": uterineLining,
   Uterus: uteras,
   Vagina: vagina,
 };

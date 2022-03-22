@@ -8,10 +8,10 @@ module.exports = {
         'sans': ["pangolin"]
       },
       spacing: {
-        'line-height': '25px'
+        'line-height': '26px'
       },
       lineHeight: {
-        'line-height': '25px'
+        'line-height': '26px'
       }
     },
   },
