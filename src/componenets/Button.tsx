@@ -4,13 +4,24 @@ type Props = {
   text: string;
   colour: string;
   inverted: boolean;
+  size: "small" | "large";
+  disabled?: boolean;
 };
 
-const { button, bg, bgInverted, centred } = styles;
+const { button, buttonSmall, bg, bgInverted, centred, disabled } = styles;
 
-export default function Button({ text, colour, inverted }: Props) {
+export default function Button({
+  text,
+  colour,
+  inverted,
+  size,
+  disabled = false,
+}: Props) {
   return (
-    <button className={button}>
+    <button
+      className={size === "small" ? buttonSmall : button}
+      disabled={disabled}
+    >
       <span>{text}</span>
       <div
         className={inverted ? bgInverted : bg}

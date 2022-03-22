@@ -22,7 +22,12 @@ export default function Intro() {
       <Doodles>
         <div className="flex justify-center space-x-6 mt-2">
           <Link to="/game">
-            <Button text={"Play"} colour={"#ccccff"} inverted={false} />
+            <Button
+              text={"Play"}
+              colour={"#ccccff"}
+              inverted={false}
+              size="large"
+            />
           </Link>
         </div>
       </Doodles>

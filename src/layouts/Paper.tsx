@@ -13,7 +13,7 @@ export default function Paper({ children }: any) {
           <h1 className="text-center text-3xl underline">
             A Sexplanation: The Game
           </h1>
-          <Home className="invisible" />
+          <Home className="invisible mb-2 h-4" />
         </header>
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
