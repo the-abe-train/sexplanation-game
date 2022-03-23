@@ -1,21 +1,36 @@
-import cervix from "./Cervix label.png";
-import fallopian from "./Fallopian tube label.png";
-import labiaMinora from "./Labia minora label.png";
-import ovary from "./Ovary label.png";
-import uterineLining from "./Uterine lining label.png";
-import uteras from "./Uterus label.png";
-import vagina from "./Vagina label.png";
+import cervixLabel from "./Cervix label.png";
+import cervixHighlight from "./Cervix highlight.png";
+import fallopianLabel from "./Fallopian tube label.png";
+import fallopianHighlight from "./Fallopian tube highlight.png";
+import labiaMinoraLabel from "./Labia minora label.png";
+import labiaMinoraHighlight from "./Labia minora highlight.png";
+import ovaryLabel from "./Ovary label.png";
+import ovaryHighlight from "./Ovary highlight.png";
+import uterineLiningLabel from "./Uterine lining label.png";
+import uterineLiningHighlight from "./Uterine lining highlight.png";
+import uterasLabel from "./Uterus label.png";
+import uterasHighlight from "./Uterus highlight.png";
+import vaginaLabel from "./Vagina label.png";
+import vaginaHighlight from "./Vagina highlight.png";
 
 type PictureIndex = { [key: string]: string };
 
-const pictures: PictureIndex = {
-  Cervix: cervix,
-  "Fallopian tubes": fallopian,
-  "Labia minora": labiaMinora,
-  Ovary: ovary,
-  "Uterine lining": uterineLining,
-  Uterus: uteras,
-  Vagina: vagina,
+export const labels: PictureIndex = {
+  Cervix: cervixLabel,
+  "Fallopian tubes": fallopianLabel,
+  "Labia minora": labiaMinoraLabel,
+  Ovary: ovaryLabel,
+  "Uterine lining": uterineLiningLabel,
+  Uterus: uterasLabel,
+  Vagina: vaginaLabel,
 };
 
-export default pictures;
+export const highlights: PictureIndex = {
+  Cervix: cervixHighlight,
+  "Fallopian tubes": fallopianHighlight,
+  "Labia minora": labiaMinoraHighlight,
+  Ovary: ovaryHighlight,
+  "Uterine lining": uterineLiningHighlight,
+  Uterus: uterasHighlight,
+  Vagina: vaginaHighlight,
+};

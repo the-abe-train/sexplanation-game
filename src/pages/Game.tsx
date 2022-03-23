@@ -1,6 +1,6 @@
 import { useState } from "react";
 import diagram from "../images/Female internal/Diagram.png";
-import labels from "../images/Female internal";
+import { labels, highlights } from "../images/Female internal";
 import { today } from "../util/dates";
 import type { FormEvent } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -9,8 +9,14 @@ import parts from "../data/parts.json";
 import { Link } from "react-router-dom";
 import { Part, StoredGuesses } from "../lib/types";
 import { answer } from "../util/answer";
+import { BrowserView } from "react-device-detect";
 
 // const parts: Part[] = untypedParts;
+
+// TODO remove diagram labels on mobile and rely on highlights instead
+// TODO change labels from PNGs to SVGs
+// TODO I want to be able to click on labels to highlight the parts.
+// This can be done with SVGs and pointer event CSS
 
 export default function Game() {
   const [guessName, setGuessName] = useState("");
@@ -18,6 +24,7 @@ export default function Game() {
   const [win, setWin] = useState("");
   const [female, setFemale] = useState(true);
   const [internal, setInternal] = useState(true);
+  const [highlight, setHighlight] = useState("");
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     {
@@ -61,6 +68,7 @@ export default function Game() {
     if (validGuess) {
       setGuesses([...guesses, validGuess]);
       setGuessName("");
+      setHighlight(validGuess.name);
     }
   }
 
@@ -87,7 +95,8 @@ export default function Game() {
             onChange={(e) => setGuessName(e.currentTarget.value)}
             autoComplete="new-password"
             disabled={!!win}
-            className="border-[1px] border-black mx-2 px-2 py-1 bg-white w-full sm:w-fit"
+            className="border-[1px] border-black mx-2 px-2 py-1 
+            bg-white disabled:bg-gray-200 w-full sm:w-fit"
           />
           <ButtonSwitch win={win} />
         </div>
@@ -98,28 +107,34 @@ export default function Game() {
           <p className="text-center mt-4 text-green-700 font-bold">{win}</p>
         )}
       </form>
-      <div className="relative h-[173px] sm:h-[250px]">
+      <div className="relative h-[200px] sm:h-[250px] w-[500px] sm:w-full">
         <img
           src={diagram}
           alt="Female Internal"
-          className="absolute top-0 left-0"
+          className="absolute top-0 -left-[100px] sm:-left-7 z-0"
         />
-        {guesses.length >= 1 &&
-          guesses.map(({ name }) => {
-            if (name in labels) {
-              return (
-                <img
-                  key={name}
-                  src={labels[name]}
-                  alt={name}
-                  className="absolute top-0 left-0"
-                  style={{ filter: "contrast(20%)" }}
-                />
-              );
-            }
-          })}
+        <BrowserView>
+          {guesses.length >= 1 &&
+            guesses.map(({ name }) => {
+              if (name in labels) {
+                return (
+                  <img
+                    key={name}
+                    src={labels[name]}
+                    alt={name}
+                    className="absolute top-0 -left-7 z-20"
+                    style={{ filter: "contrast(20%)" }}
+                  />
+                );
+              }
+            })}
+        </BrowserView>
+        <img
+          src={highlights[highlight]}
+          alt={highlight}
+          className="absolute top-0 -left-[100px] sm:-left-7 z-0 opacity-80"
+        />
       </div>
-
       <div className="flex w-full justify-around items-center h-[52px] text-sm sm:text-base">
         <div className="flex h-fit space-x-4 sm:space-x-8 px-4 sm:px-7 py-2 justify-around bg-white border-gray-700 border-[1px] rounded-full">
           <p
@@ -165,18 +180,34 @@ export default function Game() {
         </div>
       </div>
       <p className="mt-line-height">Clue: {answer.clue}</p>
+
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
         {guesses &&
           guesses.map(({ name }) => {
             return (
               <li
                 key={name}
-                className="mb-line-height px-1 text-sm leading-line-height"
+                className="mb-line-height px-1 text-sm leading-line-height cursor-pointer w-fit"
+                onClick={() => setHighlight(name)}
               >
                 {name}
               </li>
             );
           })}
+        {win &&
+          parts
+            .filter((part) => !guesses.includes(part))
+            .map(({ name }) => {
+              return (
+                <li
+                  key={name}
+                  className="mb-line-height px-1 text-sm leading-line-height cursor-pointer w-fit text-red-900"
+                  onClick={() => setHighlight(name)}
+                >
+                  {name}
+                </li>
+              );
+            })}
       </ul>
 
       {/* <button

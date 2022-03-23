@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
 import data from "../data/doodles_categorized.json";
+import useInterval from "../hooks/useInterval";
 import styles from "../styles/transition.module.css";
 
 export default function Doodles({ children }: any) {
   const [doodles, setDoodles] = useState<string[]>([]);
   const [count, setCount] = useState(1);
 
-  const timer = setTimeout(() => {
-    if (count <= data.length) {
-      setCount(count + 1);
-    }
-  }, 3000);
+  useInterval(() => setCount(count + 1), 3000);
 
   useEffect(() => {
     const paths = data.map((p) => p.path);
     setDoodles(paths.slice(0, count));
-    return () => {
-      clearTimeout(timer);
-    };
   }, [count]);
 
   return (
