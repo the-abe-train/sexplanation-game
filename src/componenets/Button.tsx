@@ -1,7 +1,7 @@
 import styles from "../styles/button.module.css";
 
 type Props = {
-  text: string;
+  children: string;
   colour: string;
   inverted: boolean;
   size: "small" | "large";
@@ -12,7 +12,7 @@ type Props = {
 const { button, buttonSmall, bg, bgInverted, centred, disabled } = styles;
 
 export default function Button({
-  text,
+  children,
   colour,
   inverted,
   size,
@@ -25,12 +25,12 @@ export default function Button({
       disabled={disabled}
       onClick={fn}
     >
-      <span>{text}</span>
+      <span>{children}</span>
       <div
         className={inverted ? bgInverted : bg}
         style={{ backgroundColor: colour }}
       >
-        <span className={centred}>{text}</span>
+        <span className={centred}>{children}</span>
       </div>
     </button>
   );

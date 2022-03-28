@@ -5,6 +5,8 @@ import Doodles from "../componenets/Doodles";
 import styles from "../styles/transition.module.css";
 import { answer } from "../util/answer";
 
+// TODO put the clue in a box. Maybe make it into a component?
+
 export default function Intro() {
   const [reveal, setReveal] = useState(false);
   return (
@@ -17,12 +19,13 @@ export default function Intro() {
         {!reveal && (
           <div className="mx-auto block w-fit my-8">
             <Button
-              colour="pink"
+              colour="#FFC8FF"
               size="large"
-              text="Reveal game"
               inverted={false}
               fn={() => setReveal(true)}
-            />
+            >
+              Reveal game
+            </Button>
           </div>
         )}
       </section>
@@ -44,8 +47,8 @@ export default function Intro() {
             <div className="flex justify-center space-x-6 mt-2">
               <Link to="/game">
                 <Button
-                  text={"Play!"}
-                  colour={"#ccccff"}
+                  children="Play!"
+                  colour="#FFC8FF"
                   inverted={false}
                   size="large"
                 />

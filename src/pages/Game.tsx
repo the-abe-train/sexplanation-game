@@ -13,10 +13,10 @@ import { BrowserView } from "react-device-detect";
 
 // const parts: Part[] = untypedParts;
 
-// TODO remove diagram labels on mobile and rely on highlights instead
 // TODO change labels from PNGs to SVGs
 // TODO I want to be able to click on labels to highlight the parts.
 // This can be done with SVGs and pointer event CSS
+// TODO add a dropdown for the guesser
 
 export default function Game() {
   const [guessName, setGuessName] = useState("");
@@ -75,12 +75,19 @@ export default function Game() {
   function ButtonSwitch({ win }: { win: string }) {
     if (!win) {
       return (
-        <Button text="Enter" colour="pink" inverted={false} size="small" />
+        <Button
+          children="Enter"
+          colour="#FFC8FF"
+          inverted={false}
+          size="small"
+        />
       );
     }
     return (
       <Link to="/stats">
-        <Button text="Share" colour="#90ee90" inverted={false} size="small" />
+        <Button colour="#90ee90" inverted={false} size="small">
+          Share
+        </Button>
       </Link>
     );
   }
@@ -115,8 +122,9 @@ export default function Game() {
         />
         <BrowserView>
           {guesses.length >= 1 &&
-            guesses.map(({ name }) => {
-              if (name in labels) {
+            guesses
+              .filter(({ name }) => name in labels)
+              .map(({ name }) => {
                 return (
                   <img
                     key={name}
@@ -126,8 +134,7 @@ export default function Game() {
                     style={{ filter: "contrast(20%)" }}
                   />
                 );
-              }
-            })}
+              })}
         </BrowserView>
         <img
           src={highlights[highlight]}
@@ -141,7 +148,7 @@ export default function Game() {
             onClick={() => setFemale(true)}
             style={{
               fontWeight: female ? "bold" : "",
-              color: female ? "orange" : "",
+              color: female ? "#DA9100" : "",
               cursor: "pointer",
             }}
           >
