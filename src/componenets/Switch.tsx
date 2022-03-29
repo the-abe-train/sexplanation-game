@@ -9,7 +9,6 @@ export default function Switch() {
     console.log("toggle");
     setOn(!on);
   }
-  // TODO fix a11y focusing
   return (
     <form action="" className="w-full flex justify-between items-center">
       <label htmlFor="hard-mode">Hard mode</label>
@@ -19,7 +18,7 @@ export default function Switch() {
           type="checkbox"
           checked={on}
           onChange={(e) => setOn(e.target.checked)}
-          className="w-full h-full"
+          className="w-full h-full  "
         />
         <span className={slider}></span>
       </div>

@@ -5,8 +5,6 @@ import Clue from "../componenets/Clue";
 import Doodles from "../componenets/Doodles";
 import styles from "../styles/transition.module.css";
 
-// TODO put the clue in a box. Maybe make it into a component?
-
 export default function Intro() {
   const [reveal, setReveal] = useState(false);
   return (

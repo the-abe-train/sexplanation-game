@@ -11,10 +11,15 @@ export type StoredGuesses = {
   guesses: string[];
 };
 
-export type Stats = {
+export type StatTable = {
   gamesWon: number;
   lastWin: Dayjs;
   currentStreak: number;
   maxStreak: number;
   usedGuesses: number[];
+  games: {
+    guesses: number;
+    win: boolean;
+    date: Dayjs;
+  }[];
 };

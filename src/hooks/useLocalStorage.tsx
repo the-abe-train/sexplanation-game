@@ -25,9 +25,8 @@ export function useLocalStorage<T extends IStorage>(
   });
 
   useEffect(() => {
-    const expiration = value?.day ? value.day : dayjs("2030-01-01");
-    console.log("Expiration", expiration.toDate());
-    console.log("Today", dayjs().toDate());
+    const expirationString = value?.day ? value.day : "2030-01-01";
+    const expiration = dayjs(expirationString);
     if (dayjs().diff(expiration, "day") <= 1) {
       localStorage.setItem(key, JSON.stringify(value));
     } else {

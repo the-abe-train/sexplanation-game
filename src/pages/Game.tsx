@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-// import { today } from "../util/dates";
 import type { FormEvent } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "../componenets/Button";
 import parts from "../data/parts.json";
 import { Link } from "react-router-dom";
-import { Part, Stats, StoredGuesses } from "../lib/types";
+import { Part, StatTable, StoredGuesses } from "../lib/types";
 import Select from "react-select";
 import Clue from "../componenets/Clue";
 import { answer } from "../util/answer";
@@ -30,7 +29,6 @@ export default function Game() {
     initialGuesses
   );
   const storedParts = storedGuesses.guesses.map((guess) => {
-    console.log(guess);
     const part = parts.find((part) => guess === part.name);
     invariant(part, "Error mapping local storage to parts list");
     return part;
@@ -40,27 +38,21 @@ export default function Game() {
   const [guesses, setGuesses] = useState<Part[]>(storedParts);
   const initialStats = {
     gamesWon: 0,
-    lastWin: dayjs(),
+    lastWin: dayjs("2022-01-01"),
     currentStreak: 0,
     maxStreak: 0,
     usedGuesses: [],
     emojiGuesses: "",
+    games: [],
   };
-  const [storedStats, storeStats] = useLocalStorage<Stats>(
+  const [storedStats, storeStats] = useLocalStorage<StatTable>(
     "statistics",
     initialStats
   );
-  const [stats, setStats] = useState<string[]>(storedGuesses.guesses);
-  const [gameOver, setGameOver] = useState(false);
-  const [win, setWin] = useState("");
-
-  // Storing the guesses in local storage
-  // useEffect(() => {
-  //   storeGuesses({
-  //     day: dayjs(),
-  //     guesses,
-  //   });
-  // }, [guesses, storeGuesses]);
+  const alreadyWon = !!guesses.find((guess) => guess.name === answer.name);
+  const initialWin = alreadyWon ? `The answer was ${answer.name}.` : "";
+  const [gameOver, setGameOver] = useState(alreadyWon);
+  const [win, setWin] = useState(initialWin);
 
   // Losing the game
   useEffect(() => {
@@ -70,13 +62,12 @@ export default function Game() {
     }
   }, [guesses, win]);
 
-  // When the game ends
+  // Storing new stats when the game ends
   useEffect(() => {
-    console.log("When the game ends");
-    if (!!win) {
+    const newWin = dayjs().diff(dayjs(storedStats.lastWin), "day") > 1;
+    if (win && newWin) {
       const lastWin = dayjs();
       const gamesWon = storedStats.gamesWon + 1;
-      // const streakBroken = dateDiffInDays(storedStats.lastWin, lastWin) > 1;
       const streakBroken = storedStats.lastWin > lastWin;
       const currentStreak = streakBroken ? 1 : storedStats.currentStreak + 1;
       const maxStreak =
@@ -88,12 +79,19 @@ export default function Game() {
       for (let i = 0; i < guesses.length; i += 8) {
         chunks.push([...guesses].slice(i, i + 8));
       }
+      const game = {
+        guesses: guesses.length,
+        win: !!win,
+        date: dayjs(),
+      };
+      const games = [...storedStats.games, game];
       const newStats = {
-        lastWin: dayjs(),
+        lastWin,
         gamesWon,
         currentStreak,
         maxStreak,
         usedGuesses,
+        games,
       };
       storeStats(newStats);
     }
@@ -135,14 +133,18 @@ export default function Game() {
     let validGuess = runChecks();
     if (validGuess) {
       setGuesses([...guesses, validGuess]);
-      storeGuesses({
-        day: dayjs(),
-        guesses: guesses.map((guess) => guess.name),
-      });
       setGuessName("");
       setHighlight(validGuess.name);
     }
   }
+
+  // When there's a new guess, update the local storage guesses
+  useEffect(() => {
+    storeGuesses({
+      day: dayjs(),
+      guesses: guesses.map((guess) => guess.name),
+    });
+  }, [guesses]);
 
   // Changing the button form "Enter" to "Share" when the game ends
   function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
@@ -177,7 +179,8 @@ export default function Game() {
             options={options}
             onChange={(e) => setGuessName(e?.value || "")}
             isDisabled={gameOver}
-            className="w-full max-w-[250px] z-20"
+            className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
+            autoFocus
           />
           <ButtonSwitch gameOver={gameOver} />
         </div>
@@ -197,25 +200,18 @@ export default function Game() {
                 key={name}
                 className="mb-line-height px-1 leading-line-height cursor-pointer w-fit"
                 onClick={() => setHighlight(name)}
+                onKeyDown={(e) => {
+                  return (
+                    ["Enter", "Return", " "].includes(e.key) &&
+                    setHighlight(name)
+                  );
+                }}
+                tabIndex={0}
               >
                 {name}
               </li>
             );
           })}
-        {win &&
-          parts
-            .filter((part) => !guesses.includes(part))
-            .map(({ name }) => {
-              return (
-                <li
-                  key={name}
-                  className="mb-line-height px-1 text-sm leading-line-height cursor-pointer w-fit text-red-900"
-                  onClick={() => setHighlight(name)}
-                >
-                  {name}
-                </li>
-              );
-            })}
       </ul>
       <p className="mt-line-height">Remaining guesses: {6 - guesses.length}</p>
       <button

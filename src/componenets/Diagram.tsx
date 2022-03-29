@@ -69,7 +69,7 @@ export default function Diagram({ guesses, highlight }: Props) {
               onClick={() => setFemale(false)}
               style={{
                 fontWeight: female ? "" : "bold",
-                color: female ? "" : "blue",
+                color: female ? "" : "teal",
                 cursor: "pointer",
               }}
             >

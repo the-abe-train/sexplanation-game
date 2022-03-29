@@ -3,8 +3,6 @@ import data from "../data/doodles_categorized.json";
 import useInterval from "../hooks/useInterval";
 import styles from "../styles/transition.module.css";
 
-// TODO revisit drawing the doodles instead of fading
-
 export default function Doodles({ children }: any) {
   const [doodles, setDoodles] = useState<string[]>([]);
   const [count, setCount] = useState(1);
