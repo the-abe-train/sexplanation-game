@@ -24,7 +24,7 @@ export default function Doodles({ children }: any) {
         version="1.1"
       >
         {doodles.map((path, idx) => {
-          return <path d={path} key={idx} className={styles.fade} />;
+          return <path d={path} key={idx} className={styles.draw} />;
         })}
       </svg>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

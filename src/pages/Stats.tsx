@@ -8,7 +8,6 @@ const data = [
   { name: "Max streak", value: 3 },
 ];
 
-// TODO design and code Stats page
 // TODO set up localstorage score tracking
 
 export default function Stats() {
@@ -28,7 +27,7 @@ export default function Stats() {
               })}
             </tbody>
           </table>
-          <div className="flex mt-[22px] items-center">
+          <div className="flex mt-[20px] items-center">
             <Button
               colour="#FFC8FF"
               size="small"
@@ -42,7 +41,7 @@ export default function Stats() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col justify-center w-fit">
+        <div className="flex flex-col justify-center w-fit mt-5">
           <Switch />
           <div className="flex mt-4">
             <Button
@@ -56,7 +55,7 @@ export default function Stats() {
           </div>
         </div>
       </section>
-      <section className="mt-20 flex flex-col justify-center space-y-8">
+      <section className="mt-24 flex flex-col justify-center space-y-8">
         <p className="text-center">
           Need to brush up on your sex ed? Here’s a good place to start:
         </p>

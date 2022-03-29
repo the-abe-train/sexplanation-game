@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
+import Clue from "../componenets/Clue";
 import Doodles from "../componenets/Doodles";
 import styles from "../styles/transition.module.css";
-import { answer } from "../util/answer";
 
 // TODO put the clue in a box. Maybe make it into a component?
 
@@ -40,9 +40,8 @@ export default function Intro() {
             based on a clue. <b className="text-[#C50D6F]">You get 6 tries.</b>{" "}
             Ready to play?
           </p>
-          <p className="mt-line-height">
-            Today's clue: <b>{answer.clue}</b>
-          </p>
+          <p className="mt-line-height">Today's clue: </p>
+          <Clue />
           <Doodles>
             <div className="flex justify-center space-x-6 mt-2">
               <Link to="/game">

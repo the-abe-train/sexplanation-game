@@ -1,8 +1,8 @@
+import dayjs, { Dayjs } from "dayjs";
 import { useState, useEffect } from "react";
-import { today } from "../util/dates";
 
 interface IStorage extends Object {
-  day?: string;
+  day?: Dayjs;
 }
 
 function getStorageValue<T>(key: string, defaultValue?: T): T {
@@ -25,8 +25,10 @@ export function useLocalStorage<T extends IStorage>(
   });
 
   useEffect(() => {
-    const ex = value?.day ? value.day : "9999-99-99";
-    if (today <= ex) {
+    const expiration = value?.day ? value.day : dayjs("2030-01-01");
+    console.log("Expiration", expiration.toDate());
+    console.log("Today", dayjs().toDate());
+    if (dayjs().diff(expiration, "day") <= 1) {
       localStorage.setItem(key, JSON.stringify(value));
     } else {
       localStorage.setItem(key, JSON.stringify(defaultValue));

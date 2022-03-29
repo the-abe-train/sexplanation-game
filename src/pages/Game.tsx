@@ -1,39 +1,105 @@
-import { useState } from "react";
-import diagram from "../images/Female internal/Diagram.png";
-import { labels, highlights } from "../images/Female internal";
-import { today } from "../util/dates";
+import { useEffect, useState } from "react";
+// import { today } from "../util/dates";
 import type { FormEvent } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "../componenets/Button";
 import parts from "../data/parts.json";
 import { Link } from "react-router-dom";
-import { Part, StoredGuesses } from "../lib/types";
+import { Part, Stats, StoredGuesses } from "../lib/types";
+import Select from "react-select";
+import Clue from "../componenets/Clue";
 import { answer } from "../util/answer";
-import { BrowserView } from "react-device-detect";
-
-// const parts: Part[] = untypedParts;
+import Diagram from "../componenets/Diagram";
+import dayjs from "dayjs";
+import invariant from "tiny-invariant";
 
 // TODO change labels from PNGs to SVGs
 // TODO I want to be able to click on labels to highlight the parts.
 // This can be done with SVGs and pointer event CSS
-// TODO add a dropdown for the guesser
 
 export default function Game() {
+  // State hooks
   const [guessName, setGuessName] = useState("");
   const [error, setError] = useState("");
-  const [win, setWin] = useState("");
-  const [female, setFemale] = useState(true);
-  const [internal, setInternal] = useState(true);
   const [highlight, setHighlight] = useState("");
+
+  // Localstorage hooks
+  const initialGuesses = { day: dayjs(), guesses: [] };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
-    {
-      day: today,
-      guesses: [],
-    }
+    initialGuesses
   );
-  const [guesses, setGuesses] = useState<Part[]>(storedGuesses.guesses);
+  const storedParts = storedGuesses.guesses.map((guess) => {
+    console.log(guess);
+    const part = parts.find((part) => guess === part.name);
+    invariant(part, "Error mapping local storage to parts list");
+    return part;
+  });
 
+  // const x = storedParts.filter(a => !!a)
+  const [guesses, setGuesses] = useState<Part[]>(storedParts);
+  const initialStats = {
+    gamesWon: 0,
+    lastWin: dayjs(),
+    currentStreak: 0,
+    maxStreak: 0,
+    usedGuesses: [],
+    emojiGuesses: "",
+  };
+  const [storedStats, storeStats] = useLocalStorage<Stats>(
+    "statistics",
+    initialStats
+  );
+  const [stats, setStats] = useState<string[]>(storedGuesses.guesses);
+  const [gameOver, setGameOver] = useState(false);
+  const [win, setWin] = useState("");
+
+  // Storing the guesses in local storage
+  // useEffect(() => {
+  //   storeGuesses({
+  //     day: dayjs(),
+  //     guesses,
+  //   });
+  // }, [guesses, storeGuesses]);
+
+  // Losing the game
+  useEffect(() => {
+    if (guesses.length >= 6 && !win) {
+      setError(`The answer was ${answer.name}.`);
+      setGameOver(true);
+    }
+  }, [guesses, win]);
+
+  // When the game ends
+  useEffect(() => {
+    console.log("When the game ends");
+    if (!!win) {
+      const lastWin = dayjs();
+      const gamesWon = storedStats.gamesWon + 1;
+      // const streakBroken = dateDiffInDays(storedStats.lastWin, lastWin) > 1;
+      const streakBroken = storedStats.lastWin > lastWin;
+      const currentStreak = streakBroken ? 1 : storedStats.currentStreak + 1;
+      const maxStreak =
+        currentStreak > storedStats.maxStreak
+          ? currentStreak
+          : storedStats.maxStreak;
+      const usedGuesses = [...storedStats.usedGuesses, guesses.length];
+      const chunks = [];
+      for (let i = 0; i < guesses.length; i += 8) {
+        chunks.push([...guesses].slice(i, i + 8));
+      }
+      const newStats = {
+        lastWin: dayjs(),
+        gamesWon,
+        currentStreak,
+        maxStreak,
+        usedGuesses,
+      };
+      storeStats(newStats);
+    }
+  }, [win, storeStats, guesses]);
+
+  // Form validation
   function runChecks() {
     const userGuess = guessName.trim().toLowerCase();
     const alreadyGuessed = guesses.find((guess) => {
@@ -57,23 +123,30 @@ export default function Game() {
     }
     if (answer.name.toLowerCase() === userGuess) {
       setWin(`The answer is ${userGuess}!`);
+      setGameOver(true);
     }
     return validGuess;
   }
 
+  // Entering a new guess
   function addGuess(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     let validGuess = runChecks();
     if (validGuess) {
       setGuesses([...guesses, validGuess]);
+      storeGuesses({
+        day: dayjs(),
+        guesses: guesses.map((guess) => guess.name),
+      });
       setGuessName("");
       setHighlight(validGuess.name);
     }
   }
 
-  function ButtonSwitch({ win }: { win: string }) {
-    if (!win) {
+  // Changing the button form "Enter" to "Share" when the game ends
+  function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
+    if (!gameOver) {
       return (
         <Button
           children="Enter"
@@ -92,109 +165,37 @@ export default function Game() {
     );
   }
 
+  const options = parts.map((part) => {
+    return { value: part.name, label: part.name };
+  });
+
   return (
     <div>
-      <form onSubmit={addGuess} className="mt-5 mb-8 space-y-6">
+      <form onSubmit={addGuess} className="mt-5 mb-8 space-y-5">
         <div className="flex justify-center">
-          <input
-            type="text"
-            value={guessName}
-            onChange={(e) => setGuessName(e.currentTarget.value)}
-            autoComplete="new-password"
-            disabled={!!win}
-            className="border-[1px] border-black mx-2 px-2 py-1 
-            bg-white disabled:bg-gray-200 w-full sm:w-fit"
+          <Select
+            options={options}
+            onChange={(e) => setGuessName(e?.value || "")}
+            isDisabled={gameOver}
+            className="w-full max-w-[250px] z-20"
           />
-          <ButtonSwitch win={win} />
+          <ButtonSwitch gameOver={gameOver} />
         </div>
-        {!!error && (
-          <p className="text-center mt-8 text-red-700 font-bold">{error}</p>
-        )}
-        {!!win && (
-          <p className="text-center mt-4 text-green-700 font-bold">{win}</p>
-        )}
-      </form>
-      <div className="relative h-[200px] sm:h-[250px] w-[500px] sm:w-full">
-        <img
-          src={diagram}
-          alt="Female Internal"
-          className="absolute top-0 -left-[100px] sm:-left-7 z-0"
-        />
-        <BrowserView>
-          {guesses.length >= 1 &&
-            guesses
-              .filter(({ name }) => name in labels)
-              .map(({ name }) => {
-                return (
-                  <img
-                    key={name}
-                    src={labels[name]}
-                    alt={name}
-                    className="absolute top-0 -left-7 z-20"
-                    style={{ filter: "contrast(20%)" }}
-                  />
-                );
-              })}
-        </BrowserView>
-        <img
-          src={highlights[highlight]}
-          alt={highlight}
-          className="absolute top-0 -left-[100px] sm:-left-7 z-0 opacity-80"
-        />
-      </div>
-      <div className="flex w-full justify-around items-center h-[52px] text-sm sm:text-base">
-        <div className="flex h-fit space-x-4 sm:space-x-8 px-4 sm:px-7 py-2 justify-around bg-white border-gray-700 border-[1px] rounded-full">
-          <p
-            onClick={() => setFemale(true)}
-            style={{
-              fontWeight: female ? "bold" : "",
-              color: female ? "#DA9100" : "",
-              cursor: "pointer",
-            }}
-          >
-            Female
-          </p>
-          <p
-            onClick={() => setFemale(false)}
-            style={{
-              fontWeight: female ? "" : "bold",
-              color: female ? "" : "blue",
-              cursor: "pointer",
-            }}
-          >
-            Male
-          </p>
-        </div>
-        <div className="flex h-fit space-x-4 sm:space-x-8 px-4 sm:px-7 py-2 justify-around bg-white border-gray-700 border-[1px] rounded-full">
-          <p
-            onClick={() => setInternal(true)}
-            style={{
-              fontWeight: internal ? "bold" : "",
-              cursor: "pointer",
-            }}
-          >
-            Internal
-          </p>
-          <p
-            onClick={() => setInternal(false)}
-            style={{
-              fontWeight: internal ? "" : "bold",
-              cursor: "pointer",
-            }}
-          >
-            External
-          </p>
-        </div>
-      </div>
-      <p className="mt-line-height">Clue: {answer.clue}</p>
 
-      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
+        {!!error && (
+          <p className="text-center text-red-700 font-bold">{error}</p>
+        )}
+        {!!win && <p className="text-center text-green-700 font-bold">{win}</p>}
+      </form>
+      <Diagram guesses={guesses} highlight={highlight} />
+      <Clue />
+      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-7">
         {guesses &&
           guesses.map(({ name }) => {
             return (
               <li
                 key={name}
-                className="mb-line-height px-1 text-sm leading-line-height cursor-pointer w-fit"
+                className="mb-line-height px-1 leading-line-height cursor-pointer w-fit"
                 onClick={() => setHighlight(name)}
               >
                 {name}
@@ -216,8 +217,8 @@ export default function Game() {
               );
             })}
       </ul>
-
-      {/* <button
+      <p className="mt-line-height">Remaining guesses: {6 - guesses.length}</p>
+      <button
         onClick={() => {
           setGuesses([]);
           setWin("");
@@ -225,7 +226,17 @@ export default function Game() {
         className="mt-line-height text-red-700"
       >
         Clear list
-      </button> */}
+      </button>
+      <button
+        onClick={() => {
+          // const names = parts.map(part => part.name)
+          setGuesses(parts);
+          setWin("You cheated!");
+        }}
+        className="mt-line-height text-blue-700 ml-8"
+      >
+        Select all
+      </button>
     </div>
   );
 }
