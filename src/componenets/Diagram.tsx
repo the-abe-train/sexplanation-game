@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { Part } from "../lib/types";
 import diagrams from "../images/diagrams";
 import Label from "./Label";
+import parts from "../data/parts.json";
 
 type Props = {
   guesses: Part[];
@@ -11,31 +12,55 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
 };
 
+type DiagramInfo = {
+  name: string;
+  sex: "Male" | "Female";
+  layer: "Internal" | "External";
+};
+
+const diagramMap: DiagramInfo[] = [
+  { name: "vulva", sex: "Female", layer: "Internal" },
+  { name: "clitoris", sex: "Female", layer: "External" },
+];
+
 export default function Diagram({ guesses, highlight, setHighlight }: Props) {
-  const [female, setFemale] = useState(true);
-  const [internal, setInternal] = useState(true);
+  const [sex, setSex] = useState<"Male" | "Female">("Female");
+  const [layer, setLayer] = useState<"Internal" | "External">("External");
   const [diagram, setDiagram] = useState("clitoris");
   const [showLabels, setShowLabels] = useState<string[]>([]);
 
+  function changeDiagram(diagramName: string) {
+    setDiagram(diagrams[diagramName]);
+    setShowLabels(
+      guesses
+        .filter((guess) => guess.diagram === diagramName)
+        .map((guess) => guess.name)
+    );
+  }
+
+  // When player switches highlight
   useEffect(() => {
-    setHighlight("");
-    if (internal) {
-      setDiagram(diagrams["vulva"]);
-      setShowLabels(
-        guesses
-          .filter((guess) => guess.diagram === "vulva")
-          .map((guess) => guess.name)
-      );
+    const highlightPart = parts.find((part) => part.name === highlight);
+    if (highlightPart) {
+      const diagramName = highlightPart.diagram;
+      const diagramInfo = diagramMap.find((d) => d.name === diagramName);
+      changeDiagram(diagramName);
+      if (diagramInfo) {
+        setSex(diagramInfo.sex);
+        setLayer(diagramInfo.layer);
+      }
     }
-    if (!internal) {
-      setDiagram(diagrams["clitoris"]);
-      setShowLabels(
-        guesses
-          .filter((guess) => guess.diagram === "clitoris")
-          .map((guess) => guess.name)
-      );
+  }, [highlight]);
+
+  // When player switches diagrams
+  useEffect(() => {
+    if (layer === "Internal") {
+      changeDiagram("vulva");
     }
-  }, [internal, female]);
+    if (layer === "External") {
+      changeDiagram("clitoris");
+    }
+  }, [layer, sex]);
 
   const renderLoader = () => <p>Loading</p>;
 
@@ -46,12 +71,14 @@ export default function Diagram({ guesses, highlight, setHighlight }: Props) {
           className="w-[500px] sm:w-[42rem] relative -ml-14
           overflow-clip h-[300px] my-4"
         >
-          <img src={diagram} alt="" className="absolute -top-20" />
-          <img
-            src={highlights[highlight]}
-            alt={highlight}
-            className="absolute -top-20 z-0 opacity-80 pointer-events-none"
-          />
+          <img src={diagram} alt={diagram} className="absolute -top-20" />
+          {showLabels.includes(highlight) && (
+            <img
+              src={highlights[highlight]}
+              alt={highlight}
+              className="absolute -top-20 z-0 opacity-80 pointer-events-none"
+            />
+          )}
           <BrowserView>
             {showLabels.length >= 1 &&
               showLabels.map((label, idx) => {
@@ -71,20 +98,20 @@ export default function Diagram({ guesses, highlight, setHighlight }: Props) {
             }}
           >
             <p
-              onClick={() => setFemale(true)}
+              onClick={() => setSex("Female")}
               style={{
-                fontWeight: female ? "bold" : "",
-                color: female ? "#DA9100" : "",
+                fontWeight: sex === "Female" ? "bold" : "",
+                color: sex === "Female" ? "#DA9100" : "",
                 cursor: "pointer",
               }}
             >
               Female
             </p>
             <p
-              onClick={() => setFemale(false)}
+              onClick={() => setSex("Male")}
               style={{
-                fontWeight: female ? "" : "bold",
-                color: female ? "" : "teal",
+                fontWeight: sex === "Male" ? "bold" : "",
+                color: sex === "Male" ? "teal" : "",
                 cursor: "pointer",
               }}
             >
@@ -100,18 +127,18 @@ export default function Diagram({ guesses, highlight, setHighlight }: Props) {
             }}
           >
             <p
-              onClick={() => setInternal(true)}
+              onClick={() => setLayer("Internal")}
               style={{
-                fontWeight: internal ? "bold" : "",
+                fontWeight: layer === "Internal" ? "bold" : "",
                 cursor: "pointer",
               }}
             >
               Internal
             </p>
             <p
-              onClick={() => setInternal(false)}
+              onClick={() => setLayer("External")}
               style={{
-                fontWeight: internal ? "" : "bold",
+                fontWeight: layer === "External" ? "bold" : "",
                 cursor: "pointer",
               }}
             >

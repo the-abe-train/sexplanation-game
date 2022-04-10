@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import Button from "../componenets/Button";
-import parts from "../data/parts.json";
 import { Link } from "react-router-dom";
-import { Part, StatTable, StoredGuesses } from "../lib/types";
 import Select from "react-select";
-import Clue from "../componenets/Clue";
-import { answer } from "../util/answer";
-import Diagram from "../componenets/Diagram";
 import dayjs from "dayjs";
 import invariant from "tiny-invariant";
+
+import Button from "../componenets/Button";
+import Clue from "../componenets/Clue";
+import Diagram from "../componenets/Diagram";
+
+import parts from "../data/parts.json";
+import { answer } from "../util/answer";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Part, StatTable, StoredGuesses } from "../lib/types";
 
 // TODO I want to be able to click on labels to highlight the parts.
 // This can be done with SVGs and pointer event CSS
@@ -170,8 +172,6 @@ export default function Game() {
     return { value: part.name, label: part.name };
   });
 
-  // const labels = parts.filter({diagram} => diagram ===  )
-
   return (
     <div>
       <form onSubmit={addGuess} className="mt-5 space-y-5">
@@ -184,14 +184,6 @@ export default function Game() {
             autoFocus
             placeholder=""
           />
-          {/* <select
-            name="guess"
-            className="z-20 border-[1px] rounded border-black bg-white"
-          >
-            {parts.map((part) => {
-              return <option value={part.name}>{part.name}</option>;
-            })}
-          </select> */}
           <ButtonSwitch gameOver={gameOver} />
         </div>
 

@@ -8,7 +8,6 @@ type Props = {
 export default function Label({ name, setHighlight }: Props) {
   const labelData = data.find((label) => label.name === name);
   if (labelData) {
-    console.log(labelData);
     const { x, y, width, height, path } = labelData;
     return (
       <svg

@@ -1,7 +1,9 @@
 import vulva from "./Vulva.png";
 import clitoris from "./Clitoris.png";
 
-const diagrams = {
+let diagrams: Record<string, string>;
+
+diagrams = {
   vulva,
   clitoris,
 };
