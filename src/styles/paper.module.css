@@ -5,7 +5,7 @@
 
 /* styling paper */
 .paper {
-  width: clamp(365px, calc(100% - 24px), 1000px);
+  width: clamp(365px, 100%, 1000px);
   height: fit-content;
   min-height: 800px;
   position: relative;

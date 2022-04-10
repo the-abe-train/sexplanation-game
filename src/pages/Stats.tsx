@@ -57,7 +57,7 @@ Average guesses: ${showAvgGuesses}`;
 
     if ("canShare" in navigator && isMobile && !isFirefox) {
       return await navigator.share({
-        title: "Globle Stats",
+        title: "Sexplanation Game Stats",
         text: shareString,
       });
     } else {

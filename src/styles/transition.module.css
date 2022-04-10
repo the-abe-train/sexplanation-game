@@ -15,7 +15,6 @@
 }
 
 .draw {
-  stroke: #000000;
   stroke-width: 1;
   stroke-dasharray: 600;
   stroke-dashoffset: 600;

@@ -12,7 +12,6 @@ import Diagram from "../componenets/Diagram";
 import dayjs from "dayjs";
 import invariant from "tiny-invariant";
 
-// TODO change labels from PNGs to SVGs
 // TODO I want to be able to click on labels to highlight the parts.
 // This can be done with SVGs and pointer event CSS
 
@@ -171,9 +170,11 @@ export default function Game() {
     return { value: part.name, label: part.name };
   });
 
+  // const labels = parts.filter({diagram} => diagram ===  )
+
   return (
     <div>
-      <form onSubmit={addGuess} className="mt-5 mb-8 space-y-5">
+      <form onSubmit={addGuess} className="mt-5 space-y-5">
         <div className="flex justify-center">
           <Select
             options={options}
@@ -181,7 +182,16 @@ export default function Game() {
             isDisabled={gameOver}
             className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
             autoFocus
+            placeholder=""
           />
+          {/* <select
+            name="guess"
+            className="z-20 border-[1px] rounded border-black bg-white"
+          >
+            {parts.map((part) => {
+              return <option value={part.name}>{part.name}</option>;
+            })}
+          </select> */}
           <ButtonSwitch gameOver={gameOver} />
         </div>
 
@@ -190,7 +200,11 @@ export default function Game() {
         )}
         {!!win && <p className="text-center text-green-700 font-bold">{win}</p>}
       </form>
-      <Diagram guesses={guesses} highlight={highlight} />
+      <Diagram
+        guesses={guesses}
+        highlight={highlight}
+        setHighlight={setHighlight}
+      />
       <Clue />
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-7">
         {guesses &&

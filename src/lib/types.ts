@@ -4,6 +4,7 @@ export type Part = {
   name: string;
   alternate_names: string[];
   clue: string;
+  diagram: string;
 };
 
 export type StoredGuesses = {

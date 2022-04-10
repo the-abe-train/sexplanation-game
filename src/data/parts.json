@@ -2,72 +2,151 @@
   {
     "name": "Ovary",
     "alternate_names": [],
-    "clue": "About the size of a large grape, this organ changes shape over time."
+    "clue": "About the size of a large grape, this organ changes shape over time.",
+    "diagram": ""
   },
-  { "name": "Rete ovarii", "alternate_names": [], "clue": "" },
-  { "name": "Fallopian tubes", "alternate_names": [], "clue": "" },
-  { "name": "Uterus", "alternate_names": [], "clue": "" },
+  { "name": "Rete ovarii", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Fallopian tubes",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  { "name": "Uterus", "alternate_names": [], "clue": "", "diagram": "" },
   {
     "name": "Cervix",
     "alternate_names": [],
-    "image": "Cervix lab",
-    "clue": ""
+    "clue": "",
+    "diagram": ""
   },
-  { "name": "Vagina", "alternate_names": [], "clue": "" },
-  { "name": "Epoophoron", "alternate_names": [], "clue": "" },
-  { "name": "Paroophoron", "alternate_names": [], "clue": "" },
-  { "name": "Gartner's duct", "alternate_names": [], "clue": "" },
+  { "name": "Vagina", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Epoophoron", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Paroophoron", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Gartner's duct",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
   {
     "name": "Skene's glands",
     "alternate_names": ["paraurethral gland"],
-    "clue": ""
+    "clue": "",
+    "diagram": "vulva"
   },
-  { "name": "Bladder", "alternate_names": [], "clue": "" },
-  { "name": "Urethra", "alternate_names": [], "clue": "" },
+  { "name": "Bladder", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Urethra", "alternate_names": [], "clue": "", "diagram": "vulva" },
   {
     "name": "Bartholin's gland",
     "alternate_names": ["greater vestibular glands"],
-    "clue": ""
+    "clue": "",
+    "diagram": "vulva"
   },
-  { "name": "Labia majora", "alternate_names": [], "clue": "" },
-  { "name": "Labia minora", "alternate_names": [], "clue": "" },
-  { "name": "Clitoris", "alternate_names": [], "clue": "" },
-  { "name": "Vestibular bulbs", "alternate_names": [], "clue": "" },
-  { "name": "Clitoral glans", "alternate_names": [], "clue": "" },
-  { "name": "Clitoral crura", "alternate_names": [], "clue": "" },
-  { "name": "Clitoral hood", "alternate_names": [], "clue": "" },
-  { "name": "Canal of Nuck", "alternate_names": [], "clue": "" },
-  { "name": "Round ligament of uterus", "alternate_names": [], "clue": "" },
-  { "name": "Egg", "alternate_names": [], "clue": "" },
-  { "name": "Anus", "alternate_names": [], "clue": "" },
-  { "name": "Rectum", "alternate_names": [], "clue": "" },
-  { "name": "Brain", "alternate_names": [], "clue": "" },
-  { "name": "Skin", "alternate_names": [], "clue": "" },
-  { "name": "Vulva", "alternate_names": [], "clue": "" },
-  { "name": "Testis", "alternate_names": [], "clue": "" },
-  { "name": "Rete testis", "alternate_names": [], "clue": "" },
-  { "name": "Appendix testis", "alternate_names": [], "clue": "" },
-  { "name": "Prostatic utricle", "alternate_names": [], "clue": "" },
-  { "name": "Efferent ducts", "alternate_names": [], "clue": "" },
-  { "name": "Paradidymis", "alternate_names": [], "clue": "" },
-  { "name": "Epididymis", "alternate_names": [], "clue": "" },
-  { "name": "Vas deferens", "alternate_names": [], "clue": "" },
-  { "name": "Seminal vesicle", "alternate_names": [], "clue": "" },
-  { "name": "Prostate", "alternate_names": [], "clue": "" },
+  {
+    "name": "Labia majora",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  },
+  {
+    "name": "Labia minora",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  },
+  { "name": "Clitoris", "alternate_names": [], "clue": "", "diagram": "vulva" },
+  {
+    "name": "Vestibular bulbs",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "clitoris"
+  },
+  {
+    "name": "Clitoral glans",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "clitoris"
+  },
+  {
+    "name": "Clitoral crura",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "clitoris"
+  },
+  {
+    "name": "Clitoral hood",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  },
+  { "name": "Canal of Nuck", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Round ligament of uterus",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  { "name": "Egg", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Anus", "alternate_names": [], "clue": "", "diagram": "vulva" },
+  { "name": "Rectum", "alternate_names": [], "clue": "", "diagram": "vulva" },
+  { "name": "Brain", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Skin", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Vulva", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Testis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Rete testis", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Appendix testis",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  {
+    "name": "Prostatic utricle",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  {
+    "name": "Efferent ducts",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  { "name": "Paradidymis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Epididymis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Vas deferens", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Seminal vesicle",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  { "name": "Prostate", "alternate_names": [], "clue": "", "diagram": "" },
   {
     "name": "Cowper's gland",
     "alternate_names": ["bulbourethral gland"],
-    "clue": ""
+    "clue": "",
+    "diagram": ""
   },
-  { "name": "Scrotum", "alternate_names": [], "clue": "" },
-  { "name": "Penile skin", "alternate_names": [], "clue": "" },
-  { "name": "Penis", "alternate_names": [], "clue": "" },
-  { "name": "Bulb of penis", "alternate_names": [], "clue": "" },
-  { "name": "Glans penis", "alternate_names": [], "clue": "" },
-  { "name": "Crus of penis", "alternate_names": [], "clue": "" },
-  { "name": "Foreskin", "alternate_names": [], "clue": "" },
-  { "name": "Processus vaginalis", "alternate_names": [], "clue": "" },
-  { "name": "Gubernaculum testis", "alternate_names": [], "clue": "" },
-  { "name": "Sperm", "alternate_names": [], "clue": "" },
-  { "name": "Frenulum", "alternate_names": [], "clue": "" }
+  { "name": "Scrotum", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Penile skin", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Penis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Bulb of penis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Glans penis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Crus of penis", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Foreskin", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Processus vaginalis",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  {
+    "name": "Gubernaculum testis",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": ""
+  },
+  { "name": "Sperm", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Frenulum", "alternate_names": [], "clue": "", "diagram": "" }
 ]
