@@ -10,32 +10,50 @@ type Props = {
   guesses: Part[];
   highlight: string;
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
+  gameOver: boolean;
 };
+
+type Layer = "Vulva" | "Clitoris" | "Uterus";
 
 type DiagramInfo = {
   name: string;
   sex: "Male" | "Female";
-  layer: "Internal" | "External";
+  layer: Layer;
 };
 
 const diagramMap: DiagramInfo[] = [
-  { name: "vulva", sex: "Female", layer: "Internal" },
-  { name: "clitoris", sex: "Female", layer: "External" },
+  { name: "vulva", sex: "Female", layer: "Vulva" },
+  { name: "clitoris", sex: "Female", layer: "Clitoris" },
+  { name: "uterus", sex: "Female", layer: "Uterus" },
 ];
 
-export default function Diagram({ guesses, highlight, setHighlight }: Props) {
+export default function Diagram({
+  guesses,
+  highlight,
+  setHighlight,
+  gameOver,
+}: Props) {
   const [sex, setSex] = useState<"Male" | "Female">("Female");
-  const [layer, setLayer] = useState<"Internal" | "External">("External");
+  const [layer, setLayer] = useState<Layer>("Vulva");
   const [diagram, setDiagram] = useState("clitoris");
   const [showLabels, setShowLabels] = useState<string[]>([]);
 
   function changeDiagram(diagramName: string) {
-    setDiagram(diagrams[diagramName]);
-    setShowLabels(
-      guesses
-        .filter((guess) => guess.diagram === diagramName)
-        .map((guess) => guess.name)
-    );
+    if (!gameOver) {
+      setDiagram(diagrams[diagramName]);
+      setShowLabels(
+        guesses
+          .filter((guess) => guess.diagram === diagramName)
+          .map((guess) => guess.name)
+      );
+    } else {
+      setDiagram(diagrams[diagramName]);
+      setShowLabels(
+        parts
+          .filter((part) => part.diagram === diagramName)
+          .map((part) => part.name)
+      );
+    }
   }
 
   // When player switches highlight
@@ -54,29 +72,39 @@ export default function Diagram({ guesses, highlight, setHighlight }: Props) {
 
   // When player switches diagrams
   useEffect(() => {
-    if (layer === "Internal") {
+    if (layer === "Vulva") {
       changeDiagram("vulva");
     }
-    if (layer === "External") {
+    if (layer === "Clitoris") {
       changeDiagram("clitoris");
+    }
+    if (layer === "Uterus") {
+      changeDiagram("uterus");
     }
   }, [layer, sex]);
 
-  const renderLoader = () => <p>Loading</p>;
+  const renderLoader = () => <p>Loading...</p>;
 
+  // TODO maybe replace drawn lines on diagram with different PNG so that only
+  // plastecine has a shadow
   return (
     <Suspense fallback={renderLoader()}>
       <div className="mb-8 z-0">
         <div
           className="w-[500px] sm:w-[42rem] relative -ml-14
-          overflow-clip h-[300px] my-4"
+          overflow-clip h-[325px] my-4"
         >
-          <img src={diagram} alt={diagram} className="absolute -top-20" />
+          <img
+            src={diagram}
+            alt={diagram}
+            className="absolute -top-20"
+            style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
+          />
           {showLabels.includes(highlight) && (
             <img
               src={highlights[highlight]}
               alt={highlight}
-              className="absolute -top-20 z-0 opacity-80 pointer-events-none"
+              className="absolute -top-20 z-0 opacity-70 pointer-events-none"
             />
           )}
           <BrowserView>
@@ -127,22 +155,31 @@ export default function Diagram({ guesses, highlight, setHighlight }: Props) {
             }}
           >
             <p
-              onClick={() => setLayer("Internal")}
+              onClick={() => setLayer("Clitoris")}
               style={{
-                fontWeight: layer === "Internal" ? "bold" : "",
+                fontWeight: layer === "Clitoris" ? "bold" : "",
                 cursor: "pointer",
               }}
             >
-              Internal
+              Clitoris
             </p>
             <p
-              onClick={() => setLayer("External")}
+              onClick={() => setLayer("Vulva")}
               style={{
-                fontWeight: layer === "External" ? "bold" : "",
+                fontWeight: layer === "Vulva" ? "bold" : "",
                 cursor: "pointer",
               }}
             >
-              External
+              Vulva
+            </p>
+            <p
+              onClick={() => setLayer("Uterus")}
+              style={{
+                fontWeight: layer === "Uterus" ? "bold" : "",
+                cursor: "pointer",
+              }}
+            >
+              Uterus
             </p>
           </div>
         </div>

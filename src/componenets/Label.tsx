@@ -12,7 +12,7 @@ export default function Label({ name, setHighlight }: Props) {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 4800 2700"
+        viewBox="0 0 4800 2800"
         className="absolute -top-20 pointer-events-none"
         onClick={() => setHighlight(name)}
       >

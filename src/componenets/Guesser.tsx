@@ -95,7 +95,7 @@ export default function Guesser({
 
   return (
     <form onSubmit={addGuess} className="mt-5 space-y-5">
-      <div className="flex justify-center">
+      <div className="flex justify-center space-x-3">
         <Select
           options={options}
           onChange={(e) => setGuessName(e?.value || "")}

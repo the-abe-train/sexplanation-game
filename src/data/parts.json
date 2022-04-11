@@ -3,30 +3,30 @@
     "name": "Ovary",
     "alternate_names": [],
     "clue": "About the size of a large grape, this organ changes shape over time.",
-    "diagram": ""
+    "diagram": "uterus"
   },
   { "name": "Rete ovarii", "alternate_names": [], "clue": "", "diagram": "" },
   {
     "name": "Fallopian tubes",
     "alternate_names": [],
     "clue": "",
-    "diagram": ""
+    "diagram": "uterus"
   },
-  { "name": "Uterus", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Uterus", "alternate_names": [], "clue": "", "diagram": "uterus" },
   {
     "name": "Cervix",
     "alternate_names": [],
     "clue": "",
-    "diagram": ""
+    "diagram": "uterus"
   },
-  { "name": "Vagina", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Vagina", "alternate_names": [], "clue": "", "diagram": "uterus" },
   { "name": "Epoophoron", "alternate_names": [], "clue": "", "diagram": "" },
   { "name": "Paroophoron", "alternate_names": [], "clue": "", "diagram": "" },
   {
     "name": "Gartner's duct",
     "alternate_names": [],
     "clue": "",
-    "diagram": ""
+    "diagram": "uterus"
   },
   {
     "name": "Skene's glands",
@@ -86,7 +86,7 @@
     "clue": "",
     "diagram": ""
   },
-  { "name": "Egg", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Egg", "alternate_names": [], "clue": "", "diagram": "uterus" },
   { "name": "Anus", "alternate_names": [], "clue": "", "diagram": "vulva" },
   { "name": "Rectum", "alternate_names": [], "clue": "", "diagram": "vulva" },
   { "name": "Brain", "alternate_names": [], "clue": "", "diagram": "" },
@@ -148,5 +148,29 @@
     "diagram": ""
   },
   { "name": "Sperm", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Frenulum", "alternate_names": [], "clue": "", "diagram": "" }
+  { "name": "Frenulum", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Uterine lining",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "uterus"
+  },
+  {
+    "name": "Pubic hair",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  },
+  {
+    "name": "Bartholin's glands",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  },
+  {
+    "name": "Vaginal opening",
+    "alternate_names": [],
+    "clue": "",
+    "diagram": "vulva"
+  }
 ]

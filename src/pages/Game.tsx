@@ -116,14 +116,18 @@ export default function Game() {
     gameOver,
   };
 
+  // Props to pass to Diagram
+  const diagramProps = {
+    guesses,
+    highlight,
+    setHighlight,
+    gameOver,
+  };
+
   return (
     <div>
       <Guesser {...guesserProps} />
-      <Diagram
-        guesses={guesses}
-        highlight={highlight}
-        setHighlight={setHighlight}
-      />
+      <Diagram {...diagramProps} />
       <Clue />
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-7">
         {guesses &&
@@ -140,6 +144,7 @@ export default function Game() {
                   );
                 }}
                 tabIndex={0}
+                style={{ fontWeight: name === highlight ? "bold" : "" }}
               >
                 {name}
               </li>
