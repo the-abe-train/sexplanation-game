@@ -1,4 +1,5 @@
-import highlights from "../images/highlights";
+import femaleHighlights from "../images/female_highlights";
+import maleHighlights from "../images/male_highlights";
 import { BrowserView } from "react-device-detect";
 import { Suspense, useEffect, useState } from "react";
 import { Part } from "../lib/types";
@@ -13,7 +14,7 @@ type Props = {
   gameOver: boolean;
 };
 
-type Layer = "Vulva" | "Clitoris" | "Uterus";
+type Layer = "Vulva" | "Clitoris" | "Uterus" | "Penis";
 
 type DiagramInfo = {
   name: string;
@@ -25,7 +26,10 @@ const diagramMap: DiagramInfo[] = [
   { name: "vulva", sex: "Female", layer: "Vulva" },
   { name: "clitoris", sex: "Female", layer: "Clitoris" },
   { name: "uterus", sex: "Female", layer: "Uterus" },
+  { name: "penis", sex: "Male", layer: "Penis" },
 ];
+
+const highlights = { Male: maleHighlights, Female: femaleHighlights };
 
 export default function Diagram({
   guesses,
@@ -72,16 +76,11 @@ export default function Diagram({
 
   // When player switches diagrams
   useEffect(() => {
-    if (layer === "Vulva") {
-      changeDiagram("vulva");
-    }
-    if (layer === "Clitoris") {
-      changeDiagram("clitoris");
-    }
-    if (layer === "Uterus") {
-      changeDiagram("uterus");
-    }
-  }, [layer, sex]);
+    setLayer(sex === "Male" ? "Penis" : "Vulva");
+  }, [sex]);
+  useEffect(() => {
+    changeDiagram(layer.toLocaleLowerCase());
+  }, [layer]);
 
   const renderLoader = () => <p>Loading...</p>;
 
@@ -92,7 +91,7 @@ export default function Diagram({
       <div className="mb-8 z-0">
         <div
           className="w-[500px] sm:w-[42rem] relative -ml-14
-          overflow-clip h-[325px] my-4"
+          overflow-clip h-[330px] my-4"
         >
           <img
             src={diagram}
@@ -102,7 +101,7 @@ export default function Diagram({
           />
           {showLabels.includes(highlight) && (
             <img
-              src={highlights[highlight]}
+              src={highlights[sex][highlight]}
               alt={highlight}
               className="absolute -top-20 z-0 opacity-70 pointer-events-none"
             />
@@ -111,7 +110,12 @@ export default function Diagram({
             {showLabels.length >= 1 &&
               showLabels.map((label, idx) => {
                 return (
-                  <Label name={label} setHighlight={setHighlight} key={idx} />
+                  <Label
+                    sex={sex}
+                    name={label}
+                    setHighlight={setHighlight}
+                    key={idx}
+                  />
                 );
               })}
           </BrowserView>
@@ -154,33 +158,22 @@ export default function Diagram({
               boxShadow: "20px 38px 34px -26px hsla(0, 0%, 0%, 0.2)",
             }}
           >
-            <p
-              onClick={() => setLayer("Clitoris")}
-              style={{
-                fontWeight: layer === "Clitoris" ? "bold" : "",
-                cursor: "pointer",
-              }}
-            >
-              Clitoris
-            </p>
-            <p
-              onClick={() => setLayer("Vulva")}
-              style={{
-                fontWeight: layer === "Vulva" ? "bold" : "",
-                cursor: "pointer",
-              }}
-            >
-              Vulva
-            </p>
-            <p
-              onClick={() => setLayer("Uterus")}
-              style={{
-                fontWeight: layer === "Uterus" ? "bold" : "",
-                cursor: "pointer",
-              }}
-            >
-              Uterus
-            </p>
+            {diagramMap
+              .filter((map) => map.sex === sex)
+              .map(({ layer: layerName }, idx) => {
+                return (
+                  <p
+                    onClick={() => setLayer(layerName)}
+                    style={{
+                      fontWeight: layer === layerName ? "bold" : "",
+                      cursor: "pointer",
+                    }}
+                    key={idx}
+                  >
+                    {layerName}
+                  </p>
+                );
+              })}
           </div>
         </div>
       </div>

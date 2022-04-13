@@ -21,6 +21,7 @@ import vagina from "./Vagina Highlight.png";
 import gartnersDuct from "./Gartner's Duct Highlight.png";
 import egg from "./Egg Highlight.png";
 import uterus from "./Uterus Highlight.png";
+import vulva from "./Vulva Highlight.png";
 
 type PictureIndex = { [key: string]: string };
 
@@ -47,6 +48,7 @@ const highlights: PictureIndex = {
   "Gartner's duct": gartnersDuct,
   Egg: egg,
   Uterus: uterus,
+  Vulva: vulva,
 };
 
 export default highlights;

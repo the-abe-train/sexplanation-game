@@ -1,18 +1,21 @@
-import data from "../data/labels.json";
+import maleLabels from "../data/male_labels.json";
+import femaleLabels from "../data/female_labels.json";
 
 type Props = {
   name: string;
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
+  sex: "Male" | "Female";
 };
 
-export default function Label({ name, setHighlight }: Props) {
-  const labelData = data.find((label) => label.name === name);
-  if (labelData) {
-    const { x, y, width, height, path } = labelData;
+export default function Label({ name, setHighlight, sex }: Props) {
+  const labelData = { Male: maleLabels, Female: femaleLabels };
+  const label = labelData[sex].find((label) => label.name === name);
+  if (label) {
+    const { x, y, width, height, path } = label;
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 4800 2800"
+        viewBox="0 0 4800 3006"
         className="absolute -top-20 pointer-events-none"
         onClick={() => setHighlight(name)}
       >
