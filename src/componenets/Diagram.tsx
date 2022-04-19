@@ -2,9 +2,11 @@ import femaleHighlights from "../images/female_highlights";
 import maleHighlights from "../images/male_highlights";
 import { BrowserView } from "react-device-detect";
 import { Suspense, useEffect, useState } from "react";
-import { Layer, Part } from "../lib/types";
+import { DiagramInfo, Layer, Part } from "../lib/types";
 import diagrams from "../images/diagrams";
 import Label from "./Label";
+import styles from "../styles/diagram.module.css";
+import Panel from "./Panel";
 const parts: Part[] = require("../data/parts.json");
 
 type Props = {
@@ -12,11 +14,6 @@ type Props = {
   highlight: string;
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   gameOver: boolean;
-};
-
-type DiagramInfo = {
-  sex: "Male" | "Female";
-  layer: Layer;
 };
 
 // TODO resolve the empty space
@@ -84,13 +81,13 @@ export default function Diagram({
 
   // TODO maybe replace drawn lines on diagram with different PNG so that only
   // plastecine has a shadow
+
+  // TODO include parts for the same sex on multiple diagrams
+  // TODO Add treasure hunt to the game in the guesser dialogue
   return (
     <Suspense fallback={renderLoader()}>
-      <div className="mb-8 z-0">
-        <div
-          className="w-[500px] sm:w-[42rem] relative -ml-14
-          overflow-clip h-[400px]"
-        >
+      <div className={styles.container}>
+        <div className={styles.diagram}>
           <img
             src={diagram}
             alt={diagram}
@@ -118,69 +115,14 @@ export default function Diagram({
               })}
           </BrowserView>
         </div>
-        <div className="flex w-full justify-around items-center h-[52px] text-sm sm:text-base">
-          <div
-            className="flex h-fit space-x-4 sm:space-x-8 px-4 sm:px-7 py-2 
-        justify-around bg-white border-gray-700 border-[1px]"
-            style={{
-              borderRadius: "255px 200px 225px 200px/200px 225px 200px 255px",
-              boxShadow: "20px 38px 34px -26px hsla(0, 0%, 0%, 0.2)",
-            }}
-          >
-            <p
-              onClick={() => {
-                setSex("Female");
-                setLayer("Vulva");
-              }}
-              style={{
-                fontWeight: sex === "Female" ? "bold" : "",
-                color: sex === "Female" ? "#DA9100" : "",
-                cursor: "pointer",
-              }}
-            >
-              Female
-            </p>
-            <p
-              onClick={() => {
-                setSex("Male");
-                setLayer("Penis");
-              }}
-              style={{
-                fontWeight: sex === "Male" ? "bold" : "",
-                color: sex === "Male" ? "teal" : "",
-                cursor: "pointer",
-              }}
-            >
-              Male
-            </p>
-          </div>
-          <div
-            className="flex h-fit space-x-4 sm:space-x-8 px-4 sm:px-7 py-2 
-                  justify-around bg-white border-gray-700 border-[1px]"
-            style={{
-              borderRadius: "255px 200px 225px 200px/200px 225px 200px 255px",
-              boxShadow: "20px 38px 34px -26px hsla(0, 0%, 0%, 0.2)",
-            }}
-          >
-            {diagramMap
-              .filter((map) => map.sex === sex)
-              .map(({ layer: layerName }, idx) => {
-                return (
-                  <p
-                    onClick={() => setLayer(layerName)}
-                    style={{
-                      fontWeight: layer === layerName ? "bold" : "",
-                      cursor: "pointer",
-                    }}
-                    key={idx}
-                  >
-                    {layerName}
-                  </p>
-                );
-              })}
-          </div>
-        </div>
       </div>
+      <Panel
+        setSex={setSex}
+        setLayer={setLayer}
+        sex={sex}
+        layer={layer}
+        diagramMap={diagramMap}
+      />
     </Suspense>
   );
 }

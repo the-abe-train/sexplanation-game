@@ -7,7 +7,7 @@ import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
 
-// TODO finalize the share message
+// TODO Make the share message include your "path"
 // TODO make practice game actually work
 // TODO define and implement hard mode
 
@@ -88,7 +88,7 @@ Average guesses: ${showAvgGuesses}`;
               })}
             </tbody>
           </table>
-          <div className="flex mt-[20px] items-center">
+          <div className="flex mt-[20px] items-center space-x-4">
             <Button
               colour="#FFC8FF"
               size="small"
@@ -108,7 +108,7 @@ Average guesses: ${showAvgGuesses}`;
         </div>
         <div className="flex flex-col justify-center w-fit mt-5">
           <Switch />
-          <div className="flex mt-4">
+          <div className="flex mt-4 justify-center">
             <Button
               colour="#FFC8FF"
               size="small"
@@ -125,7 +125,7 @@ Average guesses: ${showAvgGuesses}`;
           <Chart games={storedStats.games} />
         </div>
       </section>
-      <section className="mt-12 flex flex-col justify-center space-y-8">
+      <section className="mt-10 flex flex-col justify-center space-y-8">
         <p className="text-center">
           Need to brush up on your sex ed? Here’s a good place to start:
         </p>

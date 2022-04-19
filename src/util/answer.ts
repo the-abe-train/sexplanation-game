@@ -4,13 +4,17 @@ const parts: Part[] = require("../data/parts.json");
 
 // TODO set up answer mechanism like Globle
 const SHUFFLE_KEY = 1337;
-export const today = new Date().toLocaleDateString("en-CA");
 
-function generateKeyNew(list: any[], day: string) {
-  const [year, month, date] = day.split("-");
+function generateKey(list: any[]) {
+  const today = new Date().toLocaleDateString("en-CA");
+  const [year, month, date] = today.split("-");
   const dayCode = Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(date));
   const key = Math.floor(dayCode / parseInt(SHUFFLE_KEY + "5")) % list.length;
   return key;
+}
+
+function randomKey(list: any[]) {
+  return list[Math.floor(Math.random() * list.length)];
 }
 
 const clues = parts.flatMap((part) => part.clues);
@@ -23,6 +27,11 @@ const clueMap = clues.map((clue) => {
   };
 });
 
-const key = generateKeyNew(clueMap, today);
+const key = generateKey(clueMap);
+
+export function generateAnswer(random: boolean) {
+  const key = random ? randomKey(clueMap) : generateKey(clueMap);
+  return clueMap[key];
+}
 
 export const answer = clueMap[key];

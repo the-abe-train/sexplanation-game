@@ -10,7 +10,10 @@ export default function Switch() {
     setOn(!on);
   }
   return (
-    <form action="" className="w-full flex justify-between items-center">
+    <form
+      action=""
+      className="w-full flex justify-between items-center space-x-4"
+    >
       <label htmlFor="hard-mode">Hard mode</label>
       <div className={switcher} onClick={toggle}>
         <input

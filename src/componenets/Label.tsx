@@ -6,7 +6,7 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   sex: "Male" | "Female";
 };
-// TODO labia majora, for example, needs to have a higer z-index.
+
 export default function Label({ name, setHighlight, sex }: Props) {
   const labelData = { Male: maleLabels, Female: femaleLabels };
   const label = labelData[sex].find((label) => label.name === name);

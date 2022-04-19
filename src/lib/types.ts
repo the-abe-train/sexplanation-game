@@ -8,6 +8,11 @@ export type Layer =
   | "Internal"
   | "Foreskin";
 
+export type DiagramInfo = {
+  sex: "Male" | "Female";
+  layer: Layer;
+};
+
 export type Part = {
   name: string;
   clues: string[];

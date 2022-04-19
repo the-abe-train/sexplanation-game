@@ -111,6 +111,7 @@ export default function Game() {
     setGameOver,
     win,
     gameOver,
+    answer,
   };
 
   // Props to pass to Diagram
@@ -121,12 +122,17 @@ export default function Game() {
     gameOver,
   };
 
+  // TODO ask kylie to move labels from vulva to clitoris to save space and make the clitoris diagram more clear
+  // TODO swap foreskin diagrams mobile to desktop
+  // TODO we don't want testicles, just testis
+  // TODO hard mode is no dropdown
+
   return (
     <div>
       <Guesser {...guesserProps} />
       <Diagram {...diagramProps} />
       <Clue />
-      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-7">
+      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-4">
         {guesses &&
           guesses.map(({ name }) => {
             return (

@@ -26,6 +26,8 @@ import egg from "./Egg Highlight.png";
 import uterus from "./Uterus Highlight.png";
 import vulva from "./Vulva Highlight.png";
 
+// TODO make highlighting syntax consistent
+
 type PictureIndex = { [key: string]: string };
 
 const highlights: PictureIndex = {
@@ -53,7 +55,7 @@ const highlights: PictureIndex = {
   Egg: egg,
   Uterus: uterus,
   Vulva: vulva,
-  Perenium: perineum,
+  Perineum: perineum,
   "Mons pubis": monsPubis,
 };
 

@@ -3,7 +3,6 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
-import { answer } from "../util/answer";
 const parts: Part[] = require("../data/parts.json");
 
 // Changing the button form "Enter" to "Share" when the game ends
@@ -32,6 +31,10 @@ type Props = {
   gameOver: boolean;
   setWin: React.Dispatch<React.SetStateAction<string>>;
   win: string;
+  answer: {
+    clue: string;
+    part: string;
+  };
 };
 
 export default function Guesser({
@@ -44,6 +47,7 @@ export default function Guesser({
   setGameOver,
   win,
   gameOver,
+  answer,
 }: Props) {
   // State hooks
   const [guessName, setGuessName] = useState("");

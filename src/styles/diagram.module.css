@@ -1,0 +1,35 @@
+.container {
+  z-index: 0;
+  position: relative;
+  overflow: clip;
+}
+
+.diagram {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Desktop */
+@media only screen and (min-width: 415px) {
+  .container {
+    height: 400px;
+  }
+  .diagram {
+    height: 400px;
+    width: 42rem;
+  }
+}
+
+/* Mobile */
+@media only screen and (max-width: 414px) {
+  .container {
+    height: 300px;
+  }
+  .diagram {
+    height: 20rem;
+    width: 42rem;
+    top: -10%;
+    margin-bottom: 1rem;
+  }
+}
