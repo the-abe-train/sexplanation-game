@@ -1,187 +1,313 @@
 [
   {
     "name": "Ovary",
-    "alternate_names": [],
-    "clue": "About the size of a large grape, this organ changes shape over time.",
-    "diagram": "uterus"
+    "clues": [
+      "About the size of a large grape, this organ changes shape over time."
+    ],
+    "diagrams": ["Uterus"]
   },
-  { "name": "Rete ovarii", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Rete ovarii", "clues": [], "diagrams": [] },
   {
     "name": "Fallopian tubes",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "uterus"
+    "clues": [
+      "This passageway is where a new person is formed.",
+      "Named after a Catholic priest, this passageway contains nutrients for sperm."
+    ],
+    "diagrams": ["Uterus"]
   },
-  { "name": "Uterus", "alternate_names": [], "clue": "", "diagram": "uterus" },
+  {
+    "name": "Uterus",
+    "clues": ["This muscluar organ can stretch to the size of a watermelon."],
+    "diagrams": ["Uterus"]
+  },
   {
     "name": "Cervix",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "uterus"
+    "clues": [
+      "This part protects people from foreign organisms entering—but will let in sperm.",
+      "It wasn't until 2004 that scientists confirmed stimulating this body part could result in an orgasm.",
+      "This part is checked for cancer during a Pap smear."
+    ],
+    "diagrams": ["Uterus"]
   },
-  { "name": "Vagina", "alternate_names": [], "clue": "", "diagram": "uterus" },
-  { "name": "Epoophoron", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Paroophoron", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Vagina",
+    "clues": [
+      "People often misuse the name of this part to describe external sex organs, but it's actually an exclusively internal structure."
+    ],
+    "diagrams": ["Uterus"]
+  },
+  {
+    "name": "Hymen",
+    "clues": [
+      "This thin tissue might not even be present in some—and contrary to myth—does not necessarily tear during intercourse."
+    ],
+    "diagrams": ["Vulva"]
+  },
+  { "name": "Epoophoron", "clues": [], "diagrams": [] },
+  { "name": "Paroophoron", "clues": [], "diagrams": [] },
   {
     "name": "Gartner's duct",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "uterus"
+    "clues": [],
+    "diagrams": ["Uterus"]
   },
   {
     "name": "Skene's glands",
-    "alternate_names": ["paraurethral gland"],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [
+      "This part produces a milky fluid that lubricates the urethral opening—and it's hypothesized to be the source of the \"G-spot\" named after Dr. Ernst Gräfenberg."
+    ],
+    "diagrams": ["Vulva"]
   },
-  { "name": "Bladder", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Urethra", "alternate_names": [], "clue": "", "diagram": "vulva" },
   {
-    "name": "Bartholin's gland",
-    "alternate_names": ["greater vestibular glands"],
-    "clue": "",
-    "diagram": "vulva"
+    "name": "Bladder",
+    "clues": [
+      "When empty this organ is about the size of a pear—but can expand to three times the size."
+    ],
+    "diagrams": ["Internal"]
   },
+  {
+    "name": "Urethra",
+    "clues": ["The name of this tube sounds like the fluid it carries."],
+    "diagrams": ["Vulva", "Internal"]
+  },
+  { "name": "Urethra opening", "clues": [], "diagrams": ["Penis"] },
   {
     "name": "Labia majora",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [
+      "This thick fold of skin can darken and chage size during puberty, pregnancy, and menopause—but not as a result of having sex."
+    ],
+    "diagrams": ["Vulva"]
   },
   {
     "name": "Labia minora",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [
+      "These flaps of skin are often omitted from art and pornography—and there is a rise in surgeries to have them removed."
+    ],
+    "diagrams": ["Vulva"]
   },
-  { "name": "Clitoris", "alternate_names": [], "clue": "", "diagram": "vulva" },
+  {
+    "name": "Clitoris",
+    "clues": [
+      "This is the only part of the human body that's devoted entirely to pleasure.",
+      "It wasn't until 2009 that scientists fully mapped this part's anatomy—which might not surprise you when you consider its function."
+    ],
+    "diagrams": ["Vulva"]
+  },
   {
     "name": "Vestibular bulbs",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "clitoris"
+    "clues": [
+      "These two masses of erectile tissue fill with blood during sexual arousal—which is released by the spasms of orgasm."
+    ],
+    "diagrams": ["Clitoris"]
   },
   {
     "name": "Clitoral glans",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "clitoris"
+    "clues": [],
+    "diagrams": ["Clitoris"]
   },
   {
     "name": "Clitoral crura",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "clitoris"
+    "clues": [],
+    "diagrams": ["Clitoris"]
   },
   {
     "name": "Clitoral hood",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [
+      "This part protects a highly senstive organ from being overstimulated in a person's day to day."
+    ],
+    "diagrams": ["Vulva"]
   },
-  { "name": "Canal of Nuck", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Canal of Nuck", "clues": [], "diagrams": [] },
   {
     "name": "Round ligament of uterus",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [],
+    "diagrams": []
   },
-  { "name": "Egg", "alternate_names": [], "clue": "", "diagram": "uterus" },
-  { "name": "Anus", "alternate_names": [], "clue": "", "diagram": "vulva" },
-  { "name": "Rectum", "alternate_names": [], "clue": "", "diagram": "vulva" },
-  { "name": "Brain", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Skin", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Vulva", "alternate_names": [], "clue": "", "diagram": "vulva" },
-  { "name": "Testis", "alternate_names": [], "clue": "", "diagram": "penis" },
-  { "name": "Rete testis", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Egg",
+    "clues": [
+      "This is larger than any other cell in the human body—you can see one with the naked eye."
+    ],
+    "diagrams": ["Uterus"]
+  },
+  {
+    "name": "Anus",
+    "clues": [
+      "This part is one of the most sensitve in the body—and can detect slight variations in touch, pain, pleasure, temperature, tension, and pressure—which is helpful if you need to determine if something is a solid, liquid, or gas.",
+      "With one of the densest nerve ending concentrations in the body, this highly erogenous zone has a large nerve that connects to a the clitoris and penis."
+    ],
+    "diagrams": ["Vulva", "Internal"]
+  },
+  {
+    "name": "Rectum",
+    "clues": [
+      "About 6-8 inches long, this inelastic part is prone to tears—but with enough practice, lubricant, and communication—many people avoid damage to this part during intercourse."
+    ],
+    "diagrams": ["Vulva", "Internal"]
+  },
+  { "name": "Brain", "clues": [], "diagrams": [] },
+  { "name": "Skin", "clues": [], "diagrams": [] },
+  {
+    "name": "Vulva",
+    "clues": [
+      "Derived from the Latin word for wrapper or covering, this term refers to all the female external organs, but is often mislabelled as the vagina."
+    ],
+    "diagrams": ["Vulva"]
+  },
+  {
+    "name": "Testis",
+    "clues": [
+      "These organs can double in size during sex and are named as a testament to virility. "
+    ],
+    "diagrams": ["Internal"]
+  },
+  { "name": "Testicles", "clues": [], "diagrams": ["Penis"] },
+  { "name": "Rete testis", "clues": [], "diagrams": [] },
   {
     "name": "Appendix testis",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [],
+    "diagrams": []
   },
   {
     "name": "Prostatic utricle",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [],
+    "diagrams": []
   },
   {
     "name": "Efferent ducts",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [
+      "These thin, delicate tubes connect so that sperm can travel from two testes into a single tube."
+    ],
+    "diagrams": ["Internal"]
   },
-  { "name": "Paradidymis", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Epididymis", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Vas deferens", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Paradidymis", "clues": [], "diagrams": [] },
+  {
+    "name": "Epididymis",
+    "clues": ["This long coiled tube is where sperm matures."],
+    "diagrams": ["Internal"]
+  },
+  {
+    "name": "Vas deferens",
+    "clues": [
+      "This hard, thick, muscular tube contracts during ejaculation to propel sperm (but not semen).",
+      "This structure stores sperm—so is often snipped surgically to prevent pregnancy."
+    ],
+    "diagrams": ["Internal"]
+  },
   {
     "name": "Seminal vesicle",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": ["These glands produce a highly nutritious fluid for sperm."],
+    "diagrams": ["Internal"]
   },
-  { "name": "Prostate", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Prostate",
+    "clues": [
+      "This organ produces an alkaline milky fluid—and it's possible to achieve orgasm solely through its stimulation."
+    ],
+    "diagrams": ["Internal"]
+  },
   {
     "name": "Cowper's gland",
-    "alternate_names": ["bulbourethral gland"],
-    "clue": "",
-    "diagram": ""
+    "clues": [
+      "This part can produce up to 4 ml of a lubricant you might call \"pre-cum\" during sexual arousal."
+    ],
+    "diagrams": []
   },
-  { "name": "Scrotum", "alternate_names": [], "clue": "", "diagram": "penis" },
-  { "name": "Penile skin", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Penis", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Bulb of penis", "alternate_names": [], "clue": "", "diagram": "" },
+  {
+    "name": "Scrotum",
+    "clues": [
+      "The main function of this stretchy structure? Temperature regulation."
+    ],
+    "diagrams": ["Penis"]
+  },
+  { "name": "Penile skin", "clues": [], "diagrams": [] },
+  {
+    "name": "Penis",
+    "clues": [
+      "Named after the Latin word for tail, this organ is often mistaken for a muscle."
+    ],
+    "diagrams": ["Internal"]
+  },
+  { "name": "Bulb of penis", "clues": [], "diagrams": [] },
   {
     "name": "Glans penis",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "penis"
+    "clues": [
+      "A tip: this structure is ahead of all others as the source of penile sexual pleasure."
+    ],
+    "diagrams": ["Penis"]
   },
-  { "name": "Crus of penis", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Foreskin", "alternate_names": [], "clue": "", "diagram": "" },
+  { "name": "Crus of penis", "clues": [], "diagrams": [] },
+  {
+    "name": "Foreskin",
+    "clues": [
+      "About 10% of Israeli men, 20% of American men, 42% of Australian men, 55% of South African men, 80% of British men, and 99% of Japanese men still have this part."
+    ],
+    "diagrams": ["Foreskin"]
+  },
   {
     "name": "Processus vaginalis",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [],
+    "diagrams": []
   },
   {
     "name": "Gubernaculum testis",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": ""
+    "clues": [],
+    "diagrams": []
   },
-  { "name": "Sperm", "alternate_names": [], "clue": "", "diagram": "" },
-  { "name": "Frenulum", "alternate_names": [], "clue": "", "diagram": "penis" },
+  {
+    "name": "Sperm",
+    "clues": [
+      "It takes around 64 days to grow these cells, which play the strongest role in determining the sex of a new person."
+    ],
+    "diagrams": ["Internal"]
+  },
+  {
+    "name": "Frenulum",
+    "clues": [
+      "This highly sensitive fold is a major erogenous zone and secures two parts together, much like the fold under the tongue anchors it to the mouth."
+    ],
+    "diagrams": ["Penis"]
+  },
   {
     "name": "Uterine lining",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "uterus"
+    "clues": ["Every 28 days or so, this part grows and sheds a layer."],
+    "diagrams": ["Uterus"]
   },
   {
     "name": "Pubic hair",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": ["Its appearance is one of the first signifiers of puberty."],
+    "diagrams": ["Vulva", "Penis"]
   },
   {
     "name": "Bartholin's glands",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [
+      "Every day, this part produces about six grams of a natural lubrication that's always present."
+    ],
+    "diagrams": ["Vulva"]
   },
   {
     "name": "Vaginal opening",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "vulva"
+    "clues": [],
+    "diagrams": ["Vulva"]
   },
   {
     "name": "Shaft",
-    "alternate_names": [],
-    "clue": "",
-    "diagram": "penis"
+    "clues": [
+      "This part is made of three columns of erectile tissues and contains the urethra."
+    ],
+    "diagrams": ["Penis"]
+  },
+  {
+    "name": "Mons pubis",
+    "clues": [
+      "This mass of fatty tissue is covered in pubic hair—although less and less these days."
+    ],
+    "diagrams": ["Vulva", "Penis"]
+  },
+  {
+    "name": "Perineum",
+    "clues": [
+      "This part ain't your anus and it ain't your vulva or scrotum—but rather a highly erogenous external space in between."
+    ],
+    "diagrams": ["Vulva", "Internal"]
   }
 ]

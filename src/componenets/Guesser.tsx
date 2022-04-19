@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react";
 import Select from "react-select";
-import parts from "../data/parts.json";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
 import { answer } from "../util/answer";
+const parts: Part[] = require("../data/parts.json");
 
 // Changing the button form "Enter" to "Share" when the game ends
 function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
@@ -71,27 +71,27 @@ export default function Guesser({
       return;
     }
     const validGuess = parts.find((guess) => {
-      return (
-        guess.name.toLowerCase() === userGuess ||
-        guess.alternate_names
-          .map((alt) => alt.toLowerCase())
-          .includes(userGuess)
-      );
+      return guess.name.toLowerCase() === userGuess;
     });
     if (!validGuess) {
       setError("Invalid guess");
       return;
     }
-    if (answer.name.toLowerCase() === userGuess) {
+    if (answer.part.toLowerCase() === userGuess) {
       setWin(`The answer is ${userGuess}!`);
       setGameOver(true);
     }
     return validGuess;
   }
 
-  const options = parts.map((part) => {
-    return { value: part.name, label: part.name };
-  });
+  const options = parts
+    .map((part) => part.name)
+    .filter((value, idx, self) => {
+      return self.indexOf(value) === idx;
+    })
+    .map((name) => {
+      return { value: name, label: name };
+    });
 
   return (
     <form onSubmit={addGuess} className="mt-5 space-y-5">

@@ -7,7 +7,7 @@ export default function Doodles({ children }: any) {
   const [doodles, setDoodles] = useState<string[]>([]);
   const [count, setCount] = useState(1);
 
-  useInterval(() => setCount(count + 1), 2000);
+  useInterval(() => setCount(count + 1), 2500);
 
   useEffect(() => {
     const paths = data.map((p) => p.path);

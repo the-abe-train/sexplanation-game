@@ -18,7 +18,7 @@
   stroke-width: 1;
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
-  animation: dash 3s linear forwards;
+  animation: dash 2s linear forwards;
   animation-iteration-count: 1;
   stroke: rgba(165, 70, 88, 0.7);
   fill: transparent;

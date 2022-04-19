@@ -2,10 +2,10 @@ import femaleHighlights from "../images/female_highlights";
 import maleHighlights from "../images/male_highlights";
 import { BrowserView } from "react-device-detect";
 import { Suspense, useEffect, useState } from "react";
-import { Part } from "../lib/types";
+import { Layer, Part } from "../lib/types";
 import diagrams from "../images/diagrams";
 import Label from "./Label";
-import parts from "../data/parts.json";
+const parts: Part[] = require("../data/parts.json");
 
 type Props = {
   guesses: Part[];
@@ -14,19 +14,20 @@ type Props = {
   gameOver: boolean;
 };
 
-type Layer = "Vulva" | "Clitoris" | "Uterus" | "Penis";
-
 type DiagramInfo = {
-  name: string;
   sex: "Male" | "Female";
   layer: Layer;
 };
 
+// TODO resolve the empty space
+
 const diagramMap: DiagramInfo[] = [
-  { name: "vulva", sex: "Female", layer: "Vulva" },
-  { name: "clitoris", sex: "Female", layer: "Clitoris" },
-  { name: "uterus", sex: "Female", layer: "Uterus" },
-  { name: "penis", sex: "Male", layer: "Penis" },
+  { sex: "Female", layer: "Vulva" },
+  { sex: "Female", layer: "Clitoris" },
+  { sex: "Female", layer: "Uterus" },
+  { sex: "Male", layer: "Penis" },
+  { sex: "Male", layer: "Internal" },
+  { sex: "Male", layer: "Foreskin" },
 ];
 
 const highlights = { Male: maleHighlights, Female: femaleHighlights };
@@ -39,33 +40,33 @@ export default function Diagram({
 }: Props) {
   const [sex, setSex] = useState<"Male" | "Female">("Female");
   const [layer, setLayer] = useState<Layer>("Vulva");
-  const [diagram, setDiagram] = useState("clitoris");
+  const [diagram, setDiagram] = useState(diagrams["Clitoris"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
 
-  function changeDiagram(diagramName: string) {
+  function getLabels(guesses: Part[], diagramName: Layer) {
+    return guesses
+      .filter((guess) => guess.diagrams.includes(diagramName))
+      .map((guess) => guess.name);
+  }
+
+  function changeDiagram(diagramName: Layer) {
     if (!gameOver) {
       setDiagram(diagrams[diagramName]);
-      setShowLabels(
-        guesses
-          .filter((guess) => guess.diagram === diagramName)
-          .map((guess) => guess.name)
-      );
+      setShowLabels(getLabels(guesses, diagramName));
     } else {
       setDiagram(diagrams[diagramName]);
-      setShowLabels(
-        parts
-          .filter((part) => part.diagram === diagramName)
-          .map((part) => part.name)
-      );
+      setShowLabels(getLabels(parts, diagramName));
     }
   }
 
   // When player switches highlight
+  // Reminder: "Diagram" state is the png string, "Layer" state is the name
   useEffect(() => {
     const highlightPart = parts.find((part) => part.name === highlight);
     if (highlightPart) {
-      const diagramName = highlightPart.diagram;
-      const diagramInfo = diagramMap.find((d) => d.name === diagramName);
+      const needChangeDiagram = !highlightPart.diagrams.includes(layer);
+      const diagramName = needChangeDiagram ? highlightPart.diagrams[0] : layer;
+      const diagramInfo = diagramMap.find((d) => d.layer === diagramName);
       changeDiagram(diagramName);
       if (diagramInfo) {
         setSex(diagramInfo.sex);
@@ -76,10 +77,7 @@ export default function Diagram({
 
   // When player switches diagrams
   useEffect(() => {
-    setLayer(sex === "Male" ? "Penis" : "Vulva");
-  }, [sex]);
-  useEffect(() => {
-    changeDiagram(layer.toLocaleLowerCase());
+    changeDiagram(layer);
   }, [layer]);
 
   const renderLoader = () => <p>Loading...</p>;
@@ -91,19 +89,19 @@ export default function Diagram({
       <div className="mb-8 z-0">
         <div
           className="w-[500px] sm:w-[42rem] relative -ml-14
-          overflow-clip h-[330px] my-4"
+          overflow-clip h-[400px]"
         >
           <img
             src={diagram}
             alt={diagram}
-            className="absolute -top-20"
+            className="absolute -top-12"
             style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
           />
           {showLabels.includes(highlight) && (
             <img
               src={highlights[sex][highlight]}
               alt={highlight}
-              className="absolute -top-20 z-0 opacity-70 pointer-events-none"
+              className="absolute -top-12 z-0 opacity-70 pointer-events-none"
             />
           )}
           <BrowserView>
@@ -130,7 +128,10 @@ export default function Diagram({
             }}
           >
             <p
-              onClick={() => setSex("Female")}
+              onClick={() => {
+                setSex("Female");
+                setLayer("Vulva");
+              }}
               style={{
                 fontWeight: sex === "Female" ? "bold" : "",
                 color: sex === "Female" ? "#DA9100" : "",
@@ -140,7 +141,10 @@ export default function Diagram({
               Female
             </p>
             <p
-              onClick={() => setSex("Male")}
+              onClick={() => {
+                setSex("Male");
+                setLayer("Penis");
+              }}
               style={{
                 fontWeight: sex === "Male" ? "bold" : "",
                 color: sex === "Male" ? "teal" : "",

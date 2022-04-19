@@ -6,14 +6,11 @@ import invariant from "tiny-invariant";
 import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
 
-import parts from "../data/parts.json";
 import { answer } from "../util/answer";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Part, StatTable, StoredGuesses } from "../lib/types";
 import Guesser from "../componenets/Guesser";
-
-// TODO I want to be able to click on labels to highlight the parts.
-// This can be done with SVGs and pointer event CSS
+const parts: Part[] = require("../data/parts.json");
 
 export default function Game() {
   // State hooks
@@ -47,15 +44,15 @@ export default function Game() {
     "statistics",
     initialStats
   );
-  const alreadyWon = !!guesses.find((guess) => guess.name === answer.name);
-  const initialWin = alreadyWon ? `The answer was ${answer.name}.` : "";
+  const alreadyWon = !!guesses.find((guess) => guess.name === answer.part);
+  const initialWin = alreadyWon ? `The answer was ${answer.part}.` : "";
   const [gameOver, setGameOver] = useState(alreadyWon);
   const [win, setWin] = useState(initialWin);
 
   // Losing the game
   useEffect(() => {
     if (guesses.length >= 6 && !win) {
-      setError(`The answer was ${answer.name}.`);
+      setError(`The answer was ${answer.part}.`);
       setGameOver(true);
     }
   }, [guesses, win]);
@@ -152,7 +149,7 @@ export default function Game() {
           })}
       </ul>
       <p className="mt-line-height">Remaining guesses: {6 - guesses.length}</p>
-      {/* <button
+      <button
         onClick={() => {
           setGuesses([]);
           setWin("");
@@ -170,7 +167,7 @@ export default function Game() {
         className="mt-line-height text-blue-700 ml-8"
       >
         Select all
-      </button> */}
+      </button>
     </div>
   );
 }

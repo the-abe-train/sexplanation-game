@@ -12,6 +12,9 @@ import rectum from "./Rectum Highlight.png";
 import skenesGlands from "./Skene's Glands Highlight.png";
 import urethra from "./Urethra Highlight.png";
 import vaginalOpening from "./Vaginal Opening Highlight.png";
+import hymen from "./Hymen Highlight.png";
+import perineum from "./Perineum Highlight.png";
+import monsPubis from "./Mons Pubis Highlight.png";
 
 import fallopianTube from "./Fallopian Tube Highlight.png";
 import ovary from "./Ovary Highlight.png";
@@ -30,12 +33,13 @@ const highlights: PictureIndex = {
   "Clitoral crura": clitoralCrura,
   "Vestibular bulbs": vestibularBulb,
   Anus: anus,
-  "Bartholin's gland": bartholinsGlands,
+  "Bartholin's glands": bartholinsGlands,
   "Clitoral hood": clitoralHood,
   Clitoris: clitoris,
   "Labia majora": labiaMajora,
   "Labia minora": labiaMinora,
   "Pubic hair": pubicHair,
+  Hymen: hymen,
   Rectum: rectum,
   "Skene's glands": skenesGlands,
   Urethra: urethra,
@@ -49,6 +53,8 @@ const highlights: PictureIndex = {
   Egg: egg,
   Uterus: uterus,
   Vulva: vulva,
+  Perenium: perineum,
+  "Mons pubis": monsPubis,
 };
 
 export default highlights;

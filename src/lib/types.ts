@@ -1,10 +1,17 @@
 import { Dayjs } from "dayjs";
 
+export type Layer =
+  | "Vulva"
+  | "Clitoris"
+  | "Uterus"
+  | "Penis"
+  | "Internal"
+  | "Foreskin";
+
 export type Part = {
   name: string;
-  alternate_names: string[];
-  clue: string;
-  diagram: string;
+  clues: string[];
+  diagrams: Layer[];
 };
 
 export type StoredGuesses = {
