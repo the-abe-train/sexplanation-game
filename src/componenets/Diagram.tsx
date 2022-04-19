@@ -79,7 +79,7 @@ export default function Diagram({
 
   const renderLoader = () => <p>Loading...</p>;
 
-  // TODO maybe replace drawn lines on diagram with different PNG so that only
+  // TODO replace drawn lines on diagram with different PNG so that only
   // plastecine has a shadow
 
   // TODO include parts for the same sex on multiple diagrams

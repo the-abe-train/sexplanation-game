@@ -5,6 +5,8 @@ import Button from "../componenets/Button";
 import { Part } from "../lib/types";
 const parts: Part[] = require("../data/parts.json");
 
+// TODO the props on this page a mess, clean up
+
 // Changing the button form "Enter" to "Share" when the game ends
 function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
   if (!gameOver) {
@@ -18,6 +20,44 @@ function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
         Share
       </Button>
     </Link>
+  );
+}
+
+type InputPros = {
+  hardMode: boolean;
+  gameOver: boolean;
+  guessName: string;
+  setGuessName: React.Dispatch<React.SetStateAction<string>>;
+};
+
+function Input({ hardMode, gameOver, setGuessName, guessName }: InputPros) {
+  const options = parts
+    .map((part) => part.name)
+    .filter((value, idx, self) => {
+      return self.indexOf(value) === idx;
+    })
+    .map((name) => {
+      return { value: name, label: name };
+    });
+  return hardMode ? (
+    <input
+      type="text"
+      className="w-full max-w-[250px] z-20 border-[1px] rounded border-black 
+      px-2 bg-white disabled:bg-gray-300"
+      onChange={(e) => setGuessName(e.target.value || "")}
+      disabled={gameOver}
+      value={guessName}
+    />
+  ) : (
+    <Select
+      options={options}
+      onChange={(e) => setGuessName(e?.value || "")}
+      isDisabled={gameOver}
+      className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
+      autoFocus
+      placeholder=""
+      menuIsOpen={false}
+    />
   );
 }
 
@@ -35,6 +75,7 @@ type Props = {
     clue: string;
     part: string;
   };
+  hardMode: boolean;
 };
 
 export default function Guesser({
@@ -48,6 +89,7 @@ export default function Guesser({
   win,
   gameOver,
   answer,
+  hardMode,
 }: Props) {
   // State hooks
   const [guessName, setGuessName] = useState("");
@@ -66,6 +108,7 @@ export default function Guesser({
 
   // Form validation
   function runChecks() {
+    console.log("Guess name;", guessName);
     const userGuess = guessName.trim().toLowerCase();
     const alreadyGuessed = guesses.find((guess) => {
       return guess.name.toLowerCase() === userGuess;
@@ -88,25 +131,14 @@ export default function Guesser({
     return validGuess;
   }
 
-  const options = parts
-    .map((part) => part.name)
-    .filter((value, idx, self) => {
-      return self.indexOf(value) === idx;
-    })
-    .map((name) => {
-      return { value: name, label: name };
-    });
-
   return (
     <form onSubmit={addGuess} className="mt-5 space-y-5">
       <div className="flex justify-center space-x-3">
-        <Select
-          options={options}
-          onChange={(e) => setGuessName(e?.value || "")}
-          isDisabled={gameOver}
-          className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
-          autoFocus
-          placeholder=""
+        <Input
+          gameOver={gameOver}
+          hardMode={hardMode}
+          setGuessName={setGuessName}
+          guessName={guessName}
         />
         <ButtonSwitch gameOver={gameOver} />
       </div>

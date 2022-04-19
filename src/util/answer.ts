@@ -2,10 +2,9 @@ import { Part } from "../lib/types";
 
 const parts: Part[] = require("../data/parts.json");
 
-// TODO set up answer mechanism like Globle
 const SHUFFLE_KEY = 1337;
 
-function generateKey(list: any[]) {
+function dailyKey(list: any[]) {
   const today = new Date().toLocaleDateString("en-CA");
   const [year, month, date] = today.split("-");
   const dayCode = Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(date));
@@ -14,7 +13,7 @@ function generateKey(list: any[]) {
 }
 
 function randomKey(list: any[]) {
-  return list[Math.floor(Math.random() * list.length)];
+  return Math.floor(Math.random() * list.length);
 }
 
 const clues = parts.flatMap((part) => part.clues);
@@ -27,11 +26,8 @@ const clueMap = clues.map((clue) => {
   };
 });
 
-const key = generateKey(clueMap);
-
-export function generateAnswer(random: boolean) {
-  const key = random ? randomKey(clueMap) : generateKey(clueMap);
+export function generateAnswer(random?: boolean) {
+  const key = random ? randomKey(clueMap) : dailyKey(clueMap);
+  console.log("Key:", key);
   return clueMap[key];
 }
-
-export const answer = clueMap[key];

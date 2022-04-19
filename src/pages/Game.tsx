@@ -6,10 +6,11 @@ import invariant from "tiny-invariant";
 import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
 
-import { answer } from "../util/answer";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Part, StatTable, StoredGuesses } from "../lib/types";
 import Guesser from "../componenets/Guesser";
+import { useSearchParams } from "react-router-dom";
+import { generateAnswer } from "../util/answer";
 const parts: Part[] = require("../data/parts.json");
 
 export default function Game() {
@@ -17,7 +18,17 @@ export default function Game() {
   const [error, setError] = useState("");
   const [highlight, setHighlight] = useState("");
 
-  // Localstorage hooks
+  // Search params
+  const [params] = useSearchParams();
+  const practiceMode = !!params.get("practice_mode");
+  const hardMode = !!params.get("hard_mode");
+  const practiceAnswer = JSON.parse(
+    localStorage.getItem("practice") || "false"
+  );
+  const answer =
+    practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
+
+  // Local storage hooks
   const initialGuesses = { day: dayjs(), guesses: [] };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
@@ -28,9 +39,9 @@ export default function Game() {
     invariant(part, "Error mapping local storage to parts list");
     return part;
   });
-
-  // const x = storedParts.filter(a => !!a)
-  const [guesses, setGuesses] = useState<Part[]>(storedParts);
+  const [guesses, setGuesses] = useState<Part[]>(
+    practiceMode ? [] : storedParts
+  );
   const initialStats = {
     gamesWon: 0,
     lastWin: dayjs("2022-01-01"),
@@ -44,6 +55,7 @@ export default function Game() {
     "statistics",
     initialStats
   );
+  console.log(answer);
   const alreadyWon = !!guesses.find((guess) => guess.name === answer.part);
   const initialWin = alreadyWon ? `The answer was ${answer.part}.` : "";
   const [gameOver, setGameOver] = useState(alreadyWon);
@@ -94,10 +106,12 @@ export default function Game() {
 
   // When there's a new guess, update the local storage guesses
   useEffect(() => {
-    storeGuesses({
-      day: dayjs(),
-      guesses: guesses.map((guess) => guess.name),
-    });
+    if (!practiceMode) {
+      storeGuesses({
+        day: dayjs(),
+        guesses: guesses.map((guess) => guess.name),
+      });
+    }
   }, [guesses]);
 
   // Props to pass to Guesser
@@ -112,6 +126,7 @@ export default function Game() {
     win,
     gameOver,
     answer,
+    hardMode,
   };
 
   // Props to pass to Diagram
@@ -125,13 +140,12 @@ export default function Game() {
   // TODO ask kylie to move labels from vulva to clitoris to save space and make the clitoris diagram more clear
   // TODO swap foreskin diagrams mobile to desktop
   // TODO we don't want testicles, just testis
-  // TODO hard mode is no dropdown
 
   return (
     <div>
       <Guesser {...guesserProps} />
       <Diagram {...diagramProps} />
-      <Clue />
+      <Clue answer={answer} />
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-4">
         {guesses &&
           guesses.map(({ name }) => {

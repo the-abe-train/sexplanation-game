@@ -6,12 +6,14 @@ import { useState } from "react";
 import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
+import { Link } from "react-router-dom";
+import { generateAnswer } from "../util/answer";
 
 // TODO Make the share message include your "path"
-// TODO make practice game actually work
-// TODO define and implement hard mode
 
 export default function Stats() {
+  const [hardMode, setHardMode] = useState(false);
+
   const initialStats = {
     gamesWon: 0,
     lastWin: dayjs(),
@@ -72,6 +74,11 @@ Average guesses: ${showAvgGuesses}`;
     }
   }
 
+  function enterPracticeMode() {
+    const practiceAnswer = generateAnswer(true);
+    localStorage.setItem("practice", JSON.stringify(practiceAnswer));
+  }
+
   return (
     <main className="mt-line-height mx-3">
       <section className="flex flex-col sm:flex-row items-center sm:items-start justify-around w-full">
@@ -107,16 +114,18 @@ Average guesses: ${showAvgGuesses}`;
           {msg && <p className="mt-5">{msg}</p>}
         </div>
         <div className="flex flex-col justify-center w-fit mt-5">
-          <Switch />
+          <Switch on={hardMode} setOn={setHardMode} />
           <div className="flex mt-4 justify-center">
-            <Button
-              colour="#FFC8FF"
-              size="small"
-              inverted={false}
-              fn={() => console.log(true)}
-            >
-              Practice game
-            </Button>
+            <Link to={`/game?practice_mode=true&hard_mode=${hardMode}`}>
+              <Button
+                colour="#FFC8FF"
+                size="small"
+                inverted={false}
+                fn={enterPracticeMode}
+              >
+                Practice game
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
