@@ -28,6 +28,5 @@ const clueMap = clues.map((clue) => {
 
 export function generateAnswer(random?: boolean) {
   const key = random ? randomKey(clueMap) : dailyKey(clueMap);
-  console.log("Key:", key);
   return clueMap[key];
 }

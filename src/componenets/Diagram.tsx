@@ -1,9 +1,10 @@
 import femaleHighlights from "../images/female_highlights";
 import maleHighlights from "../images/male_highlights";
-import { BrowserView } from "react-device-detect";
+import diagrams from "../images/diagrams";
+import outlines from "../images/outlines";
+import { BrowserView, isMobile } from "react-device-detect";
 import { Suspense, useEffect, useState } from "react";
 import { DiagramInfo, Layer, Part } from "../lib/types";
-import diagrams from "../images/diagrams";
 import Label from "./Label";
 import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
@@ -38,6 +39,7 @@ export default function Diagram({
   const [sex, setSex] = useState<"Male" | "Female">("Female");
   const [layer, setLayer] = useState<Layer>("Vulva");
   const [diagram, setDiagram] = useState(diagrams["Clitoris"]);
+  const [outline, setOutline] = useState(outlines["Clitoris"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
 
   function getLabels(guesses: Part[], diagramName: Layer) {
@@ -47,11 +49,13 @@ export default function Diagram({
   }
 
   function changeDiagram(diagramName: Layer) {
+    const chooseDiagram =
+      isMobile && diagramName === "Foreskin" ? "Mobile Foreskin" : diagramName;
+    setDiagram(diagrams[chooseDiagram]);
+    setOutline(outlines[chooseDiagram]);
     if (!gameOver) {
-      setDiagram(diagrams[diagramName]);
       setShowLabels(getLabels(guesses, diagramName));
     } else {
-      setDiagram(diagrams[diagramName]);
       setShowLabels(getLabels(parts, diagramName));
     }
   }
@@ -79,18 +83,18 @@ export default function Diagram({
 
   const renderLoader = () => <p>Loading...</p>;
 
-  // TODO replace drawn lines on diagram with different PNG so that only
-  // plastecine has a shadow
-
   // TODO include parts for the same sex on multiple diagrams
   // TODO Add treasure hunt to the game in the guesser dialogue
   return (
     <Suspense fallback={renderLoader()}>
       <div className={styles.container}>
         <div className={styles.diagram}>
+          {outline && (
+            <img src={outline} alt={layer} className="absolute -top-12" />
+          )}
           <img
             src={diagram}
-            alt={diagram}
+            alt={layer}
             className="absolute -top-12"
             style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
           />

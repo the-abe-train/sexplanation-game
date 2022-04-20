@@ -56,7 +56,6 @@ function Input({ hardMode, gameOver, setGuessName, guessName }: InputPros) {
       className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
       autoFocus
       placeholder=""
-      menuIsOpen={false}
     />
   );
 }
