@@ -1,5 +1,4 @@
-import femaleHighlights from "../images/female_highlights";
-import maleHighlights from "../images/male_highlights";
+import highlights from "../images/highlights";
 import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
 import { BrowserView, isMobile } from "react-device-detect";
@@ -28,7 +27,7 @@ const diagramMap: DiagramInfo[] = [
   { sex: "Male", layer: "Foreskin" },
 ];
 
-const highlights = { Male: maleHighlights, Female: femaleHighlights };
+// const highlights = { Male: maleHighlights, Female: femaleHighlights };
 
 export default function Diagram({
   guesses,
@@ -38,9 +37,10 @@ export default function Diagram({
 }: Props) {
   const [sex, setSex] = useState<"Male" | "Female">("Female");
   const [layer, setLayer] = useState<Layer>("Vulva");
-  const [diagram, setDiagram] = useState(diagrams["Clitoris"]);
+  const [layerPng, setLayerPng] = useState(diagrams["Clitoris"]);
   const [outline, setOutline] = useState(outlines["Clitoris"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
+  const [highlightPng, setHighlightPng] = useState("");
 
   function getLabels(guesses: Part[], diagramName: Layer) {
     return guesses
@@ -51,7 +51,7 @@ export default function Diagram({
   function changeDiagram(diagramName: Layer) {
     const chooseDiagram =
       isMobile && diagramName === "Foreskin" ? "Mobile Foreskin" : diagramName;
-    setDiagram(diagrams[chooseDiagram]);
+    setLayerPng(diagrams[chooseDiagram]);
     setOutline(outlines[chooseDiagram]);
     if (!gameOver) {
       setShowLabels(getLabels(guesses, diagramName));
@@ -61,8 +61,8 @@ export default function Diagram({
   }
 
   // When player switches highlight
-  // Reminder: "Diagram" state is the png string, "Layer" state is the name
   useEffect(() => {
+    // Change diagram
     const highlightPart = parts.find((part) => part.name === highlight);
     if (highlightPart) {
       const needChangeDiagram = !highlightPart.diagrams.includes(layer);
@@ -72,6 +72,11 @@ export default function Diagram({
       if (diagramInfo) {
         setSex(diagramInfo.sex);
         setLayer(diagramInfo.layer);
+        const allLayerHighlights =
+          highlights[diagramInfo.sex][diagramInfo.layer];
+        if (allLayerHighlights) {
+          setHighlightPng(allLayerHighlights[highlight]);
+        }
       }
     }
   }, [highlight]);
@@ -85,6 +90,9 @@ export default function Diagram({
 
   // TODO include parts for the same sex on multiple diagrams
   // TODO Add treasure hunt to the game in the guesser dialogue
+  // TODO all labels should reveal immediately after after game ends
+  // TODO add scrotum to male internal diagram
+
   return (
     <Suspense fallback={renderLoader()}>
       <div className={styles.container}>
@@ -93,14 +101,14 @@ export default function Diagram({
             <img src={outline} alt={layer} className="absolute -top-12" />
           )}
           <img
-            src={diagram}
+            src={layerPng}
             alt={layer}
             className="absolute -top-12"
             style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
           />
           {showLabels.includes(highlight) && (
             <img
-              src={highlights[sex][highlight]}
+              src={highlightPng}
               alt={highlight}
               className="absolute -top-12 z-0 opacity-70 pointer-events-none"
             />
@@ -110,10 +118,11 @@ export default function Diagram({
               showLabels.map((label, idx) => {
                 return (
                   <Label
+                    key={idx}
                     sex={sex}
                     name={label}
                     setHighlight={setHighlight}
-                    key={idx}
+                    layer={layer}
                   />
                 );
               })}

@@ -1,5 +1,9 @@
 import { Dayjs } from "dayjs";
 
+export type PictureIndex = { [key: string]: string };
+
+export type Sex = "Male" | "Female";
+
 export type Layer =
   | "Vulva"
   | "Clitoris"
@@ -9,7 +13,7 @@ export type Layer =
   | "Foreskin";
 
 export type DiagramInfo = {
-  sex: "Male" | "Female";
+  sex: Sex;
   layer: Layer;
 };
 

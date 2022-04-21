@@ -5,6 +5,8 @@ interface IStorage extends Object {
   day?: Dayjs;
 }
 
+// TODO score is not resetting on a new day
+
 function getStorageValue<T>(key: string, defaultValue?: T): T {
   const saved = localStorage.getItem(key);
   if (saved) {
