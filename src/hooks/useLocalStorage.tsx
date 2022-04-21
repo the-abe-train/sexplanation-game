@@ -5,7 +5,7 @@ interface IStorage extends Object {
   day?: Dayjs;
 }
 
-// TODO score is not resetting on a new day
+// TODO check if solved: guesses is not resetting on a new day
 
 function getStorageValue<T>(key: string, defaultValue?: T): T {
   const saved = localStorage.getItem(key);
@@ -29,6 +29,10 @@ export function useLocalStorage<T extends IStorage>(
   useEffect(() => {
     const expirationString = value?.day ? value.day : "2030-01-01";
     const expiration = dayjs(expirationString);
+    // console.log("Stored data", value);
+    // console.log("Expiration date", expiration);
+    // console.log("Today", dayjs());
+    // console.log("The difference", expiration.diff(dayjs(), "day"));
     if (dayjs().diff(expiration, "day") <= 1) {
       localStorage.setItem(key, JSON.stringify(value));
     } else {

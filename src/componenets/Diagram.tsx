@@ -2,11 +2,12 @@ import highlights from "../images/highlights";
 import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
 import { BrowserView, isMobile } from "react-device-detect";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DiagramInfo, Layer, Part } from "../lib/types";
 import Label from "./Label";
 import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
+import { after } from "underscore";
 const parts: Part[] = require("../data/parts.json");
 
 type Props = {
@@ -27,8 +28,6 @@ const diagramMap: DiagramInfo[] = [
   { sex: "Male", layer: "Foreskin" },
 ];
 
-// const highlights = { Male: maleHighlights, Female: femaleHighlights };
-
 export default function Diagram({
   guesses,
   highlight,
@@ -38,7 +37,7 @@ export default function Diagram({
   const [sex, setSex] = useState<"Male" | "Female">("Female");
   const [layer, setLayer] = useState<Layer>("Vulva");
   const [layerPng, setLayerPng] = useState(diagrams["Clitoris"]);
-  const [outline, setOutline] = useState(outlines["Clitoris"]);
+  const [outlinePng, setOutlinePng] = useState(outlines["Clitoris"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
   const [highlightPng, setHighlightPng] = useState("");
 
@@ -52,7 +51,7 @@ export default function Diagram({
     const chooseDiagram =
       isMobile && diagramName === "Foreskin" ? "Mobile Foreskin" : diagramName;
     setLayerPng(diagrams[chooseDiagram]);
-    setOutline(outlines[chooseDiagram]);
+    setOutlinePng(outlines[chooseDiagram]);
     if (!gameOver) {
       setShowLabels(getLabels(guesses, diagramName));
     } else {
@@ -84,50 +83,90 @@ export default function Diagram({
   // When player switches diagrams
   useEffect(() => {
     changeDiagram(layer);
+    console.log(`Sex: ${sex}, layer: ${layer}`);
+    const allLayerHighlights = highlights[sex][layer];
+    if (allLayerHighlights) {
+      setHighlightPng(allLayerHighlights[highlight]);
+    }
   }, [layer]);
 
   const renderLoader = () => <p>Loading...</p>;
 
-  // TODO include parts for the same sex on multiple diagrams
+  // When the game ends
+  useEffect(() => {
+    if (gameOver) {
+      setShowLabels(getLabels(parts, layer));
+    }
+  }, [gameOver]);
+
   // TODO Add treasure hunt to the game in the guesser dialogue
-  // TODO all labels should reveal immediately after after game ends
-  // TODO add scrotum to male internal diagram
+
+  // Loading image states
+  const [loadedOutline, setLoadedOutline] = useState(true);
+  const [loadedLayer, setLoadedLayer] = useState(true);
+  const [loadedHighlight, setLoadedHighlight] = useState(true);
+  const [loadedLabels, setLoadedLabels] = useState(false);
+  const [showImages, setShowImages] = useState(false);
+
+  useEffect(() => {
+    if (!outlinePng) setLoadedOutline(true);
+    if (!highlightPng) setLoadedHighlight(true);
+    setShowImages(loadedLayer && loadedOutline && loadedHighlight);
+  }, [loadedLayer, loadedOutline, loadedHighlight, outlinePng, highlightPng]);
+
+  const onComplete = after(showLabels.length, () => {
+    setLoadedLabels(true);
+    console.log("loaded labels");
+  });
 
   return (
-    <Suspense fallback={renderLoader()}>
+    <div>
       <div className={styles.container}>
-        <div className={styles.diagram}>
-          {outline && (
-            <img src={outline} alt={layer} className="absolute -top-12" />
-          )}
-          <img
-            src={layerPng}
-            alt={layer}
-            className="absolute -top-12"
-            style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
-          />
-          {showLabels.includes(highlight) && (
+        {showImages && (
+          <div className={styles.diagram}>
+            {outlinePng && (
+              <img
+                src={outlinePng}
+                alt={layer}
+                onLoad={() => setLoadedOutline(true)}
+                onLoadStart={() => setLoadedOutline(false)}
+                className="absolute -top-12"
+              />
+            )}
             <img
-              src={highlightPng}
-              alt={highlight}
-              className="absolute -top-12 z-0 opacity-70 pointer-events-none"
+              src={layerPng}
+              alt={layer}
+              className="absolute -top-12"
+              onLoad={() => setLoadedLayer(true)}
+              onLoadStart={() => setLoadedLayer(false)}
+              style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
             />
-          )}
-          <BrowserView>
-            {showLabels.length >= 1 &&
-              showLabels.map((label, idx) => {
-                return (
-                  <Label
-                    key={idx}
-                    sex={sex}
-                    name={label}
-                    setHighlight={setHighlight}
-                    layer={layer}
-                  />
-                );
-              })}
-          </BrowserView>
-        </div>
+            {showLabels.includes(highlight) && (
+              <img
+                src={highlightPng}
+                alt={highlight}
+                onLoad={() => setLoadedHighlight(true)}
+                onLoadStart={() => setLoadedHighlight(false)}
+                className="absolute -top-12 z-0 opacity-70 pointer-events-none"
+              />
+            )}
+            <BrowserView>
+              {showLabels.length >= 1 &&
+                showLabels.map((label, idx) => {
+                  return (
+                    <Label
+                      key={idx}
+                      sex={sex}
+                      name={label}
+                      setHighlight={setHighlight}
+                      layer={layer}
+                      fn={onComplete}
+                    />
+                  );
+                })}
+            </BrowserView>
+          </div>
+        )}
       </div>
       <Panel
         setSex={setSex}
@@ -136,6 +175,6 @@ export default function Diagram({
         layer={layer}
         diagramMap={diagramMap}
       />
-    </Suspense>
+    </div>
   );
 }

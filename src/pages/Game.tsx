@@ -7,7 +7,7 @@ import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Part, StatTable, StoredGuesses } from "../lib/types";
+import { Part, StatTable, StoredGuesses, Answer } from "../lib/types";
 import Guesser from "../componenets/Guesser";
 import { useSearchParams } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
@@ -15,21 +15,21 @@ const parts: Part[] = require("../data/parts.json");
 
 export default function Game() {
   // State hooks
-  const [error, setError] = useState("");
   const [highlight, setHighlight] = useState("");
 
   // Search params
   const [params] = useSearchParams();
   const practiceMode = !!params.get("practice_mode");
-  const hardMode = !!params.get("hard_mode");
   const practiceAnswer = JSON.parse(
     localStorage.getItem("practice") || "false"
   );
-  const answer =
+
+  const answer: Answer =
     practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
 
   // Local storage hooks
-  const initialGuesses = { day: dayjs(), guesses: [] };
+  const today = dayjs();
+  const initialGuesses = { day: today, guesses: [] };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     initialGuesses
@@ -55,19 +55,11 @@ export default function Game() {
     "statistics",
     initialStats
   );
-  console.log(answer);
+  // console.log(answer);
   const alreadyWon = !!guesses.find((guess) => guess.name === answer.part);
   const initialWin = alreadyWon ? `The answer was ${answer.part}.` : "";
   const [gameOver, setGameOver] = useState(alreadyWon);
   const [win, setWin] = useState(initialWin);
-
-  // Losing the game
-  useEffect(() => {
-    if (guesses.length >= 6 && !win) {
-      setError(`The answer was ${answer.part}.`);
-      setGameOver(true);
-    }
-  }, [guesses, win]);
 
   // Storing new stats when the game ends
   useEffect(() => {
@@ -108,25 +100,30 @@ export default function Game() {
   useEffect(() => {
     if (!practiceMode) {
       storeGuesses({
-        day: dayjs(),
+        day: today,
         guesses: guesses.map((guess) => guess.name),
       });
     }
   }, [guesses]);
 
+  // When the game is over
+  useEffect(() => {
+    if (gameOver) {
+      console.log("Answer", answer);
+      setHighlight(answer.part);
+    }
+  }, [gameOver]);
+
   // Props to pass to Guesser
   const guesserProps = {
-    setError,
-    error,
-    setGuesses,
     setHighlight,
+    setGuesses,
     guesses,
     setWin,
-    setGameOver,
     win,
+    setGameOver,
     gameOver,
     answer,
-    hardMode,
   };
 
   // Props to pass to Diagram

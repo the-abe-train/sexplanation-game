@@ -7,22 +7,19 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   sex: "Male" | "Female";
   layer: Layer;
+  fn: Function;
 };
 
-export default function Label({ name, setHighlight, sex, layer }: Props) {
+export default function Label({ name, setHighlight, sex, layer, fn }: Props) {
   const labelData = { Male: maleLabels, Female: femaleLabels };
   const label = labelData[sex].find((label) => {
     const correctLayer = "layer" in label ? label.layer === layer : true;
-    // if (label.name === "Scrotum") {
-    //   console.log("Scrotum label", label);
-    //   console.log("Correct layer", correctLayer);
-    // }
     return label.name === name && correctLayer;
   });
-  // console.log("Label", label);
+  function test() {
+    console.log("loaded");
+  }
   if (label) {
-    console.log("Label", label);
-    // console.log("Layer", layer);
     const { x, y, width, height, path } = label;
     return (
       <svg
@@ -30,6 +27,13 @@ export default function Label({ name, setHighlight, sex, layer }: Props) {
         viewBox="0 0 4800 3298"
         className="absolute -top-12 pointer-events-none"
         onClick={() => setHighlight(name)}
+        // @ts-ignore
+        // onLoadStart={test}
+        // onLoad={() => {
+        //   console.log(name, "loaded");
+        //   // fn();
+        // }}
+        // onLoad={console.log("Loaded", name)}
       >
         <rect
           className="cursor-pointer"
@@ -39,6 +43,7 @@ export default function Label({ name, setHighlight, sex, layer }: Props) {
           height={height}
           fill="none"
           pointerEvents="visible"
+          onLoadStart={test}
         />
         <path
           className="cursor-pointer"

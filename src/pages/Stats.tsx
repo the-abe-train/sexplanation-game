@@ -2,17 +2,20 @@ import dayjs from "dayjs";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { StatTable } from "../lib/types";
 import { isFirefox, isMobile } from "react-device-detect";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
 import { Link } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
+import { ModeContext } from "../context/ModeContext";
 
 // TODO Make the share message include your "path"
 
 export default function Stats() {
-  const [hardMode, setHardMode] = useState(false);
+  // Context
+  const modeContext = useContext(ModeContext);
+  console.log(modeContext);
 
   const initialStats = {
     gamesWon: 0,
@@ -114,9 +117,9 @@ Average guesses: ${showAvgGuesses}`;
           {msg && <p className="mt-5">{msg}</p>}
         </div>
         <div className="flex flex-col justify-center w-fit mt-5">
-          <Switch on={hardMode} setOn={setHardMode} />
+          <Switch />
           <div className="flex mt-4 justify-center">
-            <Link to={`/game?practice_mode=true&hard_mode=${hardMode}`}>
+            <Link to={`/game?practice_mode=true`}>
               <Button
                 colour="#FFC8FF"
                 size="small"

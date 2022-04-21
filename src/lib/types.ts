@@ -4,6 +4,11 @@ export type PictureIndex = { [key: string]: string };
 
 export type Sex = "Male" | "Female";
 
+export type Answer = {
+  clue: string;
+  part: string;
+};
+
 export type Layer =
   | "Vulva"
   | "Clitoris"

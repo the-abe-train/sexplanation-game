@@ -1,11 +1,10 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
+import { ModeContext } from "../context/ModeContext";
 const parts: Part[] = require("../data/parts.json");
-
-// TODO the props on this page a mess, clean up
 
 // Changing the button form "Enter" to "Share" when the game ends
 function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
@@ -24,13 +23,13 @@ function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
 }
 
 type InputPros = {
-  hardMode: boolean;
   gameOver: boolean;
   guessName: string;
   setGuessName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function Input({ hardMode, gameOver, setGuessName, guessName }: InputPros) {
+function Input({ gameOver, setGuessName, guessName }: InputPros) {
+  const { mode } = useContext(ModeContext);
   const options = parts
     .map((part) => part.name)
     .filter((value, idx, self) => {
@@ -39,7 +38,7 @@ function Input({ hardMode, gameOver, setGuessName, guessName }: InputPros) {
     .map((name) => {
       return { value: name, label: name };
     });
-  return hardMode ? (
+  return mode.hardMode ? (
     <input
       type="text"
       className="w-full max-w-[250px] z-20 border-[1px] rounded border-black 
@@ -56,13 +55,13 @@ function Input({ hardMode, gameOver, setGuessName, guessName }: InputPros) {
       className="w-full max-w-[250px] z-20 border-[1px] rounded border-black "
       autoFocus
       placeholder=""
+      isClearable
+      closeMenuOnSelect
     />
   );
 }
 
 type Props = {
-  setError: React.Dispatch<React.SetStateAction<string>>;
-  error: string;
   setGuesses: React.Dispatch<React.SetStateAction<Part[]>>;
   guesses: Part[];
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
@@ -74,12 +73,9 @@ type Props = {
     clue: string;
     part: string;
   };
-  hardMode: boolean;
 };
 
 export default function Guesser({
-  setError,
-  error,
   setGuesses,
   setHighlight,
   guesses,
@@ -88,10 +84,18 @@ export default function Guesser({
   win,
   gameOver,
   answer,
-  hardMode,
 }: Props) {
   // State hooks
   const [guessName, setGuessName] = useState("");
+  const [error, setError] = useState("");
+
+  // Losing the game
+  useEffect(() => {
+    if (guesses.length >= 6 && !win) {
+      setError(`The answer was ${answer.part}.`);
+      setGameOver(true);
+    }
+  }, [guesses, win]);
 
   // Entering a new guess
   function addGuess(e: FormEvent<HTMLFormElement>) {
@@ -101,7 +105,7 @@ export default function Guesser({
     if (validGuess) {
       setGuesses([...guesses, validGuess]);
       setGuessName("");
-      setHighlight(validGuess.name);
+      if (!gameOver) setHighlight(validGuess.name);
     }
   }
 
@@ -113,7 +117,7 @@ export default function Guesser({
       return guess.name.toLowerCase() === userGuess;
     });
     if (alreadyGuessed) {
-      setError("Already guessed");
+      setError(`You already guessed ${guessName}`);
       return;
     }
     const validGuess = parts.find((guess) => {
@@ -130,20 +134,42 @@ export default function Guesser({
     return validGuess;
   }
 
+  // Clicking the final message should take you to the answer diagram
+  function revealAnswer() {
+    if (gameOver) {
+      setHighlight(answer.part);
+    }
+  }
+
   return (
-    <form onSubmit={addGuess} className="mt-5 space-y-5">
+    <form onSubmit={addGuess} className="mt-5">
       <div className="flex justify-center space-x-3">
         <Input
           gameOver={gameOver}
-          hardMode={hardMode}
           setGuessName={setGuessName}
           guessName={guessName}
         />
         <ButtonSwitch gameOver={gameOver} />
       </div>
 
-      {!!error && <p className="text-center text-red-700 font-bold">{error}</p>}
-      {!!win && <p className="text-center text-green-700 font-bold">{win}</p>}
+      {!!error && (
+        <p
+          className="text-center text-red-700 font-bold my-3"
+          style={{ cursor: gameOver ? "pointer" : "auto" }}
+          onClick={revealAnswer}
+        >
+          {error}
+        </p>
+      )}
+      {!!win && (
+        <p
+          className="text-center text-green-700 font-bold my-3"
+          style={{ cursor: gameOver ? "pointer" : "auto" }}
+          onClick={revealAnswer}
+        >
+          {win}
+        </p>
+      )}
     </form>
   );
 }
