@@ -34,7 +34,7 @@
     "clues": [
       "People often misuse the name of this part to describe external sex organs, but it's actually an exclusively internal structure."
     ],
-    "diagrams": ["Uterus"]
+    "diagrams": ["Uterus", "Clitoris"]
   },
   {
     "name": "Hymen",
@@ -67,7 +67,7 @@
   {
     "name": "Urethra",
     "clues": ["The name of this tube sounds like the fluid it carries."],
-    "diagrams": ["Vulva", "Internal"]
+    "diagrams": ["Vulva", "Internal", "Clitoris"]
   },
   { "name": "Urethra opening", "clues": [], "diagrams": ["Penis"] },
   {
@@ -158,9 +158,8 @@
     "clues": [
       "These organs can double in size during sex and are named as a testament to virility. "
     ],
-    "diagrams": ["Internal"]
+    "diagrams": ["Internal", "Penis"]
   },
-  { "name": "Testicles", "clues": [], "diagrams": ["Penis"] },
   { "name": "Rete testis", "clues": [], "diagrams": [] },
   {
     "name": "Appendix testis",

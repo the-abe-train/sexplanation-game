@@ -131,9 +131,6 @@ export default function Game() {
     gameOver,
   };
 
-  // TODO ask kylie to move labels from vulva to clitoris to save space and make the clitoris diagram more clear
-  // TODO we don't want testicles, just testis
-
   return (
     <div>
       <Guesser {...guesserProps} />

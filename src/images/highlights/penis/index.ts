@@ -2,7 +2,7 @@
 import PubicHair from "./Pubic hair.png";
 import Frenulum from "./Frenulum.png";
 import Scrotum from "./Scrotum.png";
-import Testicles from "./Testicles.png";
+import Testis from "./Testis.png";
 import Shaft from "./Shaft.png";
 import GlansPenis from "./Glans penis.png";
 import MonsPubis from "./Mons pubis.png";
@@ -13,7 +13,7 @@ const highlights: PictureIndex = {
   "Pubic hair": PubicHair,
   Frenulum,
   Scrotum,
-  Testicles,
+  Testis,
   Shaft,
   "Glans penis": GlansPenis,
   "Mons pubis": MonsPubis,
