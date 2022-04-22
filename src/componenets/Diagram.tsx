@@ -7,7 +7,6 @@ import { DiagramInfo, Layer, Part } from "../lib/types";
 import Label from "./Label";
 import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
-import { after } from "underscore";
 const parts: Part[] = require("../data/parts.json");
 
 type Props = {
@@ -98,12 +97,11 @@ export default function Diagram({
     }
   }, [gameOver]);
 
-  // Loading image states
+  // Loading images
   const [loadedOutline, setLoadedOutline] = useState(true);
   const [loadedLayer, setLoadedLayer] = useState(true);
   const [loadedHighlight, setLoadedHighlight] = useState(true);
   const [showImages, setShowImages] = useState(false);
-
   useEffect(() => {
     if (!outlinePng) setLoadedOutline(true);
     if (!highlightPng) setLoadedHighlight(true);

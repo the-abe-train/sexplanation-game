@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import dayjs from "dayjs";
-import invariant from "tiny-invariant";
 
 import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
@@ -11,7 +10,7 @@ import { Part, StatTable, StoredGuesses, Answer } from "../lib/types";
 import Guesser from "../componenets/Guesser";
 import { useSearchParams } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
-const parts: Part[] = require("../data/parts.json");
+import { mapNameToPart } from "../util/maps";
 
 export default function Game() {
   // State hooks
@@ -27,21 +26,19 @@ export default function Game() {
   const answer: Answer =
     practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
 
-  // Local storage hooks
+  // Guesses from local storage
   const today = dayjs();
   const initialGuesses = { day: today, guesses: [] };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     initialGuesses
   );
-  const storedParts = storedGuesses.guesses.map((guess) => {
-    const part = parts.find((part) => guess === part.name);
-    invariant(part, "Error mapping local storage to parts list");
-    return part;
-  });
+  const storedParts = mapNameToPart(storedGuesses.guesses);
   const [guesses, setGuesses] = useState<Part[]>(
     practiceMode ? [] : storedParts
   );
+
+  // Stats from local storage
   const initialStats = {
     gamesWon: 0,
     lastWin: dayjs("2022-01-01"),

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { StatTable } from "../lib/types";
+import { Part, StatTable, StoredGuesses } from "../lib/types";
 import { isFirefox, isMobile } from "react-device-detect";
 import { useState } from "react";
 import Button from "../componenets/Button";
@@ -8,15 +8,20 @@ import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
 import { Link } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
-
-// TODO Make the share message include your "path"
-// Calculate path from guesses
-// 🍆 Mar 21, 2022 🍑
-// 🔥1 | Avg. Guesses: 4
-// ❌❌❌✅✔✔❎
-// 🟥🟥🟥🟩
+import { mapGuessesToScore, mapNameToPart } from "../util/maps";
 
 export default function Stats() {
+  // Guesses from local storage
+  const today = dayjs();
+  const initialGuesses = { day: today, guesses: [] };
+  const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
+    "guesses",
+    initialGuesses
+  );
+  const storedParts = mapNameToPart(storedGuesses.guesses);
+  const [guesses, setGuesses] = useState<Part[]>(storedParts);
+
+  // Stats from local storage
   const initialStats = {
     gamesWon: 0,
     lastWin: dayjs(),
@@ -55,10 +60,14 @@ export default function Stats() {
   }
 
   async function shareScore() {
-    let shareString = `${dayjs()}
-Today's guesses: ${todaysGuesses}
-Current streak: ${currentStreak}
-Average guesses: ${showAvgGuesses}`;
+    const answer = generateAnswer();
+    const colours = mapGuessesToScore(guesses, answer.part);
+    let shareString = `🍆 ${dayjs().format("DD MMMM YYYY")} 🍑
+🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
+${colours} = ${todaysGuesses}
+
+#sexplanation`;
+    console.log(shareString);
 
     if ("canShare" in navigator && isMobile && !isFirefox) {
       return await navigator.share({

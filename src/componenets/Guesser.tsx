@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
 import { ModeContext } from "../context/ModeContext";
+import { diagramMatch } from "../util/maps";
+import invariant from "tiny-invariant";
 const parts: Part[] = require("../data/parts.json");
 
 // Changing the button form "Enter" to "Share" when the game ends
@@ -113,13 +115,6 @@ export default function Guesser({
   function runChecks() {
     const userGuess = guessName.trim().toLowerCase();
 
-    // Win condition
-    if (answer.part.toLowerCase() === userGuess) {
-      setWin(`The answer is ${userGuess}!`);
-      setGameOver(true);
-      return;
-    }
-
     // Already guessed
     const alreadyGuessed = guesses.find((guess) => {
       return guess.name.toLowerCase() === userGuess;
@@ -138,13 +133,19 @@ export default function Guesser({
       return;
     }
 
+    // Win condition
+    if (answer.part.toLowerCase() === userGuess) {
+      setWin(`The answer is ${userGuess}!`);
+      setGameOver(true);
+      return validGuess;
+    }
+
     // Correct diagram
     const answerPart = parts.find((guess) => {
       return guess.name === answer.part;
     });
-    const correctDiagram = !!answerPart?.diagrams.some((answerDiagram) => {
-      return validGuess.diagrams.includes(answerDiagram);
-    });
+    invariant(answerPart, "Error mapping local storage to parts list");
+    const correctDiagram = diagramMatch(answerPart, validGuess);
     if (correctDiagram) {
       setError(`It's not ${guessName}, but this diagram has the part!`);
       return validGuess;
