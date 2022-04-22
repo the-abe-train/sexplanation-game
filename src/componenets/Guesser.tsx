@@ -180,7 +180,7 @@ export default function Guesser({
 
       {!!error && (
         <p
-          className="text-center text-red-700 font-bold my-3"
+          className="text-center text-red-700 font-bold my-4"
           style={{ cursor: gameOver ? "pointer" : "auto" }}
           onClick={revealAnswer}
         >
@@ -189,7 +189,7 @@ export default function Guesser({
       )}
       {!!win && (
         <p
-          className="text-center text-green-700 font-bold my-3"
+          className="text-center text-green-700 font-bold my-4"
           style={{ cursor: gameOver ? "pointer" : "auto" }}
           onClick={revealAnswer}
         >

@@ -1,12 +1,13 @@
 import highlights from "../images/highlights";
 import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
-import { BrowserView, isMobile } from "react-device-detect";
+import { BrowserView, isDesktop, isMobile } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { DiagramInfo, Layer, Part } from "../lib/types";
 import Label from "./Label";
 import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
+import { HIGH, LOW, SHORT, TALL } from "../util/contstants";
 const parts: Part[] = require("../data/parts.json");
 
 type Props = {
@@ -15,8 +16,6 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   gameOver: boolean;
 };
-
-// TODO resolve the empty space
 
 const diagramMap: DiagramInfo[] = [
   { sex: "Female", layer: "Vulva" },
@@ -108,27 +107,50 @@ export default function Diagram({
     setShowImages(loadedLayer && loadedOutline && loadedHighlight);
   }, [loadedLayer, loadedOutline, loadedHighlight, outlinePng, highlightPng]);
 
+  // Minimizing empty space
+  const outlierLabels = ["Vulva", "Perineum", "Sperm", "Efferent ducts"];
+  const [expanded, setExpanded] = useState(false);
+  useEffect(() => {
+    const outliersExist = showLabels.some((showLabel) => {
+      return outlierLabels.includes(showLabel);
+    });
+    if (outliersExist && isDesktop) setExpanded(true);
+  }, [showLabels]);
+
+  // Label props
+  const labelProps = { sex, layer, setHighlight, expanded };
+
   return (
     <div>
-      <div className={styles.container}>
+      <div
+        className={styles.container}
+        style={{ height: expanded ? TALL : SHORT }}
+      >
         {showImages && (
-          <div className={styles.diagram}>
+          <div
+            className={`${styles.diagram}`}
+            style={{ height: expanded ? TALL : SHORT }}
+          >
             {outlinePng && (
               <img
                 src={outlinePng}
                 alt={layer}
                 onLoad={() => setLoadedOutline(true)}
                 onLoadStart={() => setLoadedOutline(false)}
-                className="absolute -top-12"
+                className="absolute"
+                style={{ top: expanded ? HIGH : LOW }}
               />
             )}
             <img
               src={layerPng}
               alt={layer}
-              className="absolute -top-12"
+              className="absolute"
               onLoad={() => setLoadedLayer(true)}
               onLoadStart={() => setLoadedLayer(false)}
-              style={{ filter: "drop-shadow(2px 2px 2px #929292)" }}
+              style={{
+                filter: "drop-shadow(2px 2px 2px #929292)",
+                top: expanded ? HIGH : LOW,
+              }}
             />
             {showLabels.includes(highlight) && (
               <img
@@ -136,21 +158,14 @@ export default function Diagram({
                 alt={highlight}
                 onLoad={() => setLoadedHighlight(true)}
                 onLoadStart={() => setLoadedHighlight(false)}
-                className="absolute -top-12 z-0 opacity-70 pointer-events-none"
+                className="absolute z-0 opacity-70 pointer-events-none"
+                style={{ top: expanded ? HIGH : LOW }}
               />
             )}
             <BrowserView>
               {showLabels.length >= 1 &&
                 showLabels.map((label, idx) => {
-                  return (
-                    <Label
-                      key={idx}
-                      sex={sex}
-                      name={label}
-                      setHighlight={setHighlight}
-                      layer={layer}
-                    />
-                  );
+                  return <Label key={idx} name={label} {...labelProps} />;
                 })}
             </BrowserView>
           </div>

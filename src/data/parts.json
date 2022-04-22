@@ -6,7 +6,6 @@
     ],
     "diagrams": ["Uterus"]
   },
-  { "name": "Rete ovarii", "clues": [], "diagrams": [] },
   {
     "name": "Fallopian tubes",
     "clues": [
@@ -43,8 +42,6 @@
     ],
     "diagrams": ["Vulva"]
   },
-  { "name": "Epoophoron", "clues": [], "diagrams": [] },
-  { "name": "Paroophoron", "clues": [], "diagrams": [] },
   {
     "name": "Gartner's duct",
     "clues": [],
@@ -116,12 +113,6 @@
     ],
     "diagrams": ["Vulva"]
   },
-  { "name": "Canal of Nuck", "clues": [], "diagrams": [] },
-  {
-    "name": "Round ligament of uterus",
-    "clues": [],
-    "diagrams": []
-  },
   {
     "name": "Egg",
     "clues": [
@@ -144,8 +135,6 @@
     ],
     "diagrams": ["Vulva", "Internal"]
   },
-  { "name": "Brain", "clues": [], "diagrams": [] },
-  { "name": "Skin", "clues": [], "diagrams": [] },
   {
     "name": "Vulva",
     "clues": [
@@ -161,16 +150,7 @@
     "diagrams": ["Internal", "Penis"]
   },
   { "name": "Rete testis", "clues": [], "diagrams": [] },
-  {
-    "name": "Appendix testis",
-    "clues": [],
-    "diagrams": []
-  },
-  {
-    "name": "Prostatic utricle",
-    "clues": [],
-    "diagrams": []
-  },
+
   {
     "name": "Efferent ducts",
     "clues": [
@@ -178,7 +158,6 @@
     ],
     "diagrams": ["Internal"]
   },
-  { "name": "Paradidymis", "clues": [], "diagrams": [] },
   {
     "name": "Epididymis",
     "clues": ["This long coiled tube is where sperm matures."],
@@ -218,7 +197,6 @@
     ],
     "diagrams": ["Penis", "Internal"]
   },
-  { "name": "Penile skin", "clues": [], "diagrams": [] },
   {
     "name": "Penis",
     "clues": [
@@ -226,7 +204,6 @@
     ],
     "diagrams": ["Internal"]
   },
-  { "name": "Bulb of penis", "clues": [], "diagrams": [] },
   {
     "name": "Glans penis",
     "clues": [
@@ -234,23 +211,12 @@
     ],
     "diagrams": ["Penis"]
   },
-  { "name": "Crus of penis", "clues": [], "diagrams": [] },
   {
     "name": "Foreskin",
     "clues": [
       "About 10% of Israeli men, 20% of American men, 42% of Australian men, 55% of South African men, 80% of British men, and 99% of Japanese men still have this part."
     ],
     "diagrams": ["Foreskin"]
-  },
-  {
-    "name": "Processus vaginalis",
-    "clues": [],
-    "diagrams": []
-  },
-  {
-    "name": "Gubernaculum testis",
-    "clues": [],
-    "diagrams": []
   },
   {
     "name": "Sperm",

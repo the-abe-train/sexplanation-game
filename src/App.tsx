@@ -6,8 +6,6 @@ import Intro from "./pages/Intro";
 import NotFound from "./pages/NotFound";
 import Stats from "./pages/Stats";
 
-// TODO add metadata
-
 function App() {
   return (
     <div className="container mx-auto max-w-2xl">

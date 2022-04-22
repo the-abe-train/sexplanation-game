@@ -136,29 +136,30 @@ export default function Game() {
       <Guesser {...guesserProps} />
       <Diagram {...diagramProps} />
       <Clue answer={answer} />
-      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-4">
-        {guesses &&
-          guesses.map(({ name }) => {
-            return (
-              <li
-                key={name}
-                className="mb-line-height px-1 leading-line-height cursor-pointer w-fit"
-                onClick={() => setHighlight(name)}
-                onKeyDown={(e) => {
-                  return (
-                    ["Enter", "Return", " "].includes(e.key) &&
-                    setHighlight(name)
-                  );
-                }}
-                tabIndex={0}
-                style={{ fontWeight: name === highlight ? "bold" : "" }}
-              >
-                {name}
-              </li>
-            );
-          })}
+      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
+        {guesses.map(({ name }) => {
+          return (
+            <li
+              key={name}
+              className="mb-line-height px-1 leading-line-height cursor-pointer w-fit"
+              onClick={() => setHighlight(name)}
+              onKeyDown={(e) => {
+                return (
+                  ["Enter", "Return", " "].includes(e.key) && setHighlight(name)
+                );
+              }}
+              tabIndex={0}
+              style={{ fontWeight: name === highlight ? "bold" : "" }}
+            >
+              {name}
+            </li>
+          );
+        })}
       </ul>
-      <p className="mt-line-height">Remaining guesses: {6 - guesses.length}</p>
+
+      <p style={{ marginTop: guesses.length > 0 ? 0 : "13px" }}>
+        Remaining guesses: {6 - guesses.length}
+      </p>
       {/* <button
         onClick={() => {
           setGuesses([]);

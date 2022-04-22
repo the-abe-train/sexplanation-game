@@ -1,7 +1,6 @@
 import invariant from "tiny-invariant";
-import { Layer, Part } from "../lib/types";
+import { Part } from "../lib/types";
 
-// TODO remove parts without diagrams from parts.json
 const parts: Part[] = require("../data/parts.json");
 
 export function mapNameToPart(names: string[]) {

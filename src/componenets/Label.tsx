@@ -1,15 +1,26 @@
 import maleLabels from "../data/male_labels.json";
 import femaleLabels from "../data/female_labels.json";
 import { Layer } from "../lib/types";
+import { HIGH, LOW } from "../util/contstants";
 
 type Props = {
   name: string;
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   sex: "Male" | "Female";
   layer: Layer;
+  expanded: boolean;
 };
 
-export default function Label({ name, setHighlight, sex, layer }: Props) {
+// TODO ask Kylie to add Bulbourethral gland to the Internal diagram
+// TODO ask Kylie to rename the Skene's gland to the Paraurethral glands
+
+export default function Label({
+  name,
+  setHighlight,
+  sex,
+  layer,
+  expanded,
+}: Props) {
   const labelData = { Male: maleLabels, Female: femaleLabels };
   const label = labelData[sex].find((label) => {
     const correctLayer = "layer" in label ? label.layer === layer : true;
@@ -24,15 +35,9 @@ export default function Label({ name, setHighlight, sex, layer }: Props) {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 4800 3298"
-        className="absolute -top-12 pointer-events-none"
+        className="absolute pointer-events-none"
+        style={{ top: expanded ? HIGH : LOW }}
         onClick={() => setHighlight(name)}
-        // @ts-ignore
-        // onLoadStart={test}
-        // onLoad={() => {
-        //   console.log(name, "loaded");
-        //   // fn();
-        // }}
-        // onLoad={console.log("Loaded", name)}
       >
         <rect
           className="cursor-pointer"

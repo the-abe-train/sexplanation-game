@@ -19,7 +19,6 @@ export default function Stats() {
     initialGuesses
   );
   const storedParts = mapNameToPart(storedGuesses.guesses);
-  const [guesses, setGuesses] = useState<Part[]>(storedParts);
 
   // Stats from local storage
   const initialStats = {
@@ -61,8 +60,8 @@ export default function Stats() {
 
   async function shareScore() {
     const answer = generateAnswer();
-    const colours = mapGuessesToScore(guesses, answer.part);
-    let shareString = `🍆 ${dayjs().format("DD MMMM YYYY")} 🍑
+    const colours = mapGuessesToScore(storedParts, answer.part);
+    let shareString = `${dayjs().format("DD MMMM YYYY")}
 🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
 ${colours} = ${todaysGuesses}
 
