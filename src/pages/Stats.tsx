@@ -2,21 +2,21 @@ import dayjs from "dayjs";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { StatTable } from "../lib/types";
 import { isFirefox, isMobile } from "react-device-detect";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
 import { Link } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
-import { ModeContext } from "../context/ModeContext";
 
 // TODO Make the share message include your "path"
+// Calculate path from guesses
+// 🍆 Mar 21, 2022 🍑
+// 🔥1 | Avg. Guesses: 4
+// ❌❌❌✅✔✔❎
+// 🟥🟥🟥🟩
 
 export default function Stats() {
-  // Context
-  const modeContext = useContext(ModeContext);
-  console.log(modeContext);
-
   const initialStats = {
     gamesWon: 0,
     lastWin: dayjs(),
@@ -114,7 +114,11 @@ Average guesses: ${showAvgGuesses}`;
               Reset
             </button>
           </div>
-          {msg && <p className="mt-5">{msg}</p>}
+          {msg && (
+            <p className="mt-5 font-bold" style={{ color: "teal" }}>
+              {msg}
+            </p>
+          )}
         </div>
         <div className="flex flex-col justify-center w-fit mt-5">
           <Switch />

@@ -165,7 +165,7 @@ export default function Game() {
           })}
       </ul>
       <p className="mt-line-height">Remaining guesses: {6 - guesses.length}</p>
-      <button
+      {/* <button
         onClick={() => {
           setGuesses([]);
           setWin("");
@@ -183,7 +183,7 @@ export default function Game() {
         className="mt-line-height text-blue-700 ml-8"
       >
         Select all
-      </button>
+      </button> */}
     </div>
   );
 }

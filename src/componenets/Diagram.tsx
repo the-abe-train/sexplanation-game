@@ -63,6 +63,7 @@ export default function Diagram({
   useEffect(() => {
     // Change diagram
     const highlightPart = parts.find((part) => part.name === highlight);
+    console.log(highlightPart);
     if (highlightPart) {
       const needChangeDiagram = !highlightPart.diagrams.includes(layer);
       const diagramName = needChangeDiagram ? highlightPart.diagrams[0] : layer;
@@ -90,8 +91,6 @@ export default function Diagram({
     }
   }, [layer]);
 
-  const renderLoader = () => <p>Loading...</p>;
-
   // When the game ends
   useEffect(() => {
     if (gameOver) {
@@ -99,13 +98,10 @@ export default function Diagram({
     }
   }, [gameOver]);
 
-  // TODO Add treasure hunt to the game in the guesser dialogue
-
   // Loading image states
   const [loadedOutline, setLoadedOutline] = useState(true);
   const [loadedLayer, setLoadedLayer] = useState(true);
   const [loadedHighlight, setLoadedHighlight] = useState(true);
-  const [loadedLabels, setLoadedLabels] = useState(false);
   const [showImages, setShowImages] = useState(false);
 
   useEffect(() => {
@@ -113,11 +109,6 @@ export default function Diagram({
     if (!highlightPng) setLoadedHighlight(true);
     setShowImages(loadedLayer && loadedOutline && loadedHighlight);
   }, [loadedLayer, loadedOutline, loadedHighlight, outlinePng, highlightPng]);
-
-  const onComplete = after(showLabels.length, () => {
-    setLoadedLabels(true);
-    console.log("loaded labels");
-  });
 
   return (
     <div>
@@ -160,7 +151,6 @@ export default function Diagram({
                       name={label}
                       setHighlight={setHighlight}
                       layer={layer}
-                      fn={onComplete}
                     />
                   );
                 })}

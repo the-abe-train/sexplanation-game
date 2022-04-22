@@ -111,8 +111,16 @@ export default function Guesser({
 
   // Form validation
   function runChecks() {
-    console.log("Guess name;", guessName);
     const userGuess = guessName.trim().toLowerCase();
+
+    // Win condition
+    if (answer.part.toLowerCase() === userGuess) {
+      setWin(`The answer is ${userGuess}!`);
+      setGameOver(true);
+      return;
+    }
+
+    // Already guessed
     const alreadyGuessed = guesses.find((guess) => {
       return guess.name.toLowerCase() === userGuess;
     });
@@ -120,6 +128,8 @@ export default function Guesser({
       setError(`You already guessed ${guessName}`);
       return;
     }
+
+    // Invalid guess
     const validGuess = parts.find((guess) => {
       return guess.name.toLowerCase() === userGuess;
     });
@@ -127,9 +137,23 @@ export default function Guesser({
       setError("Invalid guess");
       return;
     }
-    if (answer.part.toLowerCase() === userGuess) {
-      setWin(`The answer is ${userGuess}!`);
-      setGameOver(true);
+
+    // Correct diagram
+    const answerPart = parts.find((guess) => {
+      return guess.name === answer.part;
+    });
+    const correctDiagram = !!answerPart?.diagrams.some((answerDiagram) => {
+      return validGuess.diagrams.includes(answerDiagram);
+    });
+    if (correctDiagram) {
+      setError(`It's not ${guessName}, but this diagram has the part!`);
+      return validGuess;
+    }
+
+    // Incorrect diagram
+    if (!correctDiagram) {
+      setError(`Not quite! You have ${5 - guesses.length} guesses left.`);
+      return validGuess;
     }
     return validGuess;
   }
@@ -137,6 +161,7 @@ export default function Guesser({
   // Clicking the final message should take you to the answer diagram
   function revealAnswer() {
     if (gameOver) {
+      console.log("Set highlight part", answer.part);
       setHighlight(answer.part);
     }
   }

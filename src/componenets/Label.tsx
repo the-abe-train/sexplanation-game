@@ -7,10 +7,9 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   sex: "Male" | "Female";
   layer: Layer;
-  fn: Function;
 };
 
-export default function Label({ name, setHighlight, sex, layer, fn }: Props) {
+export default function Label({ name, setHighlight, sex, layer }: Props) {
   const labelData = { Male: maleLabels, Female: femaleLabels };
   const label = labelData[sex].find((label) => {
     const correctLayer = "layer" in label ? label.layer === layer : true;

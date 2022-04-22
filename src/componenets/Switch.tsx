@@ -7,7 +7,6 @@ const { switcher, slider } = styles;
 export default function Switch() {
   // Context
   const { mode, setMode } = useContext(ModeContext);
-  console.log(mode);
 
   function toggleHardMode() {
     if (setMode) {
