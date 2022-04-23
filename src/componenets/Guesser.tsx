@@ -168,7 +168,7 @@ export default function Guesser({
   }
 
   return (
-    <form onSubmit={addGuess} className="mt-5">
+    <form onSubmit={addGuess} className="mt-5 z-20">
       <div className="flex justify-center space-x-3">
         <Input
           gameOver={gameOver}

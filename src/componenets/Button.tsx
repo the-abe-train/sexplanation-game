@@ -21,7 +21,7 @@ export default function Button({
 }: Props) {
   return (
     <button
-      className={`${size === "small" ? buttonSmall : button} focus:ring-8`}
+      className={`${size === "small" ? buttonSmall : button} focus:ring-8 z-20`}
       disabled={disabled}
       onClick={fn}
       tabIndex={0}
