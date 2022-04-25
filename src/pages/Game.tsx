@@ -139,7 +139,6 @@ export default function Game() {
   // When the game is over
   useEffect(() => {
     if (gameOver) {
-      console.log("Answer", answer);
       setHighlight(answer.part);
     }
   }, [gameOver]);

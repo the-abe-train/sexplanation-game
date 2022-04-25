@@ -33,10 +33,10 @@ export function useLocalStorage<T extends IStorage>(
   });
 
   useEffect(() => {
-    console.log("Stored data", value);
-    console.log("Expiration date", value.expiration);
-    console.log("Today", dayjs().toString());
-    console.log("The difference", dayjs().diff(dayjs(value.expiration)));
+    // console.log("Stored data", value);
+    // console.log("Expiration date", value.expiration);
+    // console.log("Today", dayjs().toString());
+    // console.log("The difference", dayjs().diff(dayjs(value.expiration)));
     if (value.expiration) {
       if (dayjs(value.expiration) < dayjs()) {
         localStorage.setItem(key, JSON.stringify(defaultValue));

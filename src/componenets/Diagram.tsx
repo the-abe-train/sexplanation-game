@@ -76,7 +76,6 @@ export default function Diagram({
   useEffect(() => {
     // Change diagram
     const highlightPart = parts.find((part) => part.name === highlight);
-    console.log(highlightPart);
     if (highlightPart) {
       const diagramsWithPart = highlightPart.diagrams;
 
@@ -84,12 +83,10 @@ export default function Diagram({
       // diagram that it's changed to.
       let newDiagram: Layer | null = null;
       const answerPart = parts.find((part) => part.name === answer.part);
-      console.log("Answer part", answerPart);
       if (answerPart) {
         newDiagram = answerPart.diagrams.filter((answerDiagram) => {
           return diagramsWithPart.includes(answerDiagram);
         })[0];
-        console.log("New diagram", newDiagram);
       }
 
       // Otherwise, if the part is not on the current diagram, change it
@@ -116,7 +113,6 @@ export default function Diagram({
   // When player switches diagrams
   useEffect(() => {
     changeDiagram(layer);
-    console.log(`Sex: ${sex}, layer: ${layer}`);
     const allLayerHighlights = highlights[sex][layer];
     if (allLayerHighlights) {
       setHighlightPng(allLayerHighlights[highlight]);

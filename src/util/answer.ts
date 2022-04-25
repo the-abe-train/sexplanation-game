@@ -33,6 +33,5 @@ const clueMap = clues.map((clue) => {
 
 export function generateAnswer(random?: boolean) {
   const key = random ? randomKey(clueMap) : dailyKey(clueMap);
-  // return clueMap[key];
-  return { part: "Epididymis", clue: "The answer is Epididymis" };
+  return clueMap[key];
 }
