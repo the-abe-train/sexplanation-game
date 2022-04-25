@@ -15,15 +15,25 @@ type Props = {
   highlight: string;
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   gameOver: boolean;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  error: string;
+  answer: {
+    clue: string;
+    part: string;
+  };
+  layer: Layer;
+  setLayer: React.Dispatch<React.SetStateAction<Layer>>;
+  sex: "Male" | "Female";
+  setSex: React.Dispatch<React.SetStateAction<"Male" | "Female">>;
 };
 
 const diagramMap: DiagramInfo[] = [
   { sex: "Female", layer: "Vulva" },
   { sex: "Female", layer: "Clitoris" },
   { sex: "Female", layer: "Uterus" },
+  { sex: "Male", layer: "Foreskin" },
   { sex: "Male", layer: "Penis" },
   { sex: "Male", layer: "Internal" },
-  { sex: "Male", layer: "Foreskin" },
 ];
 
 export default function Diagram({
@@ -31,9 +41,14 @@ export default function Diagram({
   highlight,
   setHighlight,
   gameOver,
+  answer,
+  setError,
+  error,
+  layer,
+  setLayer,
+  sex,
+  setSex,
 }: Props) {
-  const [sex, setSex] = useState<"Male" | "Female">("Female");
-  const [layer, setLayer] = useState<Layer>("Vulva");
   const [layerPng, setLayerPng] = useState(diagrams["Clitoris"]);
   const [outlinePng, setOutlinePng] = useState(outlines["Clitoris"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
@@ -63,8 +78,27 @@ export default function Diagram({
     const highlightPart = parts.find((part) => part.name === highlight);
     console.log(highlightPart);
     if (highlightPart) {
-      const needChangeDiagram = !highlightPart.diagrams.includes(layer);
-      const diagramName = needChangeDiagram ? highlightPart.diagrams[0] : layer;
+      const diagramsWithPart = highlightPart.diagrams;
+
+      // If the answer and the guess share a diagram, that should be the
+      // diagram that it's changed to.
+      let newDiagram: Layer | null = null;
+      const answerPart = parts.find((part) => part.name === answer.part);
+      console.log("Answer part", answerPart);
+      if (answerPart) {
+        newDiagram = answerPart.diagrams.filter((answerDiagram) => {
+          return diagramsWithPart.includes(answerDiagram);
+        })[0];
+        console.log("New diagram", newDiagram);
+      }
+
+      // Otherwise, if the part is not on the current diagram, change it
+      if (!newDiagram && !diagramsWithPart.includes(layer)) {
+        newDiagram = diagramsWithPart[0];
+      }
+
+      // Otherwise, if the part is on the current diagram, don't change it
+      const diagramName = newDiagram || layer;
       const diagramInfo = diagramMap.find((d) => d.layer === diagramName);
       changeDiagram(diagramName);
       if (diagramInfo) {
@@ -118,7 +152,18 @@ export default function Diagram({
   }, [showLabels]);
 
   // Label props
-  const labelProps = { sex, layer, setHighlight, expanded };
+  const labelProps = { sex, layer, setHighlight, expanded, gameOver, answer };
+
+  // Panel props
+  const panelProps = {
+    setSex,
+    setLayer,
+    sex,
+    layer,
+    diagramMap,
+    setError,
+    error,
+  };
 
   return (
     <div>
@@ -171,13 +216,7 @@ export default function Diagram({
           </div>
         )}
       </div>
-      <Panel
-        setSex={setSex}
-        setLayer={setLayer}
-        sex={sex}
-        layer={layer}
-        diagramMap={diagramMap}
-      />
+      <Panel {...panelProps} />
     </div>
   );
 }

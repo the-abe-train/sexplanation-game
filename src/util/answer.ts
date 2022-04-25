@@ -1,13 +1,18 @@
 import { Part } from "../lib/types";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const parts: Part[] = require("../data/parts.json");
 
 const SHUFFLE_KEY = 1337;
 
 function dailyKey(list: any[]) {
-  const today = new Date().toLocaleDateString("en-CA");
-  const [year, month, date] = today.split("-");
-  const dayCode = Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(date));
+  const midnight = dayjs().tz("America/Toronto").endOf("day");
+  const dayCode = midnight.unix();
   const key = Math.floor(dayCode / parseInt(SHUFFLE_KEY + "5")) % list.length;
   return key;
 }
@@ -28,5 +33,6 @@ const clueMap = clues.map((clue) => {
 
 export function generateAnswer(random?: boolean) {
   const key = random ? randomKey(clueMap) : dailyKey(clueMap);
-  return clueMap[key];
+  // return clueMap[key];
+  return { part: "Epididymis", clue: "The answer is Epididymis" };
 }

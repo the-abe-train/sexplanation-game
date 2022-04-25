@@ -4,12 +4,13 @@ type Props = {
   children: string;
   colour: string;
   inverted: boolean;
-  size: "small" | "large";
+  size: "small" | "medium" | "big";
   disabled?: boolean;
   fn?: () => void;
 };
 
-const { button, buttonSmall, bg, bgInverted, centred, disabled } = styles;
+const { button, buttonSmall, buttonBig, bg, bgInverted, centred, disabled } =
+  styles;
 
 export default function Button({
   children,
@@ -19,9 +20,14 @@ export default function Button({
   disabled = false,
   fn,
 }: Props) {
+  const sizeClass = {
+    small: buttonSmall,
+    medium: button,
+    big: buttonBig,
+  }[size];
   return (
     <button
-      className={`${size === "small" ? buttonSmall : button} focus:ring-8 z-20`}
+      className={`${sizeClass} focus:ring-8 z-20`}
       disabled={disabled}
       onClick={fn}
       tabIndex={0}

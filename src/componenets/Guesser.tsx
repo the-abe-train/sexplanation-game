@@ -1,11 +1,18 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
-import Select from "react-select";
+import Select, { createFilter } from "react-select";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
 import { ModeContext } from "../context/ModeContext";
 import { diagramMatch } from "../util/maps";
 import invariant from "tiny-invariant";
+import {
+  errorRed,
+  grayMessage,
+  highlighterGreen,
+  seaGreen,
+  warmYellow,
+} from "../util/colours";
 const parts: Part[] = require("../data/parts.json");
 
 // Changing the button form "Enter" to "Share" when the game ends
@@ -17,7 +24,7 @@ function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
   }
   return (
     <Link to="/stats">
-      <Button colour="#90ee90" inverted={false} size="small">
+      <Button colour={highlighterGreen} inverted={false} size="small">
         Share
       </Button>
     </Link>
@@ -37,6 +44,7 @@ function Input({ gameOver, setGuessName, guessName }: InputPros) {
     .filter((value, idx, self) => {
       return self.indexOf(value) === idx;
     })
+    .sort((a, z) => a.localeCompare(z))
     .map((name) => {
       return { value: name, label: name };
     });
@@ -59,6 +67,7 @@ function Input({ gameOver, setGuessName, guessName }: InputPros) {
       placeholder=""
       isClearable
       closeMenuOnSelect
+      filterOption={createFilter({ matchFrom: "start" })}
     />
   );
 }
@@ -69,6 +78,8 @@ type Props = {
   setHighlight: React.Dispatch<React.SetStateAction<string>>;
   setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   gameOver: boolean;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  error: string;
   setWin: React.Dispatch<React.SetStateAction<string>>;
   win: string;
   answer: {
@@ -86,15 +97,27 @@ export default function Guesser({
   win,
   gameOver,
   answer,
+  setError,
+  error,
 }: Props) {
   // State hooks
   const [guessName, setGuessName] = useState("");
-  const [error, setError] = useState("");
+  // const [message, setMessage] = useState("");
+  const [errorColour, setErrorColour] = useState("gray");
+
+  // Before your first guess
+  useEffect(() => {
+    if (guesses.length === 0 && !win && !error) {
+      setError("Use the textbox to enter your first guess!");
+      setErrorColour(grayMessage);
+    }
+  }, []);
 
   // Losing the game
   useEffect(() => {
     if (guesses.length >= 6 && !win) {
       setError(`The answer was ${answer.part}.`);
+      setErrorColour(seaGreen);
       setGameOver(true);
     }
   }, [guesses, win]);
@@ -121,6 +144,7 @@ export default function Guesser({
     });
     if (alreadyGuessed) {
       setError(`You already guessed ${guessName}`);
+      setErrorColour(seaGreen);
       return;
     }
 
@@ -130,6 +154,7 @@ export default function Guesser({
     });
     if (!validGuess) {
       setError("Invalid guess");
+      setErrorColour(errorRed);
       return;
     }
 
@@ -148,12 +173,14 @@ export default function Guesser({
     const correctDiagram = diagramMatch(answerPart, validGuess);
     if (correctDiagram) {
       setError(`It's not ${guessName}, but this diagram has the part!`);
+      setErrorColour(warmYellow);
       return validGuess;
     }
 
     // Incorrect diagram
     if (!correctDiagram) {
       setError(`Not quite! You have ${5 - guesses.length} guesses left.`);
+      setErrorColour(errorRed);
       return validGuess;
     }
     return validGuess;
@@ -162,7 +189,6 @@ export default function Guesser({
   // Clicking the final message should take you to the answer diagram
   function revealAnswer() {
     if (gameOver) {
-      console.log("Set highlight part", answer.part);
       setHighlight(answer.part);
     }
   }
@@ -177,11 +203,10 @@ export default function Guesser({
         />
         <ButtonSwitch gameOver={gameOver} />
       </div>
-
       {!!error && (
         <p
-          className="text-center text-red-700 font-bold my-4"
-          style={{ cursor: gameOver ? "pointer" : "auto" }}
+          className="text-center font-bold my-4"
+          style={{ cursor: gameOver ? "pointer" : "auto", color: errorColour }}
           onClick={revealAnswer}
         >
           {error}

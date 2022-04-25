@@ -1,8 +1,14 @@
 import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 import { useState, useEffect } from "react";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 interface IStorage extends Object {
-  day?: Dayjs;
+  expiration?: Dayjs;
 }
 
 // TODO check if solved: guesses is not resetting on a new day
@@ -27,17 +33,17 @@ export function useLocalStorage<T extends IStorage>(
   });
 
   useEffect(() => {
-    const expirationString = value?.day ? value.day : "2030-01-01";
-    const expiration = dayjs(expirationString);
-    // console.log("Stored data", value);
-    // console.log("Expiration date", expiration);
-    // console.log("Today", dayjs());
-    // console.log("The difference", expiration.diff(dayjs(), "day"));
-    if (dayjs().diff(expiration, "day") <= 1) {
-      localStorage.setItem(key, JSON.stringify(value));
-    } else {
-      localStorage.setItem(key, JSON.stringify(defaultValue));
+    console.log("Stored data", value);
+    console.log("Expiration date", value.expiration);
+    console.log("Today", dayjs().toString());
+    console.log("The difference", dayjs().diff(dayjs(value.expiration)));
+    if (value.expiration) {
+      if (dayjs(value.expiration) < dayjs()) {
+        localStorage.setItem(key, JSON.stringify(defaultValue));
+        return;
+      }
     }
+    localStorage.setItem(key, JSON.stringify(value));
   }, [key, value, defaultValue]);
 
   return [value, setValue];

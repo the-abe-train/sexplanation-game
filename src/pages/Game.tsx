@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
 
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Part, StatTable, StoredGuesses, Answer } from "../lib/types";
+import { Part, StatTable, StoredGuesses, Answer, Layer } from "../lib/types";
 import Guesser from "../componenets/Guesser";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
 import { mapNameToPart } from "../util/maps";
+import Button from "../componenets/Button";
+import { orange, purple, teal } from "../util/colours";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function Game() {
+  // Navigate
+  const navigate = useNavigate();
+
   // State hooks
   const [highlight, setHighlight] = useState("");
+  const [error, setError] = useState("");
+  const [layer, setLayer] = useState<Layer>("Vulva");
+  const [sex, setSex] = useState<"Male" | "Female">("Female");
 
   // Search params
   const [params] = useSearchParams();
@@ -23,12 +36,16 @@ export default function Game() {
     localStorage.getItem("practice") || "false"
   );
 
+  // Answer
   const answer: Answer =
     practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
 
   // Guesses from local storage
   const today = dayjs();
-  const initialGuesses = { day: today, guesses: [] };
+  const initialGuesses = {
+    expiration: dayjs().tz("America/Toronto").endOf("day"),
+    guesses: [],
+  };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     initialGuesses
@@ -41,7 +58,7 @@ export default function Game() {
   // Stats from local storage
   const initialStats = {
     gamesWon: 0,
-    lastWin: dayjs("2022-01-01"),
+    lastGame: dayjs("2022-01-01"),
     currentStreak: 0,
     maxStreak: 0,
     usedGuesses: [],
@@ -52,7 +69,6 @@ export default function Game() {
     "statistics",
     initialStats
   );
-  // console.log(answer);
   const alreadyWon = !!guesses.find((guess) => guess.name === answer.part);
   const initialWin = alreadyWon ? `The answer was ${answer.part}.` : "";
   const [gameOver, setGameOver] = useState(alreadyWon);
@@ -60,12 +76,11 @@ export default function Game() {
 
   // Storing new stats when the game ends
   useEffect(() => {
-    const newWin = dayjs().diff(dayjs(storedStats.lastWin), "day") > 1;
-    if (win && newWin) {
-      const lastWin = dayjs();
+    const newGame = dayjs().diff(dayjs(storedStats.lastGame), "day") > 1;
+    if (win && newGame) {
+      const lastGame = dayjs();
       const gamesWon = storedStats.gamesWon + 1;
-      const streakBroken = storedStats.lastWin > lastWin;
-      const currentStreak = streakBroken ? 1 : storedStats.currentStreak + 1;
+      const currentStreak = storedStats.currentStreak + 1;
       const maxStreak =
         currentStreak > storedStats.maxStreak
           ? currentStreak
@@ -82,7 +97,7 @@ export default function Game() {
       };
       const games = [...storedStats.games, game];
       const newStats = {
-        lastWin,
+        lastGame,
         gamesWon,
         currentStreak,
         maxStreak,
@@ -90,14 +105,32 @@ export default function Game() {
         games,
       };
       storeStats(newStats);
+    } else if (gameOver && newGame) {
+      const { gamesWon, maxStreak } = storedStats;
+      const usedGuesses = [...storedStats.usedGuesses, guesses.length];
+      const game = {
+        guesses: guesses.length,
+        win: false,
+        date: dayjs(),
+      };
+      const games = [...storedStats.games, game];
+      const newStats = {
+        lastGame: dayjs(),
+        gamesWon,
+        currentStreak: 0,
+        maxStreak,
+        usedGuesses,
+        games,
+      };
+      storeStats(newStats);
     }
-  }, [win, storeStats, guesses]);
+  }, [win, storeStats, guesses, gameOver]);
 
   // When there's a new guess, update the local storage guesses
   useEffect(() => {
     if (!practiceMode) {
       storeGuesses({
-        day: today,
+        expiration: dayjs().tz("America/Toronto").endOf("day"),
         guesses: guesses.map((guess) => guess.name),
       });
     }
@@ -111,6 +144,12 @@ export default function Game() {
     }
   }, [gameOver]);
 
+  // Practice mode
+  function enterPracticeMode() {
+    const practiceAnswer = generateAnswer(true);
+    localStorage.setItem("practice", JSON.stringify(practiceAnswer));
+  }
+
   // Props to pass to Guesser
   const guesserProps = {
     setHighlight,
@@ -121,6 +160,8 @@ export default function Game() {
     setGameOver,
     gameOver,
     answer,
+    setError,
+    error,
   };
 
   // Props to pass to Diagram
@@ -129,6 +170,13 @@ export default function Game() {
     highlight,
     setHighlight,
     gameOver,
+    answer,
+    setError,
+    error,
+    layer,
+    setLayer,
+    sex,
+    setSex,
   };
 
   return (
@@ -137,7 +185,7 @@ export default function Game() {
       <Diagram {...diagramProps} />
       <Clue answer={answer} />
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
-        {guesses.map(({ name }) => {
+        {guesses.map(({ name, diagrams }) => {
           return (
             <li
               key={name}
@@ -149,7 +197,14 @@ export default function Game() {
                 );
               }}
               tabIndex={0}
-              style={{ fontWeight: name === highlight ? "bold" : "" }}
+              style={{
+                fontWeight: name === highlight ? "bold" : "",
+                color: diagrams.includes(layer)
+                  ? sex === "Female"
+                    ? orange
+                    : teal
+                  : "black",
+              }}
             >
               {name}
             </li>
@@ -160,25 +215,27 @@ export default function Game() {
       <p style={{ marginTop: guesses.length > 0 ? 0 : "13px" }}>
         Remaining guesses: {6 - guesses.length}
       </p>
-      {/* <button
-        onClick={() => {
-          setGuesses([]);
-          setWin("");
-        }}
-        className="mt-line-height text-red-700"
-      >
-        Clear list
-      </button>
-      <button
-        onClick={() => {
-          // const names = parts.map(part => part.name)
-          setGuesses(parts);
-          setWin("You cheated!");
-        }}
-        className="mt-line-height text-blue-700 ml-8"
-      >
-        Select all
-      </button> */}
+      {practiceMode && (
+        <div className="my-4 flex space-x-4 items-center just">
+          <span>You are in practice mode. </span>
+          <Button
+            colour="#FFC8FF"
+            size="small"
+            inverted={false}
+            fn={() => navigate("/")}
+          >
+            Exit practice
+          </Button>
+          <Button
+            colour="#FFC8FF"
+            size="small"
+            inverted={false}
+            fn={enterPracticeMode}
+          >
+            New practice
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

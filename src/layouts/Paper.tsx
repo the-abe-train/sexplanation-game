@@ -11,9 +11,14 @@ export default function Paper({ children }: any) {
           <Link to="/">
             <Home className="mb-2 h-4" />
           </Link>
-          <h1 className="text-center text-2xl sm:text-3xl underline">
-            A Sexplanation: The Game
+          {/* <div className="flex flex-col"> */}
+          <h1 className="text-center text-lg sm:text-2xl underline">
+            Genitle: An <i>A Sexplanation</i> Game
           </h1>
+          {/* <h2 className="text-center text-md sm:text-md underline">
+              An <i>A Sexplanation</i> Game
+            </h2> */}
+          {/* </div> */}
           <Link to="stats">
             <Stats className="mb-2 h-4" />
           </Link>

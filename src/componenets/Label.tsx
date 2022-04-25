@@ -2,6 +2,7 @@ import maleLabels from "../data/male_labels.json";
 import femaleLabels from "../data/female_labels.json";
 import { Layer } from "../lib/types";
 import { HIGH, LOW } from "../util/contstants";
+import { highlighterGreen, purple, seaGreen, teal } from "../util/colours";
 
 type Props = {
   name: string;
@@ -9,6 +10,11 @@ type Props = {
   sex: "Male" | "Female";
   layer: Layer;
   expanded: boolean;
+  gameOver: boolean;
+  answer: {
+    clue: string;
+    part: string;
+  };
 };
 
 // TODO ask Kylie to add Bulbourethral gland to the Internal diagram
@@ -20,15 +26,17 @@ export default function Label({
   sex,
   layer,
   expanded,
+  gameOver,
+  answer,
 }: Props) {
   const labelData = { Male: maleLabels, Female: femaleLabels };
   const label = labelData[sex].find((label) => {
     const correctLayer = "layer" in label ? label.layer === layer : true;
     return label.name === name && correctLayer;
   });
-  function test() {
-    console.log("loaded");
-  }
+
+  const colour = gameOver && answer.part === name ? seaGreen : teal;
+
   if (label) {
     const { x, y, width, height, path } = label;
     return (
@@ -47,11 +55,10 @@ export default function Label({
           height={height}
           fill="none"
           pointerEvents="visible"
-          onLoadStart={test}
         />
         <path
           className="cursor-pointer"
-          fill="#347873"
+          fill={colour}
           stroke="black"
           strokeWidth="1"
           d={path}

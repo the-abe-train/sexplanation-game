@@ -29,13 +29,13 @@ export type Part = {
 };
 
 export type StoredGuesses = {
-  day: Dayjs;
+  expiration: Dayjs;
   guesses: string[];
 };
 
 export type StatTable = {
   gamesWon: number;
-  lastWin: Dayjs;
+  lastGame: Dayjs;
   currentStreak: number;
   maxStreak: number;
   usedGuesses: number[];

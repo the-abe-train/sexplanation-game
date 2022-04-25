@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Part, StatTable, StoredGuesses } from "../lib/types";
+import { StatTable, StoredGuesses } from "../lib/types";
 import { isFirefox, isMobile } from "react-device-detect";
 import { useState } from "react";
 import Button from "../componenets/Button";
@@ -10,10 +10,21 @@ import { Link } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
 import { mapGuessesToScore, mapNameToPart } from "../util/maps";
 
+// Photos
+import photo1 from "../images/photos/ASEXPLANATION_STILL_ALEXLIU.jpg";
+import photo2 from "../images/photos/ASEXPLANATION_STILL_ANATOMYQUIZ.jpg";
+import photo3 from "../images/photos/ASEXPLANATION_STILL_NEURO.jpg";
+import photo4 from "../images/photos/ASEXPLANATION_STILL_TITLECARD.jpg";
+
+// Styles
+import styles from "../styles/button.module.css";
+
 export default function Stats() {
   // Guesses from local storage
-  const today = dayjs();
-  const initialGuesses = { day: today, guesses: [] };
+  const initialGuesses = {
+    expiration: dayjs().tz("America/Toronto").endOf("day"),
+    guesses: [],
+  };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     initialGuesses
@@ -23,7 +34,7 @@ export default function Stats() {
   // Stats from local storage
   const initialStats = {
     gamesWon: 0,
-    lastWin: dayjs(),
+    lastGame: dayjs("2022-01-01"),
     currentStreak: 0,
     maxStreak: 0,
     usedGuesses: [],
@@ -36,11 +47,11 @@ export default function Stats() {
   );
   const [msg, setMsg] = useState("");
 
-  const { usedGuesses, lastWin, gamesWon, currentStreak, maxStreak } =
+  const { usedGuesses, lastGame, gamesWon, currentStreak, maxStreak } =
     storedStats;
-  const wonToday = dayjs().diff(dayjs(lastWin), "day") <= 1;
+  const newGame = dayjs().diff(dayjs(lastGame), "day") <= 1;
   const sumGuesses = usedGuesses.reduce((a, b) => a + b, 0);
-  const todaysGuesses = wonToday ? usedGuesses[usedGuesses.length - 1] : "--";
+  const todaysGuesses = newGame ? usedGuesses[usedGuesses.length - 1] : "--";
   const avgGuesses = Math.round((sumGuesses / usedGuesses.length) * 100) / 100;
   const showAvgGuesses = usedGuesses.length === 0 ? "--" : avgGuesses;
 
@@ -55,6 +66,7 @@ export default function Stats() {
     const ans = window.confirm("Are you sure you want to reset your score?");
     if (ans) {
       storeStats(initialStats);
+      storeGuesses(initialGuesses);
     }
   }
 
@@ -90,10 +102,38 @@ ${colours} = ${todaysGuesses}
     localStorage.setItem("practice", JSON.stringify(practiceAnswer));
   }
 
+  // Styles
+  const { button, bg, photos } = styles;
+
   return (
-    <main className="mt-line-height mx-3">
+    <main className="sm:mt-line-height mx-3">
+      <section className="flex flex-col justify-center space-y-4 mb-8">
+        <p className="text-center">
+          Did your sex ed leave much to be desired? We decided to get a good
+          one—no matter how awkward.
+        </p>
+        <div className="relative">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-10">
+            <Button
+              colour="#FFC8FF"
+              size="big"
+              inverted={false}
+              fn={() => console.log(true)}
+            >
+              A Sexplanation
+            </Button>
+          </div>
+          <div className={photos}>
+            <img src={photo1} className="opacity-70" alt="Alex with lollipop" />
+            <img src={photo2} className="opacity-70" alt="Alex with lollipop" />
+            <img src={photo3} className="opacity-70" alt="Alex with lollipop" />
+            <img src={photo4} className="opacity-70" alt="Alex with lollipop" />
+          </div>
+        </div>
+      </section>
+
       <section className="flex flex-col sm:flex-row items-center sm:items-start justify-around w-full">
-        <div className="flex flex-col justify-center w-fit">
+        <div className="flex flex-col justify-center w-fit my-auto">
           <table className="text-base table-auto w-full">
             <tbody>
               {data.map(({ name, value }) => {
@@ -128,39 +168,25 @@ ${colours} = ${todaysGuesses}
             </p>
           )}
         </div>
-        <div className="flex flex-col justify-center w-fit mt-5">
-          <Switch />
-          <div className="flex mt-4 justify-center">
-            <Link to={`/game?practice_mode=true`}>
-              <Button
-                colour="#FFC8FF"
-                size="small"
-                inverted={false}
-                fn={enterPracticeMode}
-              >
-                Practice game
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-      <section>
+
         <div>
           <Chart games={storedStats.games} />
         </div>
       </section>
-      <section className="mt-10 flex flex-col justify-center space-y-8">
-        <p className="text-center">
-          Need to brush up on your sex ed? Here’s a good place to start:
-        </p>
-        <Button
-          colour="#FFC8FF"
-          size="large"
-          inverted={false}
-          fn={() => console.log(true)}
-        >
-          A Sexplanation
-        </Button>
+      <section className="flex flex-col justify-center w-fit mt-5 mx-auto">
+        <Switch />
+        <div className="flex mt-4 justify-center">
+          <Link to={`/game?practice_mode=true`}>
+            <Button
+              colour="#FFC8FF"
+              size="small"
+              inverted={false}
+              fn={enterPracticeMode}
+            >
+              Practice game
+            </Button>
+          </Link>
+        </div>
       </section>
     </main>
   );
