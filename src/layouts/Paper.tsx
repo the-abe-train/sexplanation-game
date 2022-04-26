@@ -12,9 +12,11 @@ export default function Paper({ children }: any) {
             <Home className="mb-2 h-4" />
           </Link>
           {/* <div className="flex flex-col"> */}
-          <h1 className="text-center text-lg sm:text-2xl underline">
-            Genitle: An <i>A Sexplanation</i> Game
-          </h1>
+          <Link to="/game">
+            <h1 className="text-center text-lg sm:text-2xl underline">
+              Genitle: An <i>A Sexplanation</i> Game
+            </h1>
+          </Link>
           {/* <h2 className="text-center text-md sm:text-md underline">
               An <i>A Sexplanation</i> Game
             </h2> */}
