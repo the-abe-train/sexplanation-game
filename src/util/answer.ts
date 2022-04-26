@@ -1,18 +1,12 @@
 import { Part } from "../lib/types";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { MIDNIGHT } from "./contstants";
 
 const parts: Part[] = require("../data/parts.json");
 
 const SHUFFLE_KEY = 1337;
 
 function dailyKey(list: any[]) {
-  const midnight = dayjs().tz("America/Toronto").endOf("day");
-  const dayCode = midnight.unix();
+  const dayCode = MIDNIGHT.unix();
   const key = Math.floor(dayCode / parseInt(SHUFFLE_KEY + "5")) % list.length;
   return key;
 }

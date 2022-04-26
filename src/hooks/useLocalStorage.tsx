@@ -1,11 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 
 import { useState, useEffect } from "react";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+import { NOW } from "../util/contstants";
 
 interface IStorage extends Object {
   expiration?: Dayjs;
@@ -13,14 +9,18 @@ interface IStorage extends Object {
 
 // TODO check if solved: guesses is not resetting on a new day
 
-function getStorageValue<T>(key: string, defaultValue?: T): T {
+function getStorageValue<T>(key: string, defaultValue: T): T {
   const saved = localStorage.getItem(key);
   if (saved) {
+    const value = JSON.parse(saved);
+    if (value.expiration) {
+      if (dayjs(value.expiration) < NOW) {
+        return defaultValue;
+      }
+    }
     return JSON.parse(saved);
-  } else if (defaultValue) {
-    return defaultValue;
   } else {
-    throw new Error("Local storage error");
+    return defaultValue;
   }
 }
 
@@ -33,12 +33,10 @@ export function useLocalStorage<T extends IStorage>(
   });
 
   useEffect(() => {
-    // console.log("Stored data", value);
-    // console.log("Expiration date", value.expiration);
-    // console.log("Today", dayjs().toString());
-    // console.log("The difference", dayjs().diff(dayjs(value.expiration)));
+    if (key === "guesses") {
+    }
     if (value.expiration) {
-      if (dayjs(value.expiration) < dayjs()) {
+      if (dayjs(value.expiration) < NOW) {
         localStorage.setItem(key, JSON.stringify(defaultValue));
         return;
       }

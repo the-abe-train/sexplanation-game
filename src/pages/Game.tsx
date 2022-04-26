@@ -15,6 +15,7 @@ import { generateAnswer } from "../util/answer";
 import { mapNameToPart } from "../util/maps";
 import Button from "../componenets/Button";
 import { orange, purple, teal } from "../util/colours";
+import { MIDNIGHT, NOW } from "../util/contstants";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -41,11 +42,8 @@ export default function Game() {
     practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
 
   // Guesses from local storage
-  const today = dayjs();
-  const initialGuesses = {
-    expiration: dayjs().tz("America/Toronto").endOf("day"),
-    guesses: [],
-  };
+  const expiration = MIDNIGHT;
+  const initialGuesses = { expiration, guesses: [] };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
     "guesses",
     initialGuesses
@@ -76,9 +74,12 @@ export default function Game() {
 
   // Storing new stats when the game ends
   useEffect(() => {
-    const newGame = dayjs().diff(dayjs(storedStats.lastGame), "day") > 1;
+    const lastGameDate = dayjs(storedStats.lastGame)
+      .tz("America/Toronto")
+      .endOf("day");
+    const newGame = lastGameDate < NOW;
     if (win && newGame) {
-      const lastGame = dayjs();
+      const lastGame = NOW;
       const gamesWon = storedStats.gamesWon + 1;
       const currentStreak = storedStats.currentStreak + 1;
       const maxStreak =
@@ -93,7 +94,7 @@ export default function Game() {
       const game = {
         guesses: guesses.length,
         win: !!win,
-        date: dayjs(),
+        date: NOW,
       };
       const games = [...storedStats.games, game];
       const newStats = {
@@ -111,11 +112,11 @@ export default function Game() {
       const game = {
         guesses: guesses.length,
         win: false,
-        date: dayjs(),
+        date: NOW,
       };
       const games = [...storedStats.games, game];
       const newStats = {
-        lastGame: dayjs(),
+        lastGame: NOW,
         gamesWon,
         currentStreak: 0,
         maxStreak,
@@ -130,7 +131,7 @@ export default function Game() {
   useEffect(() => {
     if (!practiceMode) {
       storeGuesses({
-        expiration: dayjs().tz("America/Toronto").endOf("day"),
+        expiration: MIDNIGHT,
         guesses: guesses.map((guess) => guess.name),
       });
     }

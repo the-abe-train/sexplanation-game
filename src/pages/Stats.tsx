@@ -18,11 +18,12 @@ import photo4 from "../images/photos/ASEXPLANATION_STILL_TITLECARD.jpg";
 
 // Styles
 import styles from "../styles/button.module.css";
+import { MIDNIGHT, NOW } from "../util/contstants";
 
 export default function Stats() {
   // Guesses from local storage
   const initialGuesses = {
-    expiration: dayjs().tz("America/Toronto").endOf("day"),
+    expiration: MIDNIGHT,
     guesses: [],
   };
   const [storedGuesses, storeGuesses] = useLocalStorage<StoredGuesses>(
@@ -49,7 +50,7 @@ export default function Stats() {
 
   const { usedGuesses, lastGame, gamesWon, currentStreak, maxStreak } =
     storedStats;
-  const newGame = dayjs().diff(dayjs(lastGame), "day") <= 1;
+  const newGame = NOW.diff(dayjs(lastGame), "day") <= 1;
   const sumGuesses = usedGuesses.reduce((a, b) => a + b, 0);
   const todaysGuesses = newGame ? usedGuesses[usedGuesses.length - 1] : "--";
   const avgGuesses = Math.round((sumGuesses / usedGuesses.length) * 100) / 100;
@@ -73,7 +74,7 @@ export default function Stats() {
   async function shareScore() {
     const answer = generateAnswer();
     const colours = mapGuessesToScore(storedParts, answer.part);
-    let shareString = `${dayjs().format("DD MMMM YYYY")}
+    let shareString = `${NOW.format("DD MMMM YYYY")}
 🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
 ${colours} = ${todaysGuesses}
 

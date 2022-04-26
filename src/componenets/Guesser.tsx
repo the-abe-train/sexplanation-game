@@ -138,16 +138,6 @@ export default function Guesser({
   function runChecks() {
     const userGuess = guessName.trim().toLowerCase();
 
-    // Already guessed
-    const alreadyGuessed = guesses.find((guess) => {
-      return guess.name.toLowerCase() === userGuess;
-    });
-    if (alreadyGuessed) {
-      setError(`You already guessed ${guessName}`);
-      setErrorColour(seaGreen);
-      return;
-    }
-
     // Invalid guess
     const validGuess = parts.find((guess) => {
       return guess.name.toLowerCase() === userGuess;
@@ -163,6 +153,16 @@ export default function Guesser({
       setWin(`The answer is ${userGuess}!`);
       setGameOver(true);
       return validGuess;
+    }
+
+    // Already guessed
+    const alreadyGuessed = guesses.find((guess) => {
+      return guess.name.toLowerCase() === userGuess;
+    });
+    if (alreadyGuessed) {
+      setError(`You already guessed ${guessName}`);
+      setErrorColour(seaGreen);
+      return;
     }
 
     // Correct diagram
