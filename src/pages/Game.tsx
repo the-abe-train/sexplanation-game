@@ -27,7 +27,7 @@ export default function Game() {
   // State hooks
   const [highlight, setHighlight] = useState("");
   const [error, setError] = useState("");
-  const [layer, setLayer] = useState<Layer>("Vulva");
+  const [layer, setLayer] = useState<Layer>("Outside");
   const [sex, setSex] = useState<"Male" | "Female">("Female");
 
   // Search params
@@ -40,6 +40,15 @@ export default function Game() {
   // Answer
   const answer: Answer =
     practiceMode && practiceAnswer ? practiceAnswer : generateAnswer();
+
+  // If player has never been to the site before, redirect them to home page so
+  // that they can see the disclaimer
+  useEffect(() => {
+    const readDisclaimer = localStorage.getItem("read_disclaimer");
+    if (!readDisclaimer) {
+      navigate("/");
+    }
+  }, []);
 
   // Guesses from local storage
   const expiration = MIDNIGHT;
@@ -186,6 +195,8 @@ export default function Game() {
       <Clue answer={answer} />
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
         {guesses.map(({ name, diagrams }) => {
+          const layers = diagrams.map((diagram) => diagram.layer);
+          const sexes = diagrams.map((diagram) => diagram.sex);
           return (
             <li
               key={name}
@@ -199,11 +210,12 @@ export default function Game() {
               tabIndex={0}
               style={{
                 fontWeight: name === highlight ? "bold" : "",
-                color: diagrams.includes(layer)
-                  ? sex === "Female"
-                    ? orange
-                    : teal
-                  : "black",
+                color:
+                  layers.includes(layer) && sexes.includes(sex)
+                    ? sex === "Female"
+                      ? orange
+                      : teal
+                    : "black",
               }}
             >
               {name}

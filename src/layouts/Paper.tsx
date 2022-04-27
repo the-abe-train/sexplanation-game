@@ -21,7 +21,7 @@ export default function Paper({ children }: any) {
               An <i>A Sexplanation</i> Game
             </h2> */}
           {/* </div> */}
-          <Link to="stats">
+          <Link to="stats" data-testid="stats-icon">
             <Stats className="mb-2 h-4" />
           </Link>
         </header>

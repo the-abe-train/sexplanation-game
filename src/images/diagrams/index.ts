@@ -1,21 +1,34 @@
-import Vulva from "./Vulva.png";
-import Clitoris from "./Clitoris.png";
-import Uterus from "./Uterus.png";
-import Penis from "./Penis.png";
-import Internal from "./Internal.png";
-import Foreskin from "./Foreskin.png";
-import MobileForeskin from "./Mobile Foreskin.png";
+import FemaleOutside from "./Vulva.png";
+import FemaleInside from "./Clitoris.png";
+import Deeper from "./Uterus.png";
+import MaleOutside from "./Penis.png";
+import MaleInside from "./Internal.png";
+import TheTip from "./Foreskin.png";
+import MobileTheTip from "./Mobile Foreskin.png";
+import { DiagramIndex, Layer } from "../../lib/types";
 
-let diagrams: Record<string, string>;
-
-diagrams = {
-  Vulva,
-  Clitoris,
-  Uterus,
-  Penis,
-  Internal,
-  Foreskin,
-  "Mobile Foreskin": MobileForeskin,
+const diagrams: DiagramIndex<string> = {
+  Male: {
+    Outside: MaleOutside,
+    "The Tip": TheTip,
+    "Mobile The Tip": MobileTheTip,
+    Inside: MaleInside,
+  },
+  Female: {
+    Deeper,
+    Inside: FemaleInside,
+    Outside: FemaleOutside,
+  },
 };
 
 export default diagrams;
+
+// const diagrams: DiagramIndex = {
+//   Vulva,
+//   Clitoris,
+//   Uterus,
+//   MaleOutside,
+//   Internal,
+//   Foreskin,
+//   "Mobile Foreskin": MobileForeskin,
+// };

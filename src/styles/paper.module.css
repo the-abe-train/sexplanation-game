@@ -9,7 +9,7 @@
   height: fit-content;
   min-height: 800px;
   position: relative;
-  margin: 20px auto;
+  margin: 20px auto 10px auto;
   padding: 40px 0;
   /* 50 px for the alternative options */
   background-color: white;

@@ -1,7 +1,6 @@
-import { Part } from "../lib/types";
-import { MIDNIGHT } from "./contstants";
-
-const parts: Part[] = require("../data/parts.json");
+import { LAUNCH_DAY, MIDNIGHT } from "./contstants";
+import { parts } from "../data/parts";
+import dayjs, { Dayjs } from "dayjs";
 
 const SHUFFLE_KEY = 1337;
 
@@ -29,3 +28,5 @@ export function generateAnswer(random?: boolean) {
   const key = random ? randomKey(clueMap) : dailyKey(clueMap);
   return clueMap[key];
 }
+
+export const clueId = MIDNIGHT.diff(LAUNCH_DAY, "day");

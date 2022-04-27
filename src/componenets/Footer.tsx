@@ -1,30 +1,56 @@
-import React from "react";
-
+import Twitter from "../images/icons/twitter.svg";
+import GitHub from "../images/icons/github.svg";
+import Coffee from "../images/icons/coffee.svg";
 export default function Footer() {
   return (
-    <footer className="m-4">
-      <p>
-        From the creators of{" "}
-        <a className="underline" href="/">
-          Globle
-        </a>{" "}
-        and{" "}
-        <a href="/" className="underline">
-          A Sexplanation
-        </a>
-        .
-      </p>
-      <p>
-        View the{" "}
-        <a href="/" className="underline">
-          privacy policy
-        </a>{" "}
-        or the{" "}
-        <a href="/" className="underline">
-          open-source code
-        </a>
-        .
-      </p>
+    <footer
+      className="my-2 mx-3 sm:mx-0 flex flex-col sm:flex-row space-y-2 
+    sm:space-y-0 justify-between"
+    >
+      <div>
+        <p>
+          Check out{" "}
+          <a
+            href="https://www.herraproductions.com/a-sexplanation"
+            className="underline"
+          >
+            A Sexplanation: The Movie
+          </a>
+        </p>
+      </div>
+      <div className="my-0">
+        <p className="space-x-2 mb-2">
+          Website by{" "}
+          <a href="https://the-abe-train.com" className="underline">
+            The Abe Train
+          </a>
+          <a
+            href="https://twitter.com/theAbeTrain"
+            aria-label="Twitter"
+            className="inline"
+          >
+            <img src={Twitter} alt="twitter" className="inline" />
+          </a>
+          <a
+            className="underline"
+            href="https://github.com/the-abe-train/sexplanation-game"
+          >
+            <img src={GitHub} alt="github" className="inline" />
+          </a>
+          <a
+            className="underline"
+            href="https://www.buymeacoffee.com/theabetrain"
+          >
+            <img src={Coffee} alt="buy me a coffee" className="inline" />
+          </a>
+        </p>
+        <p>
+          Diagrams by{" "}
+          <a href="https://kyliemillward.com/" className="underline">
+            Kylie Millward
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }

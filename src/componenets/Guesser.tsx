@@ -6,14 +6,8 @@ import { Part } from "../lib/types";
 import { ModeContext } from "../context/ModeContext";
 import { diagramMatch } from "../util/maps";
 import invariant from "tiny-invariant";
-import {
-  errorRed,
-  grayMessage,
-  highlighterGreen,
-  seaGreen,
-  warmYellow,
-} from "../util/colours";
-const parts: Part[] = require("../data/parts.json");
+import { errorRed, grayMessage, seaGreen, warmYellow } from "../util/colours";
+import { parts } from "../data/parts";
 
 // Changing the button form "Enter" to "Share" when the game ends
 function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
@@ -24,7 +18,7 @@ function ButtonSwitch({ gameOver }: { gameOver: boolean }) {
   }
   return (
     <Link to="/stats">
-      <Button colour={highlighterGreen} inverted={false} size="small">
+      <Button colour={seaGreen} inverted={false} size="small">
         Share
       </Button>
     </Link>
@@ -214,8 +208,8 @@ export default function Guesser({
       )}
       {!!win && (
         <p
-          className="text-center text-green-700 font-bold my-4"
-          style={{ cursor: gameOver ? "pointer" : "auto" }}
+          className="text-center font-bold my-4"
+          style={{ cursor: gameOver ? "pointer" : "auto", color: seaGreen }}
           onClick={revealAnswer}
         >
           {win}

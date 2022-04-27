@@ -74,7 +74,7 @@ export default function Chart({ games }: Props) {
   };
   return (
     <Bar
-      className="my-8 border-[teal] border-[1px] p-2 rounded bg-white"
+      className="border-[teal] border-[1px] p-2 rounded bg-white"
       // options={options}
       options={{
         scales: {

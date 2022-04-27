@@ -1,4 +1,5 @@
 import styles from "../styles/button.module.css";
+import { seaGreen } from "../util/colours";
 
 type Props = {
   children: string;
@@ -9,8 +10,7 @@ type Props = {
   fn?: () => void;
 };
 
-const { button, buttonSmall, buttonBig, bg, bgInverted, centred, disabled } =
-  styles;
+const { button, buttonSmall, buttonBig, bg, bgInverted, centred } = styles;
 
 export default function Button({
   children,
@@ -37,7 +37,12 @@ export default function Button({
         className={inverted ? bgInverted : bg}
         style={{ backgroundColor: colour }}
       >
-        <span className={centred}>{children}</span>
+        <span
+          className={centred}
+          style={{ color: colour === seaGreen ? "white" : "black" }}
+        >
+          {children}
+        </span>
       </div>
     </button>
   );

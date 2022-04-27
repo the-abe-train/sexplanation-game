@@ -10,22 +10,28 @@ export type Answer = {
 };
 
 export type Layer =
-  | "Vulva"
-  | "Clitoris"
-  | "Uterus"
-  | "Penis"
-  | "Internal"
-  | "Foreskin";
+  | "Outside"
+  | "Inside"
+  | "The Tip"
+  | "Mobile The Tip"
+  | "Deeper";
 
 export type DiagramInfo = {
   sex: Sex;
   layer: Layer;
 };
 
+// The hardest TS I have ever written lol
+export type DiagramIndex<T> = {
+  [key in Sex]: {
+    [key in Layer]?: T;
+  };
+};
+
 export type Part = {
   name: string;
   clues: string[];
-  diagrams: Layer[];
+  diagrams: DiagramInfo[];
 };
 
 export type StoredGuesses = {

@@ -1,30 +1,21 @@
-import Penis from "./penis";
-import Foreskin from "./foreskin";
-import Internal from "./internal";
-import Uterus from "./uterus";
-import Vulva from "./vulva";
-import Clitoris from "./clitoris";
-import { Layer, PictureIndex, Sex } from "../../lib/types";
+import MaleOutside from "./penis";
+import TheTip from "./foreskin";
+import MaleInside from "./internal";
+import Deeper from "./uterus";
+import FemaleOutside from "./vulva";
+import FemaleInside from "./clitoris";
+import { DiagramIndex, PictureIndex } from "../../lib/types";
 
-// The hardest TS I have ever written lol
-type Highlight = {
-  [key in Sex]: {
-    [key in Layer]?: PictureIndex;
-  };
-};
-
-let x: Highlight;
-
-const highlights: Highlight = {
+const highlights: DiagramIndex<PictureIndex> = {
   Male: {
-    Penis,
-    Foreskin,
-    Internal,
+    Outside: MaleOutside,
+    "The Tip": TheTip,
+    Inside: MaleInside,
   },
   Female: {
-    Uterus,
-    Vulva,
-    Clitoris,
+    Deeper,
+    Inside: FemaleInside,
+    Outside: FemaleOutside,
   },
 };
 

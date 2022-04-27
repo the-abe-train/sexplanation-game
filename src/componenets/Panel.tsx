@@ -39,7 +39,7 @@ export default function Panel({
           <p
             onClick={() => {
               setSex("Female");
-              setLayer("Vulva");
+              setLayer("Outside");
               setError("");
             }}
             style={{
@@ -53,7 +53,7 @@ export default function Panel({
           <p
             onClick={() => {
               setSex("Male");
-              setLayer("Penis");
+              setLayer("Outside");
               setError("");
             }}
             style={{

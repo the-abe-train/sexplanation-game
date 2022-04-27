@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import Clue from "../componenets/Clue";
@@ -7,6 +7,12 @@ import styles from "../styles/transition.module.css";
 
 export default function Intro() {
   const [reveal, setReveal] = useState(false);
+  useEffect(() => {
+    if (reveal) {
+      localStorage.setItem("read_disclaimer", "true");
+    }
+  }, [reveal]);
+
   return (
     <main className="mt-line-height">
       <section>

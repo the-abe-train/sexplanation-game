@@ -2,7 +2,7 @@ import maleLabels from "../data/male_labels.json";
 import femaleLabels from "../data/female_labels.json";
 import { Layer } from "../lib/types";
 import { HIGH, LOW } from "../util/contstants";
-import { highlighterGreen, purple, seaGreen, teal } from "../util/colours";
+import { seaGreen, labelGray } from "../util/colours";
 
 type Props = {
   name: string;
@@ -35,7 +35,7 @@ export default function Label({
     return label.name === name && correctLayer;
   });
 
-  const colour = gameOver && answer.part === name ? seaGreen : teal;
+  const colour = gameOver && answer.part === name ? seaGreen : labelGray;
 
   if (label) {
     const { x, y, width, height, path } = label;
@@ -59,7 +59,7 @@ export default function Label({
         <path
           className="cursor-pointer"
           fill={colour}
-          stroke="black"
+          stroke={labelGray}
           strokeWidth="1"
           d={path}
         />

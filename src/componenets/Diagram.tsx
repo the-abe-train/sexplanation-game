@@ -3,12 +3,18 @@ import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
 import { BrowserView, isDesktop, isMobile } from "react-device-detect";
 import { useEffect, useState } from "react";
-import { DiagramInfo, Layer, Part } from "../lib/types";
+import { DiagramInfo, Layer, Part, Sex } from "../lib/types";
 import Label from "./Label";
 import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
 import { HIGH, LOW, SHORT, TALL } from "../util/contstants";
-const parts: Part[] = require("../data/parts.json");
+import { parts } from "../data/parts";
+import {
+  bestMatchDiagram,
+  getMatchingLabels,
+  getSharedDiagrams,
+  partOnDiagram,
+} from "../util/maps";
 
 type Props = {
   guesses: Part[];
@@ -28,12 +34,12 @@ type Props = {
 };
 
 const diagramMap: DiagramInfo[] = [
-  { sex: "Female", layer: "Vulva" },
-  { sex: "Female", layer: "Clitoris" },
-  { sex: "Female", layer: "Uterus" },
-  { sex: "Male", layer: "Foreskin" },
-  { sex: "Male", layer: "Penis" },
-  { sex: "Male", layer: "Internal" },
+  { sex: "Female", layer: "Outside" },
+  { sex: "Female", layer: "Inside" },
+  { sex: "Female", layer: "Deeper" },
+  { sex: "Male", layer: "The Tip" },
+  { sex: "Male", layer: "Outside" },
+  { sex: "Male", layer: "Inside" },
 ];
 
 export default function Diagram({
@@ -49,80 +55,81 @@ export default function Diagram({
   sex,
   setSex,
 }: Props) {
-  const [layerPng, setLayerPng] = useState(diagrams["Clitoris"]);
-  const [outlinePng, setOutlinePng] = useState(outlines["Clitoris"]);
+  const [layerPng, setLayerPng] = useState(diagrams["Female"]["Outside"]);
+  const [outlinePng, setOutlinePng] = useState(outlines["Female"]["Outside"]);
   const [showLabels, setShowLabels] = useState<string[]>([]);
   const [highlightPng, setHighlightPng] = useState("");
 
-  function getLabels(guesses: Part[], diagramName: Layer) {
-    return guesses
-      .filter((guess) => guess.diagrams.includes(diagramName))
-      .map((guess) => guess.name);
+  function otherSex(sex: Sex) {
+    return sex === "Male" ? "Female" : "Male";
   }
 
-  function changeDiagram(diagramName: Layer) {
-    const chooseDiagram =
-      isMobile && diagramName === "Foreskin" ? "Mobile Foreskin" : diagramName;
-    setLayerPng(diagrams[chooseDiagram]);
-    setOutlinePng(outlines[chooseDiagram]);
+  function changeDiagram(newDiagram: DiagramInfo) {
+    const chooseDiagram: DiagramInfo =
+      isMobile && newDiagram.layer === "The Tip"
+        ? { sex: "Male", layer: "Mobile The Tip" }
+        : newDiagram;
+    let { sex: chooseSex, layer: chooseLayer } = chooseDiagram;
+    setLayerPng(diagrams[chooseSex][chooseLayer]);
+    setOutlinePng(outlines[chooseSex][chooseLayer]);
     if (!gameOver) {
-      setShowLabels(getLabels(guesses, diagramName));
+      setShowLabels(getMatchingLabels(guesses, chooseDiagram));
     } else {
-      setShowLabels(getLabels(parts, diagramName));
+      setShowLabels(getMatchingLabels(parts, chooseDiagram));
     }
+    return chooseDiagram;
   }
 
   // When player switches highlight
   useEffect(() => {
     // Change diagram
     const highlightPart = parts.find((part) => part.name === highlight);
-    if (highlightPart) {
-      const diagramsWithPart = highlightPart.diagrams;
+    const answerPart = parts.find((part) => part.name === answer.part);
+    const currentDiagram = { sex, layer };
+    if (highlightPart && answerPart) {
+      // Empty variable that will be the diagram we must change to
+      let newDiagram: DiagramInfo | null = null;
+
+      // If the part is on the current diagram, don't change it
+      if (partOnDiagram(highlightPart, currentDiagram)) {
+        newDiagram = currentDiagram;
+      }
 
       // If the answer and the guess share a diagram, that should be the
       // diagram that it's changed to.
-      let newDiagram: Layer | null = null;
-      const answerPart = parts.find((part) => part.name === answer.part);
-      if (answerPart) {
-        newDiagram = answerPart.diagrams.filter((answerDiagram) => {
-          return diagramsWithPart.includes(answerDiagram);
-        })[0];
+      const sharedDiagrams = getSharedDiagrams(answerPart, highlightPart);
+      if (sharedDiagrams.length > 0 && !newDiagram) {
+        newDiagram = bestMatchDiagram(sharedDiagrams, currentDiagram);
       }
 
       // Otherwise, if the part is not on the current diagram, change it
-      if (!newDiagram && !diagramsWithPart.includes(layer)) {
-        newDiagram = diagramsWithPart[0];
+      if (!newDiagram) {
+        newDiagram = bestMatchDiagram(highlightPart.diagrams, currentDiagram);
       }
 
-      // Otherwise, if the part is on the current diagram, don't change it
-      const diagramName = newDiagram || layer;
-      const diagramInfo = diagramMap.find((d) => d.layer === diagramName);
-      changeDiagram(diagramName);
-      if (diagramInfo) {
-        setSex(diagramInfo.sex);
-        setLayer(diagramInfo.layer);
-        const allLayerHighlights =
-          highlights[diagramInfo.sex][diagramInfo.layer];
-        if (allLayerHighlights) {
-          setHighlightPng(allLayerHighlights[highlight]);
-        }
+      const diagramInfo = changeDiagram(newDiagram);
+      setSex(diagramInfo.sex);
+      setLayer(diagramInfo.layer);
+      const allLayerHighlights = highlights[diagramInfo.sex][diagramInfo.layer];
+      if (allLayerHighlights) {
+        setHighlightPng(allLayerHighlights[highlight]);
       }
     }
   }, [highlight]);
 
   // When player switches diagrams
   useEffect(() => {
-    changeDiagram(layer);
+    changeDiagram({ sex, layer });
     const allLayerHighlights = highlights[sex][layer];
     if (allLayerHighlights) {
       setHighlightPng(allLayerHighlights[highlight]);
     }
-  }, [layer]);
+  }, [sex, layer]);
 
   // When the game ends
   useEffect(() => {
     if (gameOver) {
-      setShowLabels(getLabels(parts, layer));
+      setShowLabels(getMatchingLabels(parts, { sex, layer }));
     }
   }, [gameOver]);
 

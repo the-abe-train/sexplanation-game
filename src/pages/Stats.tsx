@@ -7,7 +7,7 @@ import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
 import { Link } from "react-router-dom";
-import { generateAnswer } from "../util/answer";
+import { clueId, generateAnswer } from "../util/answer";
 import { mapGuessesToScore, mapNameToPart } from "../util/maps";
 
 // Photos
@@ -74,11 +74,11 @@ export default function Stats() {
   async function shareScore() {
     const answer = generateAnswer();
     const colours = mapGuessesToScore(storedParts, answer.part);
-    let shareString = `${NOW.format("DD MMMM YYYY")}
+    let shareString = `#Genitle Clue ${clueId}: ${answer.clue}
 🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
 ${colours} = ${todaysGuesses}
 
-#sexplanation`;
+Want to guess? genitle.herraproductions.com`;
     console.log(shareString);
 
     if ("canShare" in navigator && isMobile && !isFirefox) {
@@ -107,33 +107,11 @@ ${colours} = ${todaysGuesses}
   const { button, bg, photos } = styles;
 
   return (
-    <main className="sm:mt-line-height mx-3">
-      <section className="flex flex-col justify-center space-y-4 mb-8">
-        <p className="text-center">
-          Did your sex ed leave much to be desired? We decided to get a good
-          one—no matter how awkward.
-        </p>
-        <div className="relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-10">
-            <Button
-              colour="#FFC8FF"
-              size="big"
-              inverted={false}
-              fn={() => console.log(true)}
-            >
-              A Sexplanation
-            </Button>
-          </div>
-          <div className={photos}>
-            <img src={photo1} className="opacity-70" alt="Alex with lollipop" />
-            <img src={photo2} className="opacity-70" alt="Alex with lollipop" />
-            <img src={photo3} className="opacity-70" alt="Alex with lollipop" />
-            <img src={photo4} className="opacity-70" alt="Alex with lollipop" />
-          </div>
-        </div>
-      </section>
-
-      <section className="flex flex-col sm:flex-row items-center sm:items-start justify-around w-full">
+    <main className="sm:mt-line-height mx-3 space-y-9">
+      <section
+        className="flex flex-col sm:flex-row items-center sm:items-start 
+      justify-around w-full space-y-3"
+      >
         <div className="flex flex-col justify-center w-fit my-auto">
           <table className="text-base table-auto w-full">
             <tbody>
@@ -169,7 +147,6 @@ ${colours} = ${todaysGuesses}
             </p>
           )}
         </div>
-
         <div>
           <Chart games={storedStats.games} />
         </div>
@@ -187,6 +164,27 @@ ${colours} = ${todaysGuesses}
               Practice game
             </Button>
           </Link>
+        </div>
+      </section>
+      <section className="flex flex-col justify-center space-y-4 mb-8">
+        <p className="text-center">
+          Did your sex ed leave much to be desired? We decided to get a good
+          one—no matter how awkward.
+        </p>
+        <div className="relative">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-10">
+            <Button
+              colour="#FFC8FF"
+              size="big"
+              inverted={false}
+              fn={() => console.log(true)}
+            >
+              Watch how
+            </Button>
+          </div>
+          <div className={photos}>
+            <img src={photo2} alt="Alex at the park" />
+          </div>
         </div>
       </section>
     </main>

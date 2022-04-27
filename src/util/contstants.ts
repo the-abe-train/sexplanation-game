@@ -12,5 +12,8 @@ export const HIGH = "-3rem";
 export const LOW = "-5rem";
 
 // Time constants
-export const NOW = dayjs();
-export const MIDNIGHT = NOW.tz("America/Toronto").endOf("day");
+export const NOW = dayjs().tz("America/Toronto");
+export const MIDNIGHT = NOW.endOf("day");
+export const LAUNCH_DAY = dayjs("2022-01-01")
+  .tz("America/Toronto")
+  .endOf("day");
