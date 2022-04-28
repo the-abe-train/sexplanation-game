@@ -1,6 +1,7 @@
 import Twitter from "../images/icons/twitter.svg";
 import GitHub from "../images/icons/github.svg";
 import Coffee from "../images/icons/coffee.svg";
+import Instagram from "../images/icons/instagram.svg";
 export default function Footer() {
   return (
     <footer
@@ -44,10 +45,16 @@ export default function Footer() {
             <img src={Coffee} alt="buy me a coffee" className="inline" />
           </a>
         </p>
-        <p>
+        <p className="space-x-2 mb-2">
           Diagrams by{" "}
           <a href="https://kyliemillward.com/" className="underline">
             Kylie Millward
+          </a>
+          <a
+            className="underline"
+            href="https://www.instagram.com/kyliemillward/"
+          >
+            <img src={Instagram} alt="instagram" className="inline" />
           </a>
         </p>
       </div>
