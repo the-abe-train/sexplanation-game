@@ -8,7 +8,7 @@ export default function Paper({ children }: any) {
     <div className={styles.paper}>
       <div className={styles.pattern}>
         <header className={styles.header}>
-          <Link to="/">
+          <Link to="/" data-testid="home-icon">
             <Home className="mb-2 h-4" />
           </Link>
           {/* <div className="flex flex-col"> */}

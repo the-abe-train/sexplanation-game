@@ -54,6 +54,7 @@ export default function Intro() {
                   colour="#FFC8FF"
                   inverted={false}
                   size="medium"
+                  data-testid="reveal-btn"
                 />
               </Link>
             </div>
