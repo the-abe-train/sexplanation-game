@@ -227,7 +227,10 @@ export const parts: Part[] = [
     clues: [
       "Named after the Latin word for tail, this organ is often mistaken for a muscle.",
     ],
-    diagrams: [{ sex: "Male", layer: "Inside" }],
+    diagrams: [
+      { sex: "Male", layer: "Inside" },
+      { sex: "Male", layer: "Outside" },
+    ],
   },
   {
     name: "Glans penis",
@@ -308,5 +311,10 @@ export const parts: Part[] = [
       { sex: "Female", layer: "Outside" },
       { sex: "Male", layer: "Inside" },
     ],
+  },
+  {
+    name: "Bulbourethral gland",
+    clues: [],
+    diagrams: [{ sex: "Male", layer: "Inside" }],
   },
 ];

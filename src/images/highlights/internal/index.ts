@@ -13,6 +13,7 @@ import SeminalVesicle from "./Seminal vesicle.png";
 import Rectum from "./Rectum.png";
 import Perineum from "./Perineum.png";
 import Scrotum from "./Scrotum.png";
+import BulbourethralGland from "./Bulbourethral gland.png";
 import { PictureIndex } from "../../../lib/types";
 
 const highlights: PictureIndex = {
@@ -30,6 +31,7 @@ const highlights: PictureIndex = {
   Rectum,
   Perineum,
   Scrotum,
+  "Bulbourethral gland": BulbourethralGland,
 };
 
 export default highlights;

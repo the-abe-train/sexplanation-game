@@ -17,7 +17,6 @@ type Props = {
   };
 };
 
-// TODO ask Kylie to add Bulbourethral gland to the Internal diagram
 // TODO ask Kylie to rename the Skene's gland to the Paraurethral glands
 
 export default function Label({

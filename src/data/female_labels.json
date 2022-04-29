@@ -1,7 +1,7 @@
 [
   {
     "name": "Clitoral glans",
-    "layer": "Clitoris",
+    "layer": "Inside",
     "x": 779,
     "y": 845,
     "width": 1598,
@@ -66,7 +66,7 @@
   },
   {
     "name": "Urethra",
-    "layer": "Vulva",
+    "layer": "Outside",
     "x": 466,
     "y": 1460,
     "width": 1916,
@@ -75,7 +75,7 @@
   },
   {
     "name": "Urethra",
-    "layer": "Clitoris",
+    "layer": "Inside",
     "x": 2498,
     "y": 1847,
     "width": 1581,
@@ -172,7 +172,7 @@
   },
   {
     "name": "Vagina",
-    "layer": "Uterus",
+    "layer": "Deeper",
     "x": 2425,
     "y": 1916,
     "width": 991,
@@ -181,7 +181,7 @@
   },
   {
     "name": "Vagina",
-    "layer": "Clitoris",
+    "layer": "Inside",
     "x": 810,
     "y": 2205,
     "width": 1533,

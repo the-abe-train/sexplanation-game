@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
 import { Part } from "../lib/types";
 import { ModeContext } from "../context/ModeContext";
-import { diagramMatch } from "../util/maps";
+import { getSharedDiagrams } from "../util/maps";
 import invariant from "tiny-invariant";
 import { errorRed, grayMessage, seaGreen, warmYellow } from "../util/colours";
 import { parts } from "../data/parts";
@@ -164,7 +164,7 @@ export default function Guesser({
       return guess.name === answer.part;
     });
     invariant(answerPart, "Error mapping local storage to parts list");
-    const correctDiagram = diagramMatch(answerPart, validGuess);
+    const correctDiagram = getSharedDiagrams(answerPart, validGuess);
     if (correctDiagram) {
       setError(`It's not ${guessName}, but this diagram has the part!`);
       setErrorColour(warmYellow);

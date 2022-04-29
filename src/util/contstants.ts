@@ -14,7 +14,6 @@ export const LOW = "-5rem";
 // Time constants
 const testDate = process.env.TEST_DATE ? dayjs(process.env.TEST_DATE) : null;
 export const NOW = testDate || dayjs().tz("America/Toronto");
-console.log("Test date", process.env.TEST_DATE);
 export const MIDNIGHT = NOW.endOf("day");
 export const LAUNCH_DAY = dayjs("2022-01-01")
   .tz("America/Toronto")

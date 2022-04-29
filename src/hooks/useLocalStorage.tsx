@@ -7,8 +7,6 @@ interface IStorage extends Object {
   expiration?: Dayjs;
 }
 
-// TODO check if solved: guesses is not resetting on a new day
-
 function getStorageValue<T>(key: string, defaultValue: T): T {
   const saved = localStorage.getItem(key);
   if (saved) {

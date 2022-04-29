@@ -10,24 +10,6 @@ export function mapNameToPart(names: string[]) {
   });
 }
 
-export function diagramMatch(answerPart: Part, guessPart: Part) {
-  return !!answerPart?.diagrams.some((answerDiagram) => {
-    return guessPart.diagrams.includes(answerDiagram);
-  });
-}
-
-export function mapGuessesToScore(guesses: Part[], answerName: string) {
-  const answerPart = parts.find((part) => answerName === part.name);
-  invariant(answerPart, "Error mapping local storage to parts list");
-  const colours = guesses.map((guess) => {
-    let colour: string;
-    colour = diagramMatch(answerPart, guess) ? "🟨" : "🟥";
-    colour = guess.name === answerPart.name ? "🟩" : colour;
-    return colour;
-  });
-  return colours.join("");
-}
-
 // Given 2 parts, if they have any diagrams in common, return them
 export function getSharedDiagrams(part1: Part, part2: Part) {
   return part1.diagrams.filter((diagram1) => {
@@ -37,20 +19,31 @@ export function getSharedDiagrams(part1: Part, part2: Part) {
   });
 }
 
+export function mapGuessesToScore(guesses: Part[], answerName: string) {
+  const answerPart = parts.find((part) => answerName === part.name);
+  invariant(answerPart, "Error mapping local storage to parts list");
+  const colours = guesses.map((guess) => {
+    let colour: string;
+    colour = getSharedDiagrams(answerPart, guess) ? "🟨" : "🟥";
+    colour = guess.name === answerPart.name ? "🟩" : colour;
+    return colour;
+  });
+  return colours.join("");
+}
+
 // Given any number of guesses and a diagram, return the names of all guesses
 // that are on that diagram
 export function getMatchingLabels(guesses: Part[], diagram: DiagramInfo) {
   const showLabels = guesses
-    .filter((guess) =>
-      guess.diagrams.some((guessDiagram) => {
+    .filter((guess) => {
+      return guess.diagrams.some((guessDiagram) => {
         return (
           guessDiagram.sex === diagram.sex &&
           guessDiagram.layer === diagram.layer
         );
-      })
-    )
+      });
+    })
     .map((guess) => guess.name);
-  // console.log("show labels", showLabels);
   return showLabels;
 }
 

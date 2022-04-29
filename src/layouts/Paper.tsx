@@ -3,6 +3,7 @@ import { ReactComponent as Home } from "../images/icons/home.svg";
 import { ReactComponent as Stats } from "../images/icons/stats.svg";
 import { Link } from "react-router-dom";
 
+// TODO clicking on header during practice mode should properly exit practice mode
 export default function Paper({ children }: any) {
   return (
     <div className={styles.paper}>

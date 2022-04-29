@@ -60,10 +60,6 @@ export default function Diagram({
   const [showLabels, setShowLabels] = useState<string[]>([]);
   const [highlightPng, setHighlightPng] = useState("");
 
-  function otherSex(sex: Sex) {
-    return sex === "Male" ? "Female" : "Male";
-  }
-
   function changeDiagram(newDiagram: DiagramInfo) {
     const chooseDiagram: DiagramInfo =
       isMobile && newDiagram.layer === "The Tip"
@@ -117,6 +113,8 @@ export default function Diagram({
     }
   }, [highlight]);
 
+  useEffect(() => console.log(highlightPng), [highlightPng]);
+
   // When player switches diagrams
   useEffect(() => {
     changeDiagram({ sex, layer });
@@ -145,7 +143,13 @@ export default function Diagram({
   }, [loadedLayer, loadedOutline, loadedHighlight, outlinePng, highlightPng]);
 
   // Minimizing empty space
-  const outlierLabels = ["Vulva", "Perineum", "Sperm", "Efferent ducts"];
+  const outlierLabels = [
+    "Vulva",
+    "Perineum",
+    "Sperm",
+    "Efferent ducts",
+    "Mons pubis",
+  ];
   const [expanded, setExpanded] = useState(false);
   useEffect(() => {
     const outliersExist = showLabels.some((showLabel) => {

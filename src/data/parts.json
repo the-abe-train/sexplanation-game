@@ -15,7 +15,7 @@
     "diagrams": [{ "sex": "Female", "layer": "Deeper" }]
   },
   {
-    "name": { "sex": "Female", "layer": "Deeper" },
+    "name": "Uterus",
     "clues": ["This muscular organ can stretch to the size of a watermelon."],
     "diagrams": [{ "sex": "Female", "layer": "Deeper" }]
   },
@@ -93,7 +93,7 @@
     "diagrams": [{ "sex": "Female", "layer": "Outside" }]
   },
   {
-    "name": { "sex": "Female", "layer": "Inside" },
+    "name": "Clitoris",
     "clues": [
       "This is the only part of the human body that's devoted entirely to pleasure.",
       "It wasn't until 2009 that scientists fully mapped this part's anatomy—which might not surprise you when you consider its function."
@@ -153,7 +153,7 @@
     ]
   },
   {
-    "name": { "sex": "Female", "layer": "Outside" },
+    "name": "Vulva",
     "clues": [
       "Derived from the Latin word for wrapper or covering, this term refers to all the female external organs, but is often mislabelled as the vagina."
     ],
@@ -170,7 +170,6 @@
     ]
   },
   { "name": "Rete testis", "clues": [], "diagrams": [] },
-
   {
     "name": "Efferent ducts",
     "clues": [
@@ -221,11 +220,14 @@
     ]
   },
   {
-    "name": { "sex": "Male", "layer": "Outside" },
+    "name": "Penis",
     "clues": [
       "Named after the Latin word for tail, this organ is often mistaken for a muscle."
     ],
-    "diagrams": [{ "sex": "Male", "layer": "Inside" }]
+    "diagrams": [
+      { "sex": "Male", "layer": "Inside" },
+      { "sex": "Male", "layer": "Outside" }
+    ]
   },
   {
     "name": "Glans penis",
@@ -253,7 +255,7 @@
     "clues": [
       "This highly sensitive fold is a major erogenous zone and secures two parts together, much like the fold under the tongue anchors it to the mouth."
     ],
-    "diagrams": [{ "sex": "Male", "layer": "Outside" }]
+    "diagrams": []
   },
   {
     "name": "Uterine lining",
