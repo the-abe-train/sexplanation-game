@@ -1,6 +1,5 @@
 import { LAUNCH_DAY, MIDNIGHT } from "./contstants";
 import { parts } from "../data/parts";
-import dayjs, { Dayjs } from "dayjs";
 
 const SHUFFLE_KEY = 1337;
 

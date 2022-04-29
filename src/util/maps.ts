@@ -83,6 +83,5 @@ export function bestMatchDiagram(
       return 1;
     }
   });
-  console.log("Order", order);
   return order[0];
 }
