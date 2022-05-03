@@ -1,12 +1,9 @@
-import { LAUNCH_DAY, MIDNIGHT } from "./contstants";
+import { LAUNCH_DAY, MIDNIGHT, SHUFFLE_KEY } from "./contstants";
 import { parts } from "../data/parts";
 
-// Test the answer order, make sure it doesn't repeat
-const SHUFFLE_KEY = 1337;
-
-function dailyKey(list: any[]) {
+function dailyKey(shuffleKey: string, list: any[]) {
   const dayCode = MIDNIGHT.unix();
-  const key = Math.floor(dayCode / parseInt(SHUFFLE_KEY + "5")) % list.length;
+  const key = Math.floor(dayCode / parseInt(shuffleKey)) % list.length;
   return key;
 }
 
@@ -25,7 +22,8 @@ const clueMap = clues.map((clue) => {
 });
 
 export function generateAnswer(random?: boolean) {
-  const key = random ? randomKey(clueMap) : dailyKey(clueMap);
+  const key = random ? randomKey(clueMap) : dailyKey(SHUFFLE_KEY, clueMap);
+  console.log("Answer", clueMap[key]);
   return clueMap[key];
 }
 

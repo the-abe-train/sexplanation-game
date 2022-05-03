@@ -14,9 +14,10 @@ export const HIGH = "-3rem";
 export const LOW = "-5rem";
 
 // Time constants
-const testDate = process.env.TEST_DATE ? dayjs(process.env.TEST_DATE) : null;
-export const NOW = testDate || dayjs().tz("America/Toronto");
+export const NOW = dayjs().tz("America/Toronto");
 export const MIDNIGHT = NOW.endOf("day");
-export const LAUNCH_DAY = dayjs("2022-01-01")
+export const LAUNCH_DAY = dayjs("2022-05-11")
   .tz("America/Toronto")
   .endOf("day");
+
+export const SHUFFLE_KEY = process.env.REACT_APP_SHUFFLE_KEY || "1337";
