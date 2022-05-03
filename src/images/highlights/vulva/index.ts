@@ -6,7 +6,7 @@ import LabiaMajora from "./Labia Majora.png";
 import LabiaMinora from "./Labia Minora.png";
 import PubicHair from "./Pubic Hair.png";
 import Rectum from "./Rectum.png";
-import SkenesGlands from "./Skene's Glands.png";
+import ParaurethralGlands from "./Paraurethral Glands.png";
 import Urethra from "./Urethra.png";
 import VaginalOpening from "./Vaginal Opening.png";
 import Hymen from "./Hymen.png";
@@ -26,7 +26,7 @@ const highlights: PictureIndex = {
   "Pubic hair": PubicHair,
   Hymen,
   Rectum,
-  "Skene's glands": SkenesGlands,
+  "Paraurethral glands": ParaurethralGlands,
   Urethra,
   "Vaginal opening": VaginalOpening,
   Vulva,

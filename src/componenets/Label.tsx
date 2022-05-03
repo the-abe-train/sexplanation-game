@@ -17,8 +17,6 @@ type Props = {
   };
 };
 
-// TODO ask Kylie to rename the Skene's gland to the Paraurethral glands
-
 export default function Label({
   name,
   setHighlight,

@@ -1,6 +1,7 @@
 import { LAUNCH_DAY, MIDNIGHT } from "./contstants";
 import { parts } from "../data/parts";
 
+// Test the answer order, make sure it doesn't repeat
 const SHUFFLE_KEY = 1337;
 
 function dailyKey(list: any[]) {

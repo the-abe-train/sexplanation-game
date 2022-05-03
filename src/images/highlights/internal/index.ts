@@ -5,7 +5,7 @@ import Penis from "./Penis.png";
 import Urethra from "./Urethra.png";
 import Epididymis from "./Epididymis.png";
 import Sperm from "./Sperm.png";
-import Testis from "./Testis.png";
+import Testicles from "./Testicles.png";
 import EfferentDucts from "./Efferent ducts.png";
 import VasDeferens from "./Vas deferens.png";
 import Anus from "./Anus.png";
@@ -23,7 +23,7 @@ const highlights: PictureIndex = {
   Penis,
   Epididymis,
   Sperm,
-  Testis,
+  Testicles,
   "Efferent ducts": EfferentDucts,
   "Vas deferens": VasDeferens,
   Anus,

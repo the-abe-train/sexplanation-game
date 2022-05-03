@@ -24,7 +24,7 @@ export function mapGuessesToScore(guesses: Part[], answerName: string) {
   invariant(answerPart, "Error mapping local storage to parts list");
   const colours = guesses.map((guess) => {
     let colour: string;
-    colour = getSharedDiagrams(answerPart, guess) ? "🟨" : "🟥";
+    colour = getSharedDiagrams(answerPart, guess).length > 0 ? "🟨" : "🟥";
     colour = guess.name === answerPart.name ? "🟩" : colour;
     return colour;
   });
@@ -62,6 +62,8 @@ export function bestMatchDiagram(
   diagrams: DiagramInfo[],
   currentDiagram: DiagramInfo
 ) {
+  // If no diagrams passed to "diagrams", just return current diagram
+  if (diagrams.length === 0) return currentDiagram;
   const { sex, layer } = currentDiagram;
   const order = diagrams.sort((a, z) => {
     if (a.sex === sex && a.layer === layer) {

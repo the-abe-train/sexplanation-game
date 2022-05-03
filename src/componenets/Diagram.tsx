@@ -65,6 +65,7 @@ export default function Diagram({
       isMobile && newDiagram.layer === "The Tip"
         ? { sex: "Male", layer: "Mobile The Tip" }
         : newDiagram;
+    console.log("Choose diagram", chooseDiagram);
     let { sex: chooseSex, layer: chooseLayer } = chooseDiagram;
     setLayerPng(diagrams[chooseSex][chooseLayer]);
     setOutlinePng(outlines[chooseSex][chooseLayer]);

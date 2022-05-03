@@ -34,6 +34,8 @@ export const parts: Part[] = [
     name: "Vagina",
     clues: [
       "People often misuse the name of this part to describe external sex organs, but it's actually an exclusively internal structure.",
+      "This self-cleaning organ is naturally acidic—and any discharge at the end of the day is usually the result of its cleaning efforts.",
+      "This organ produces a compound called squalene as a lubricant—which is also found in shark livers to control buoyancy.",
     ],
     diagrams: [
       { sex: "Female", layer: "Deeper" },
@@ -49,11 +51,14 @@ export const parts: Part[] = [
   },
   {
     name: "Gartner's duct",
-    clues: [],
+    clues: [
+      "First described by a Danish military surgeon in 1822, this vestigial structure develops into painful cysts in 1% of women.",
+      "Only 25% of women end up developing this vestigial structure—which can give rise to painful cysts.",
+    ],
     diagrams: [{ sex: "Female", layer: "Deeper" }],
   },
   {
-    name: "Skene's glands",
+    name: "Paraurethral glands",
     clues: [
       'This part produces a milky fluid that lubricates the urethral opening—and it\'s hypothesized to be the source of the "G-spot" named after Dr. Ernst Gräfenberg.',
     ],
@@ -64,7 +69,10 @@ export const parts: Part[] = [
     clues: [
       "When empty this organ is about the size of a pear—but can expand to three times the size.",
     ],
-    diagrams: [{ sex: "Male", layer: "Inside" }],
+    diagrams: [
+      { sex: "Male", layer: "Inside" },
+      { sex: "Female", layer: "Deeper" },
+    ],
   },
   {
     name: "Urethra",
@@ -92,7 +100,10 @@ export const parts: Part[] = [
     clues: [
       "These flaps of skin are often omitted from art and pornography—and there is a rise in surgeries to have them removed.",
     ],
-    diagrams: [{ sex: "Female", layer: "Outside" }],
+    diagrams: [
+      { sex: "Female", layer: "Outside" },
+      { sex: "Female", layer: "Deeper" },
+    ],
   },
   {
     name: "Clitoris",
@@ -111,12 +122,17 @@ export const parts: Part[] = [
   },
   {
     name: "Clitoral glans",
-    clues: [],
+    clues: [
+      "With over 8,000 nerve endings—and only the size and shape of a pea—this is one of the most sensitive parts on a human.",
+      "It's like the highly sensitive tip of an iceberg—the only visible part of an organ that's actually mostly under the surface.",
+    ],
     diagrams: [{ sex: "Female", layer: "Inside" }],
   },
   {
     name: "Clitoral crura",
-    clues: [],
+    clues: [
+      `These muscular "legs" become engorged with blood during sexual arousal, helping increase lubrication.`,
+    ],
     diagrams: [{ sex: "Female", layer: "Inside" }],
   },
   {
@@ -130,6 +146,7 @@ export const parts: Part[] = [
     name: "Egg",
     clues: [
       "This is larger than any other cell in the human body—you can see one with the naked eye.",
+      "At birth, about half the human population has around two million of these in their body—and will produce no more.",
     ],
     diagrams: [{ sex: "Female", layer: "Deeper" }],
   },
@@ -157,21 +174,19 @@ export const parts: Part[] = [
   {
     name: "Vulva",
     clues: [
-      "Derived from the Latin word for wrapper or covering, this term refers to all the female external organs, but is often mislabelled as the vagina.",
+      "Derived from the Latin word for wrapper or covering, this term refers to all the cis female external organs, but is often mislabelled as the vagina.",
+      `It's not the vagina—but culturally the term "vagina" has become synonymous with this part.`,
     ],
     diagrams: [{ sex: "Female", layer: "Outside" }],
   },
   {
-    name: "Testis",
+    name: "Testicles",
     clues: [
       "These organs can double in size during sex and are named as a testament to virility. ",
     ],
-    diagrams: [
-      { sex: "Male", layer: "Inside" },
-      { sex: "Male", layer: "Outside" },
-    ],
+    diagrams: [{ sex: "Male", layer: "Inside" }],
   },
-  { name: "Rete testis", clues: [], diagrams: [] },
+  { name: "Rete Testicles", clues: [], diagrams: [] },
 
   {
     name: "Efferent ducts",
@@ -226,10 +241,12 @@ export const parts: Part[] = [
     name: "Penis",
     clues: [
       "Named after the Latin word for tail, this organ is often mistaken for a muscle.",
+      "Unlike most other mammals, this organ in humans contains no bones—despite a commonly used slang term.",
     ],
     diagrams: [
       { sex: "Male", layer: "Inside" },
       { sex: "Male", layer: "Outside" },
+      { sex: "Male", layer: "The Tip" },
     ],
   },
   {
@@ -237,7 +254,10 @@ export const parts: Part[] = [
     clues: [
       "A tip: this structure is ahead of all others as the source of penile sexual pleasure.",
     ],
-    diagrams: [{ sex: "Male", layer: "Outside" }],
+    diagrams: [
+      { sex: "Male", layer: "Outside" },
+      { sex: "Male", layer: "The Tip" },
+    ],
   },
   {
     name: "Foreskin",
@@ -257,8 +277,10 @@ export const parts: Part[] = [
     name: "Frenulum",
     clues: [
       "This highly sensitive fold is a major erogenous zone and secures two parts together, much like the fold under the tongue anchors it to the mouth.",
+      "This is considered the most sensitive part of the penis to light and soft touch—a source  of distinct pleasure.",
+      "Even those with spinal cord injuries feel pleasure when this part is stimulated—and can even achieve orgasm.",
     ],
-    diagrams: [{ sex: "Male", layer: "Outside" }],
+    diagrams: [{ sex: "Male", layer: "The Tip" }],
   },
   {
     name: "Uterine lining",
@@ -267,7 +289,11 @@ export const parts: Part[] = [
   },
   {
     name: "Pubic hair",
-    clues: ["Its appearance is one of the first signifiers of puberty."],
+    clues: [
+      "Its appearance is one of the first signifiers of puberty.",
+      "In a 2015 study, 95% of all people reported removing this part once in the previous four weeks.",
+      "In 2008, one study found 82% of gay men removed this part—it was 66% for straight men. (For women, 76%.)",
+    ],
     diagrams: [
       { sex: "Female", layer: "Outside" },
       { sex: "Male", layer: "Outside" },
@@ -290,7 +316,10 @@ export const parts: Part[] = [
     clues: [
       "This part is made of three columns of erectile tissues and contains the urethra.",
     ],
-    diagrams: [{ sex: "Male", layer: "Outside" }],
+    diagrams: [
+      { sex: "Male", layer: "Outside" },
+      { sex: "Male", layer: "The Tip" },
+    ],
   },
   {
     name: "Mons pubis",
@@ -316,5 +345,21 @@ export const parts: Part[] = [
     name: "Bulbourethral gland",
     clues: [],
     diagrams: [{ sex: "Male", layer: "Inside" }],
+  },
+  {
+    name: "Brain",
+    clues: [
+      "This is your most important sexual organ—no matter your body type.",
+      "This organ controls your sexual response—and is where your fantasies lie.",
+    ],
+    diagrams: [],
+  },
+  {
+    name: "Skin",
+    clues: [
+      "This is the largest organ of your sexual anatomy. With millions of sensitive nerves, nothing else comes close.",
+      "The key organ when it comes to touch, a slight contact with this organ may be all you need for a sexual thrill.",
+    ],
+    diagrams: [],
   },
 ];

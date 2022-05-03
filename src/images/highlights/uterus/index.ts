@@ -6,6 +6,8 @@ import Vagina from "./Vagina.png";
 import GartnersDuct from "./Gartner's Duct.png";
 import Egg from "./Egg.png";
 import Uterus from "./Uterus.png";
+import LabiaMinora from "./Labia Minora.png";
+import Bladder from "./Bladder.png";
 import { PictureIndex } from "../../../lib/types";
 
 const highlights: PictureIndex = {
@@ -17,6 +19,8 @@ const highlights: PictureIndex = {
   "Gartner's duct": GartnersDuct,
   Egg,
   Uterus,
+  "Labia minora": LabiaMinora,
+  Bladder,
 };
 
 export default highlights;

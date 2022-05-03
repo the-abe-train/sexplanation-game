@@ -14,7 +14,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
 import { mapNameToPart } from "../util/maps";
 import Button from "../componenets/Button";
-import { orange, purple, teal } from "../util/colours";
+import { orange, teal } from "../util/colours";
 import { MIDNIGHT, NOW } from "../util/contstants";
 
 dayjs.extend(utc);

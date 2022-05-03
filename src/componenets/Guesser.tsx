@@ -159,24 +159,29 @@ export default function Guesser({
       return;
     }
 
+    // New guess has no diagram (brain or skin)
+    if (validGuess.diagrams.length === 0) {
+      setError(`${guessName} isn't on our diagrams, but it is a sexual organ!`);
+      setErrorColour(warmYellow);
+      return validGuess;
+    }
+
     // Correct diagram
     const answerPart = parts.find((guess) => {
       return guess.name === answer.part;
     });
     invariant(answerPart, "Error mapping local storage to parts list");
-    const correctDiagram = getSharedDiagrams(answerPart, validGuess);
-    if (correctDiagram) {
+    const sharedDiagrams = getSharedDiagrams(answerPart, validGuess);
+    console.log("Shared diagrams", sharedDiagrams);
+    if (sharedDiagrams.length > 0) {
       setError(`It's not ${guessName}, but this diagram has the part!`);
       setErrorColour(warmYellow);
       return validGuess;
     }
 
     // Incorrect diagram
-    if (!correctDiagram) {
-      setError(`Not quite! You have ${5 - guesses.length} guesses left.`);
-      setErrorColour(errorRed);
-      return validGuess;
-    }
+    setError(`Not quite! You have ${5 - guesses.length} guesses left.`);
+    setErrorColour(errorRed);
     return validGuess;
   }
 

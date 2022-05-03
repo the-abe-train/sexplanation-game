@@ -94,12 +94,3 @@
 button:hover {
   box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
 }
-
-.photos {
-  color: black;
-  mask-image: url(../images/stroke_inverted.png);
-  mask-size: 200%;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  opacity: 90%;
-}
