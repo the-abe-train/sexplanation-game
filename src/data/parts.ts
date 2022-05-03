@@ -219,13 +219,6 @@ export const parts: Part[] = [
     diagrams: [{ sex: "Male", layer: "Inside" }],
   },
   {
-    name: "Cowper's gland",
-    clues: [
-      'This part can produce up to 4 ml of a lubricant you might call "pre-cum" during sexual arousal.',
-    ],
-    diagrams: [],
-  },
-  {
     name: "Scrotum",
     clues: [
       "The main function of this stretchy structure? Temperature regulation.",
@@ -341,7 +334,9 @@ export const parts: Part[] = [
   },
   {
     name: "Bulbourethral gland",
-    clues: [],
+    clues: [
+      'This part can produce up to 4 ml of a lubricant you might call "pre-cum" during sexual arousal.',
+    ],
     diagrams: [{ sex: "Male", layer: "Inside" }],
   },
   {
