@@ -65,7 +65,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   color: black;
-  mask-image: url(../images/stroke.png);
+  mask-image: url(../images/backgrounds/stroke.png);
   mask-size: 150%;
   width: 100%;
   height: 100%;
@@ -81,7 +81,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   color: black;
-  mask-image: url(../images/stroke_inverted.png);
+  mask-image: url(../images/backgrounds/stroke_inverted.png);
   mask-size: 115%;
   width: 100%;
   height: 100%;

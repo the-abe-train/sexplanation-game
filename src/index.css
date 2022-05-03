@@ -6,7 +6,8 @@
 
 body {
   background: linear-gradient(#ffffff70, #ffffff80),
-    radial-gradient(ellipse, #f6e1ecc0, #f77dbec0), url("./images/wood.jpg");
+    radial-gradient(ellipse, #f6e1ecc0, #f77dbec0),
+    url("./images/backgrounds/wood.jpg");
   background-size: cover;
   min-height: 100vh;
 }
