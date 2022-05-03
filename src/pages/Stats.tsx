@@ -167,7 +167,7 @@ Want to guess? genitle.herraproductions.com`;
           one—no matter how awkward.
         </p>
         <div className="relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-transparent z-10">
             <Button
               colour="#FFC8FF"
               size="big"
