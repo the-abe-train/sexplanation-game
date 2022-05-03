@@ -23,7 +23,6 @@ const clueMap = clues.map((clue) => {
 
 export function generateAnswer(random?: boolean) {
   const key = random ? randomKey(clueMap) : dailyKey(SHUFFLE_KEY, clueMap);
-  console.log("Answer", clueMap[key]);
   return clueMap[key];
 }
 
