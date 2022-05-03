@@ -9,12 +9,7 @@ import Chart from "../componenets/Chart";
 import { Link } from "react-router-dom";
 import { clueId, generateAnswer } from "../util/answer";
 import { mapGuessesToScore, mapNameToPart } from "../util/maps";
-
-// Photos
-import photo1 from "../images/photos/ASEXPLANATION_STILL_ALEXLIU.jpg";
-import photo2 from "../images/photos/ASEXPLANATION_STILL_ANATOMYQUIZ.jpg";
-import photo3 from "../images/photos/ASEXPLANATION_STILL_NEURO.jpg";
-import photo4 from "../images/photos/ASEXPLANATION_STILL_TITLECARD.jpg";
+import photo from "../images/photos/Genitle-with-tape.png";
 
 // Styles
 import styles from "../styles/button.module.css";
@@ -183,7 +178,7 @@ Want to guess? genitle.herraproductions.com`;
             </Button>
           </div>
           <div className={photos}>
-            <img src={photo2} alt="Alex at the park" />
+            <img src={photo} alt="Alex at the park" />
           </div>
         </div>
       </section>
