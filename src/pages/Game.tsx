@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -48,7 +48,7 @@ export default function Game() {
     if (!readDisclaimer) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   // Guesses from local storage
   const expiration = MIDNIGHT;
@@ -82,20 +82,21 @@ export default function Game() {
   const [win, setWin] = useState(initialWin);
 
   // Storing new stats when the game ends
+  const storedStatsCopy = useMemo(() => storedStats, [storedStats]);
   useEffect(() => {
-    const lastGameDate = dayjs(storedStats.lastGame)
+    const lastGameDate = dayjs(storedStatsCopy.lastGame)
       .tz("America/Toronto")
       .endOf("day");
     const newGame = lastGameDate < NOW;
     if (win && newGame) {
       const lastGame = NOW;
-      const gamesWon = storedStats.gamesWon + 1;
-      const currentStreak = storedStats.currentStreak + 1;
+      const gamesWon = storedStatsCopy.gamesWon + 1;
+      const currentStreak = storedStatsCopy.currentStreak + 1;
       const maxStreak =
-        currentStreak > storedStats.maxStreak
+        currentStreak > storedStatsCopy.maxStreak
           ? currentStreak
-          : storedStats.maxStreak;
-      const usedGuesses = [...storedStats.usedGuesses, guesses.length];
+          : storedStatsCopy.maxStreak;
+      const usedGuesses = [...storedStatsCopy.usedGuesses, guesses.length];
       const chunks = [];
       for (let i = 0; i < guesses.length; i += 8) {
         chunks.push([...guesses].slice(i, i + 8));
@@ -105,7 +106,7 @@ export default function Game() {
         win: !!win,
         date: NOW,
       };
-      const games = [...storedStats.games, game];
+      const games = [...storedStatsCopy.games, game];
       const newStats = {
         lastGame,
         gamesWon,
@@ -116,14 +117,14 @@ export default function Game() {
       };
       storeStats(newStats);
     } else if (gameOver && newGame) {
-      const { gamesWon, maxStreak } = storedStats;
-      const usedGuesses = [...storedStats.usedGuesses, guesses.length];
+      const { gamesWon, maxStreak } = storedStatsCopy;
+      const usedGuesses = [...storedStatsCopy.usedGuesses, guesses.length];
       const game = {
         guesses: guesses.length,
         win: false,
         date: NOW,
       };
-      const games = [...storedStats.games, game];
+      const games = [...storedStatsCopy.games, game];
       const newStats = {
         lastGame: NOW,
         gamesWon,
@@ -134,7 +135,7 @@ export default function Game() {
       };
       storeStats(newStats);
     }
-  }, [win, storeStats, guesses, gameOver]);
+  }, [win, storeStats, storedStatsCopy, guesses, gameOver]);
 
   // When there's a new guess, update the local storage guesses
   useEffect(() => {
@@ -144,19 +145,20 @@ export default function Game() {
         guesses: guesses.map((guess) => guess.name),
       });
     }
-  }, [guesses]);
+  }, [guesses, practiceMode, storeGuesses]);
 
   // When the game is over
   useEffect(() => {
     if (gameOver) {
       setHighlight(answer.part);
     }
-  }, [gameOver]);
+  }, [gameOver, answer]);
 
   // Practice mode
   function enterPracticeMode() {
     const practiceAnswer = generateAnswer(true);
     localStorage.setItem("practice", JSON.stringify(practiceAnswer));
+    window.location.reload();
   }
 
   // Props to pass to Guesser
@@ -193,7 +195,7 @@ export default function Game() {
       <Guesser {...guesserProps} />
       <Diagram {...diagramProps} />
       <Clue answer={answer} />
-      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-line-height">
+      <ul className="grid grid-cols-3 md:grid-cols-4 gap-x-3 mt-[13px]">
         {guesses.map(({ name, diagrams }) => {
           const layers = diagrams.map((diagram) => diagram.layer);
           const sexes = diagrams.map((diagram) => diagram.sex);
@@ -224,11 +226,11 @@ export default function Game() {
         })}
       </ul>
 
-      <p style={{ marginTop: guesses.length > 0 ? 0 : "13px" }}>
+      <p style={{ marginTop: guesses.length > 0 ? 0 : "26px" }}>
         Remaining guesses: {6 - guesses.length}
       </p>
       {practiceMode && (
-        <div className="my-4 flex space-x-4 items-center just">
+        <div className="my-[25px] flex space-x-4 items-center just">
           <span>You are in practice mode. </span>
           <Button
             colour="#FFC8FF"

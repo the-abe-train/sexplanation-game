@@ -2,10 +2,9 @@ import highlights from "../images/highlights";
 import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
 import { BrowserView, isDesktop, isMobile } from "react-device-detect";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DiagramInfo, Layer, Part, Sex } from "../lib/types";
 import Label from "./Label";
-import styles from "../styles/diagram.module.css";
 import Panel from "./Panel";
 import { HIGH, LOW, SHORT, TALL } from "../util/contstants";
 import { parts } from "../data/parts";
@@ -29,8 +28,8 @@ type Props = {
   };
   layer: Layer;
   setLayer: React.Dispatch<React.SetStateAction<Layer>>;
-  sex: "Male" | "Female";
-  setSex: React.Dispatch<React.SetStateAction<"Male" | "Female">>;
+  sex: Sex;
+  setSex: React.Dispatch<React.SetStateAction<Sex>>;
 };
 
 const diagramMap: DiagramInfo[] = [
@@ -60,22 +59,26 @@ export default function Diagram({
   const [showLabels, setShowLabels] = useState<string[]>([]);
   const [highlightPng, setHighlightPng] = useState("");
 
-  function changeDiagram(newDiagram: DiagramInfo) {
-    const chooseDiagram: DiagramInfo =
-      isMobile && newDiagram.layer === "The Tip"
-        ? { sex: "Male", layer: "Mobile The Tip" }
-        : newDiagram;
-    console.log("Choose diagram", chooseDiagram);
-    let { sex: chooseSex, layer: chooseLayer } = chooseDiagram;
-    setLayerPng(diagrams[chooseSex][chooseLayer]);
-    setOutlinePng(outlines[chooseSex][chooseLayer]);
-    if (!gameOver) {
-      setShowLabels(getMatchingLabels(guesses, chooseDiagram));
-    } else {
-      setShowLabels(getMatchingLabels(parts, chooseDiagram));
-    }
-    return chooseDiagram;
-  }
+  const changeDiagram = useCallback(
+    (newDiagram: DiagramInfo) => {
+      const chooseDiagram: DiagramInfo =
+        isMobile && newDiagram.layer === "The Tip"
+          ? { sex: "Male", layer: "Mobile The Tip" }
+          : newDiagram;
+      let { sex: chooseSex, layer: chooseLayer } = chooseDiagram;
+      // console.log("Choose diagram", chooseDiagram);
+      console.log("New diagram", chooseDiagram);
+      setLayerPng(diagrams[chooseSex][chooseLayer]);
+      setOutlinePng(outlines[chooseSex][chooseLayer]);
+      if (!gameOver) {
+        setShowLabels(getMatchingLabels(guesses, chooseDiagram));
+      } else {
+        setShowLabels(getMatchingLabels(parts, chooseDiagram));
+      }
+      return chooseDiagram;
+    },
+    [gameOver, guesses]
+  );
 
   // When player switches highlight
   useEffect(() => {
@@ -112,9 +115,7 @@ export default function Diagram({
         setHighlightPng(allLayerHighlights[highlight]);
       }
     }
-  }, [highlight]);
-
-  useEffect(() => console.log(highlightPng), [highlightPng]);
+  }, [highlight, answer.part, changeDiagram]);
 
   // When player switches diagrams
   useEffect(() => {
@@ -123,36 +124,25 @@ export default function Diagram({
     if (allLayerHighlights) {
       setHighlightPng(allLayerHighlights[highlight]);
     }
-  }, [sex, layer]);
+  }, [sex, layer, changeDiagram, highlight]);
 
   // When the game ends
   useEffect(() => {
     if (gameOver) {
       setShowLabels(getMatchingLabels(parts, { sex, layer }));
     }
-  }, [gameOver]);
-
-  // Loading images
-  const [loadedOutline, setLoadedOutline] = useState(true);
-  const [loadedLayer, setLoadedLayer] = useState(true);
-  const [loadedHighlight, setLoadedHighlight] = useState(true);
-  const [showImages, setShowImages] = useState(false);
-  useEffect(() => {
-    if (!outlinePng) setLoadedOutline(true);
-    if (!highlightPng) setLoadedHighlight(true);
-    setShowImages(loadedLayer && loadedOutline && loadedHighlight);
-  }, [loadedLayer, loadedOutline, loadedHighlight, outlinePng, highlightPng]);
+  }, [gameOver, sex, layer]);
 
   // Minimizing empty space
-  const outlierLabels = [
-    "Vulva",
-    "Perineum",
-    "Sperm",
-    "Efferent ducts",
-    "Mons pubis",
-  ];
   const [expanded, setExpanded] = useState(false);
   useEffect(() => {
+    const outlierLabels = [
+      "Vulva",
+      "Perineum",
+      "Sperm",
+      "Efferent ducts",
+      "Mons pubis",
+    ];
     const outliersExist = showLabels.some((showLabel) => {
       return outlierLabels.includes(showLabel);
     });
@@ -176,53 +166,45 @@ export default function Diagram({
   return (
     <div>
       <div
-        className={styles.container}
+        className="z-0 relative overflow-clip"
         style={{ height: expanded ? TALL : SHORT }}
       >
-        {showImages && (
-          <div
-            className={`${styles.diagram}`}
-            style={{ height: expanded ? TALL : SHORT }}
-          >
-            {outlinePng && (
-              <img
-                src={outlinePng}
-                alt={layer}
-                onLoad={() => setLoadedOutline(true)}
-                onLoadStart={() => setLoadedOutline(false)}
-                className="absolute"
-                style={{ top: expanded ? HIGH : LOW }}
-              />
-            )}
+        <div
+          className="absolute left-1/2 w-[42rem] -translate-x-1/2"
+          style={{ height: expanded ? TALL : SHORT }}
+        >
+          {outlinePng && (
             <img
-              src={layerPng}
+              src={outlinePng}
               alt={layer}
               className="absolute"
-              onLoad={() => setLoadedLayer(true)}
-              onLoadStart={() => setLoadedLayer(false)}
-              style={{
-                filter: "drop-shadow(2px 2px 2px #929292)",
-                top: expanded ? HIGH : LOW,
-              }}
+              style={{ top: expanded ? HIGH : LOW }}
             />
-            {showLabels.includes(highlight) && (
-              <img
-                src={highlightPng}
-                alt={highlight}
-                onLoad={() => setLoadedHighlight(true)}
-                onLoadStart={() => setLoadedHighlight(false)}
-                className="absolute z-0 opacity-70 pointer-events-none"
-                style={{ top: expanded ? HIGH : LOW }}
-              />
-            )}
-            <BrowserView>
-              {showLabels.length >= 1 &&
-                showLabels.map((label, idx) => {
-                  return <Label key={idx} name={label} {...labelProps} />;
-                })}
-            </BrowserView>
-          </div>
-        )}
+          )}
+          <img
+            src={layerPng}
+            alt={layer}
+            className="absolute"
+            style={{
+              filter: "drop-shadow(2px 2px 2px #929292)",
+              top: expanded ? HIGH : LOW,
+            }}
+          />
+          {showLabels.includes(highlight) && (
+            <img
+              src={highlightPng}
+              alt={highlight}
+              className="absolute z-0 opacity-70 pointer-events-none"
+              style={{ top: expanded ? HIGH : LOW }}
+            />
+          )}
+          <BrowserView>
+            {showLabels.length >= 1 &&
+              showLabels.map((label, idx) => {
+                return <Label key={idx} name={label} {...labelProps} />;
+              })}
+          </BrowserView>
+        </div>
       </div>
       <Panel {...panelProps} />
     </div>

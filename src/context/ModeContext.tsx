@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 // Use context as follows:
 // ThemeProvider > ThemeContext > themeContext > theme & setTheme

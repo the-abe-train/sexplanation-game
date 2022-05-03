@@ -5,7 +5,7 @@ import MaleOutside from "./Penis.png";
 import MaleInside from "./Internal.png";
 import TheTip from "./Foreskin.png";
 import MobileTheTip from "./Mobile Foreskin.png";
-import { DiagramIndex, Layer } from "../../lib/types";
+import { DiagramIndex } from "../../lib/types";
 
 const diagrams: DiagramIndex<string> = {
   Male: {
@@ -22,13 +22,3 @@ const diagrams: DiagramIndex<string> = {
 };
 
 export default diagrams;
-
-// const diagrams: DiagramIndex = {
-//   Vulva,
-//   Clitoris,
-//   Uterus,
-//   MaleOutside,
-//   Internal,
-//   Foreskin,
-//   "Mobile Foreskin": MobileForeskin,
-// };

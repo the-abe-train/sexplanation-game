@@ -30,19 +30,37 @@ export default function Footer() {
             aria-label="Twitter"
             className="inline"
           >
-            <img src={Twitter} alt="twitter" className="inline" />
+            <img
+              src={Twitter}
+              alt="twitter"
+              className="inline"
+              width={14}
+              height={14}
+            />
           </a>
           <a
             className="underline"
             href="https://github.com/the-abe-train/sexplanation-game"
           >
-            <img src={GitHub} alt="github" className="inline" />
+            <img
+              src={GitHub}
+              alt="github"
+              className="inline"
+              width={14}
+              height={14}
+            />
           </a>
           <a
             className="underline"
             href="https://www.buymeacoffee.com/theabetrain"
           >
-            <img src={Coffee} alt="buy me a coffee" className="inline" />
+            <img
+              src={Coffee}
+              alt="buy me a coffee"
+              className="inline"
+              width={14}
+              height={14}
+            />
           </a>
         </p>
         <p className="space-x-2 mb-2">
@@ -54,7 +72,13 @@ export default function Footer() {
             className="underline"
             href="https://www.instagram.com/kyliemillward/"
           >
-            <img src={Instagram} alt="instagram" className="inline" />
+            <img
+              src={Instagram}
+              alt="instagram"
+              className="inline"
+              width={14}
+              height={14}
+            />
           </a>
         </p>
       </div>

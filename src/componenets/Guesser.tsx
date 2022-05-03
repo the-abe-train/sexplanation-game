@@ -105,7 +105,7 @@ export default function Guesser({
       setError("Use the textbox to enter your first guess!");
       setErrorColour(grayMessage);
     }
-  }, []);
+  }, [guesses.length, win, error, setError]);
 
   // Losing the game
   useEffect(() => {
@@ -114,7 +114,7 @@ export default function Guesser({
       setErrorColour(seaGreen);
       setGameOver(true);
     }
-  }, [guesses, win]);
+  }, [guesses, win, answer.part, setError, setGameOver]);
 
   // Entering a new guess
   function addGuess(e: FormEvent<HTMLFormElement>) {
@@ -172,7 +172,6 @@ export default function Guesser({
     });
     invariant(answerPart, "Error mapping local storage to parts list");
     const sharedDiagrams = getSharedDiagrams(answerPart, validGuess);
-    console.log("Shared diagrams", sharedDiagrams);
     if (sharedDiagrams.length > 0) {
       setError(`It's not ${guessName}, but this diagram has the part!`);
       setErrorColour(warmYellow);
@@ -193,7 +192,7 @@ export default function Guesser({
   }
 
   return (
-    <form onSubmit={addGuess} className="mt-5 z-20">
+    <form onSubmit={addGuess} className="mt-1 z-20">
       <div className="flex justify-center space-x-3">
         <Input
           gameOver={gameOver}
@@ -204,7 +203,7 @@ export default function Guesser({
       </div>
       {!!error && (
         <p
-          className="text-center font-bold my-4"
+          className="text-center font-bold my-2"
           style={{ cursor: gameOver ? "pointer" : "auto", color: errorColour }}
           onClick={revealAnswer}
         >
@@ -213,13 +212,14 @@ export default function Guesser({
       )}
       {!!win && (
         <p
-          className="text-center font-bold my-4"
+          className="text-center font-bold my-2"
           style={{ cursor: gameOver ? "pointer" : "auto", color: seaGreen }}
           onClick={revealAnswer}
         >
           {win}
         </p>
       )}
+      {!error && !win && <div className="h-[42px]" />}
     </form>
   );
 }

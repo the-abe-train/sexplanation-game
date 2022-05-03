@@ -99,16 +99,16 @@ Want to guess? genitle.herraproductions.com`;
   }
 
   // Styles
-  const { button, bg, photos } = styles;
+  const { photos } = styles;
 
   return (
-    <main className="sm:mt-line-height mx-3 space-y-9">
+    <main className="mt-5 mx-3">
       <section
         className="flex flex-col sm:flex-row items-center sm:items-start 
       justify-around w-full space-y-3"
       >
         <div className="flex flex-col justify-center w-fit my-auto">
-          <table className="text-base table-auto w-full">
+          <table className="text-base table-auto w-full mt-1 sm:mt-0">
             <tbody>
               {data.map(({ name, value }) => {
                 return (
@@ -146,9 +146,9 @@ Want to guess? genitle.herraproductions.com`;
           <Chart games={storedStats.games} />
         </div>
       </section>
-      <section className="flex flex-col justify-center w-fit mt-5 mx-auto">
+      <section className="flex flex-col justify-center w-fit mt-10 mx-auto">
         <Switch />
-        <div className="flex mt-4 justify-center">
+        <div className="flex mt-3 justify-center">
           <Link to={`/game?practice_mode=true`}>
             <Button
               colour="#FFC8FF"
@@ -161,7 +161,7 @@ Want to guess? genitle.herraproductions.com`;
           </Link>
         </div>
       </section>
-      <section className="flex flex-col justify-center space-y-4 mb-8">
+      <section className="flex flex-col justify-center space-y-4 mt-line-height">
         <p className="text-center">
           Did your sex ed leave much to be desired? We decided to get a good
           one—no matter how awkward.

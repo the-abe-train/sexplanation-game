@@ -1,5 +1,5 @@
 import invariant from "tiny-invariant";
-import { DiagramInfo, Layer, Part, Sex } from "../lib/types";
+import { DiagramInfo, Part } from "../lib/types";
 import { parts } from "../data/parts";
 
 export function mapNameToPart(names: string[]) {
