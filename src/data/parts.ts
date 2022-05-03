@@ -186,8 +186,6 @@ export const parts: Part[] = [
     ],
     diagrams: [{ sex: "Male", layer: "Inside" }],
   },
-  { name: "Rete Testicles", clues: [], diagrams: [] },
-
   {
     name: "Efferent ducts",
     clues: [
