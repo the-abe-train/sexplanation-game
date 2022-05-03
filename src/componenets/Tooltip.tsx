@@ -25,7 +25,7 @@ export default function Tooltip() {
   useOutsideAlerter(wrapperRef);
   return (
     <div
-      className="relative flex flex-col items-center group h-fit"
+      className="relative flex flex-col items-center group h-fit self-start mb-4"
       onBlur={() => setOpen(false)}
       ref={wrapperRef}
       onClick={(e) => console.log(e.target)}
@@ -37,19 +37,19 @@ export default function Tooltip() {
         onClick={() => setOpen(!open)}
       />
       <div
-        className={`absolute bottom-0 flex-col items-center ${
+        className={`absolute bottom-0 flex-col items-center w-52 bg-black ${
           open ? "flex" : "hidden"
         } mb-6 group-hover:flex`}
       >
         <p
           className="relative z-10 p-2 text-xs text-center 
-      text-white whitespace-no-wrap bg-black shadow-lg w-56"
+      text-white whitespace-no-wrap "
         >
           ANATOMY≠GENDER
         </p>
         <p
           className="relative z-10 p-2 text-xs 
-      text-white whitespace-no-wrap bg-black shadow-lg w-56"
+      text-white whitespace-no-wrap "
         >
           This game uses cisgender male and female anatomy—which means the sex
           assigned at birth matches one’s gender identity. While it might be the
@@ -58,10 +58,13 @@ export default function Tooltip() {
         </p>
         <p
           className="relative z-10 p-2 text-xs
-      text-white whitespace-no-wrap bg-black shadow-lg w-56"
+      text-white whitespace-no-wrap "
         >
           There are intersex, non-binary, trans bodies—and more.{" "}
-          <a href="/" className="underline">
+          <a
+            href="https://www.plannedparenthood.org/learn/gender-identity/sex-gender-identity"
+            className="underline"
+          >
             Learn more.
           </a>
         </p>

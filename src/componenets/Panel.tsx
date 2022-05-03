@@ -24,7 +24,7 @@ export default function Panel({
   return (
     <div className="flex w-full justify-around items-end sm:items-center h-[52px] text-sm sm:text-base">
       <div className="flex flex-col sm:flex-row items-center space-x-3">
-        <div className="flex space-x-1">
+        <div className="flex space-x-1 items-center">
           <p>Cis</p>
           <Tooltip />
         </div>
