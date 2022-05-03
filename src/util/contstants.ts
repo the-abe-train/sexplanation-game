@@ -6,8 +6,10 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 // Size constants
+// export const TALL = "312px";
 export const TALL = "417px";
 export const SHORT = "312px";
+// export const HIGH = "-5rem";
 export const HIGH = "-3rem";
 export const LOW = "-5rem";
 

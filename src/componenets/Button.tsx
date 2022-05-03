@@ -27,7 +27,7 @@ export default function Button({
   }[size];
   return (
     <button
-      className={`${sizeClass} focus:ring-8 z-20`}
+      className={`${sizeClass} focus:ring-4 z-20`}
       disabled={disabled}
       onClick={fn}
       tabIndex={0}

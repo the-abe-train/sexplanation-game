@@ -66,8 +66,6 @@ export default function Diagram({
           ? { sex: "Male", layer: "Mobile The Tip" }
           : newDiagram;
       let { sex: chooseSex, layer: chooseLayer } = chooseDiagram;
-      // console.log("Choose diagram", chooseDiagram);
-      console.log("New diagram", chooseDiagram);
       setLayerPng(diagrams[chooseSex][chooseLayer]);
       setOutlinePng(outlines[chooseSex][chooseLayer]);
       if (!gameOver) {
@@ -142,6 +140,9 @@ export default function Diagram({
       "Sperm",
       "Efferent ducts",
       "Mons pubis",
+      "Testicles",
+      "Bladder",
+      "Pubic hair",
     ];
     const outliersExist = showLabels.some((showLabel) => {
       return outlierLabels.includes(showLabel);
