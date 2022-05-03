@@ -1,9 +1,9 @@
-import MaleOutside from "./penis";
-import TheTip from "./foreskin";
-import MaleInside from "./internal";
-import Deeper from "./uterus";
-import FemaleOutside from "./vulva";
-import FemaleInside from "./clitoris";
+import MaleOutside from "./MaleOutside";
+import TheTip from "./TheTip";
+import MaleInside from "./MaleInside";
+import Deeper from "./Deeper";
+import FemaleOutside from "./FemaleOutside";
+import FemaleInside from "./FemaleInside";
 import { DiagramIndex, PictureIndex } from "../../lib/types";
 
 const highlights: DiagramIndex<PictureIndex> = {
