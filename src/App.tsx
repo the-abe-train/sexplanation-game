@@ -3,10 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./componenets/Footer";
 import Paper from "./layouts/Paper";
 import NotFound from "./pages/NotFound";
+import ReactGA4 from "react-ga4";
 
 const Game = lazy(() => import("./pages/Game"));
 const Intro = lazy(() => import("./pages/Intro"));
 const Stats = lazy(() => import("./pages/Stats"));
+
+ReactGA4.send({ hitType: "pageview", page: window.location.pathname });
 
 function App() {
   return (
