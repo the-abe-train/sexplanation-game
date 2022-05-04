@@ -167,7 +167,10 @@ Want to guess? genitle.herraproductions.com`;
           one—no matter how awkward.
         </p>
         <div className="relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-transparent z-10">
+          <a
+            href="https://www.herraproductions.com/a-sexplanation"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-transparent z-10"
+          >
             <Button
               colour="#FFC8FF"
               size="big"
@@ -176,7 +179,7 @@ Want to guess? genitle.herraproductions.com`;
             >
               Watch how
             </Button>
-          </div>
+          </a>
           <div className={photos}>
             <img src={photo} alt="Alex at the park" />
           </div>
