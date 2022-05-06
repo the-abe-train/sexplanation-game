@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -8,7 +8,14 @@ import Clue from "../componenets/Clue";
 import Diagram from "../componenets/Diagram";
 
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Part, StatTable, StoredGuesses, Answer, Layer } from "../lib/types";
+import {
+  Part,
+  StatTable,
+  StoredGuesses,
+  Answer,
+  Layer,
+  Highlight,
+} from "../lib/types";
 import Guesser from "../componenets/Guesser";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { generateAnswer } from "../util/answer";
@@ -25,10 +32,34 @@ export default function Game() {
   const navigate = useNavigate();
 
   // State hooks
-  const [highlight, setHighlight] = useState("");
+  const [highlight, setHighlight] = useState<Highlight>({
+    name: "Vagina",
+    source: "label",
+  });
   const [error, setError] = useState("");
   const [layer, setLayer] = useState<Layer>("Outside");
   const [sex, setSex] = useState<"Male" | "Female">("Female");
+
+  // Reducer hook
+
+  // type ReducerState = {
+  //   name:
+  // }
+
+  // const initialHighlight = {count: 0};
+
+  // function highlightReducer(state: { count: number; }, action: { type: any; }) {
+  //   switch (action.type) {
+  //     case 'increment':
+  //       return {count: state.count + 1};
+  //     case 'decrement':
+  //       return {count: state.count - 1};
+  //     default:
+  //       throw new Error();
+  //   }
+  // }
+
+  // const [highlight, highlightDispatch] = useReducer(highlightReducer, initialHighlight);
 
   // Search params
   const [params] = useSearchParams();
@@ -150,7 +181,7 @@ export default function Game() {
   // When the game is over
   useEffect(() => {
     if (gameOver) {
-      setHighlight(answer.part);
+      setHighlight({ name: answer.part, source: "gameOver" });
     }
   }, [gameOver, answer]);
 
@@ -203,15 +234,16 @@ export default function Game() {
             <li
               key={name}
               className="mb-line-height px-1 leading-line-height cursor-pointer w-fit"
-              onClick={() => setHighlight(name)}
+              onClick={() => setHighlight({ name, source: "list" })}
               onKeyDown={(e) => {
                 return (
-                  ["Enter", "Return", " "].includes(e.key) && setHighlight(name)
+                  ["Enter", "Return", " "].includes(e.key) &&
+                  setHighlight({ name, source: "list" })
                 );
               }}
               tabIndex={0}
               style={{
-                fontWeight: name === highlight ? "bold" : "",
+                fontWeight: name === highlight.name ? "bold" : "",
                 color:
                   layers.includes(layer) && sexes.includes(sex)
                     ? sex === "Female"

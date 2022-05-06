@@ -3,7 +3,7 @@ import diagrams from "../images/diagrams";
 import outlines from "../images/outlines";
 import { BrowserView, isDesktop, isMobile } from "react-device-detect";
 import { useCallback, useEffect, useState } from "react";
-import { DiagramInfo, Layer, Part, Sex } from "../lib/types";
+import { DiagramInfo, Highlight, Layer, Part, Sex } from "../lib/types";
 import Label from "./Label";
 import Panel from "./Panel";
 import { HIGH, LOW, SHORT, TALL } from "../util/contstants";
@@ -17,8 +17,8 @@ import {
 
 type Props = {
   guesses: Part[];
-  highlight: string;
-  setHighlight: React.Dispatch<React.SetStateAction<string>>;
+  highlight: Highlight;
+  setHighlight: React.Dispatch<React.SetStateAction<Highlight>>;
   gameOver: boolean;
   setError: React.Dispatch<React.SetStateAction<string>>;
   error: string;
@@ -81,27 +81,32 @@ export default function Diagram({
   // When player switches highlight
   useEffect(() => {
     // Change diagram
-    const highlightPart = parts.find((part) => part.name === highlight);
+    const highlightPart = parts.find((part) => part.name === highlight.name);
     const answerPart = parts.find((part) => part.name === answer.part);
     const currentDiagram = { sex, layer };
+    const { source } = highlight;
     if (highlightPart && answerPart) {
       // Empty variable that will be the diagram we must change to
       let newDiagram: DiagramInfo | null = null;
+      const sharedDiagrams = getSharedDiagrams(answerPart, highlightPart);
 
-      // If the part is on the current diagram, don't change it
-      if (partOnDiagram(highlightPart, currentDiagram)) {
+      // If the part is on the current diagram and source is label or list,
+      // don't change it
+      if (
+        partOnDiagram(highlightPart, currentDiagram) &&
+        ["list", "label"].includes(source)
+      ) {
         newDiagram = currentDiagram;
       }
 
       // If the answer and the guess share a diagram, that should be the
       // diagram that it's changed to.
-      const sharedDiagrams = getSharedDiagrams(answerPart, highlightPart);
-      if (sharedDiagrams.length > 0 && !newDiagram) {
+      else if (sharedDiagrams.length > 0 && !newDiagram) {
         newDiagram = bestMatchDiagram(sharedDiagrams, currentDiagram);
       }
 
       // Otherwise, if the part is not on the current diagram, change it
-      if (!newDiagram) {
+      else {
         newDiagram = bestMatchDiagram(highlightPart.diagrams, currentDiagram);
       }
 
@@ -110,17 +115,17 @@ export default function Diagram({
       setLayer(diagramInfo.layer);
       const allLayerHighlights = highlights[diagramInfo.sex][diagramInfo.layer];
       if (allLayerHighlights) {
-        setHighlightPng(allLayerHighlights[highlight]);
+        setHighlightPng(allLayerHighlights[highlight.name]);
       }
     }
-  }, [highlight, answer.part, changeDiagram]);
+  }, [highlight, answer.part, changeDiagram, setSex, setLayer]);
 
   // When player switches diagrams
   useEffect(() => {
     changeDiagram({ sex, layer });
     const allLayerHighlights = highlights[sex][layer];
     if (allLayerHighlights) {
-      setHighlightPng(allLayerHighlights[highlight]);
+      setHighlightPng(allLayerHighlights[highlight.name]);
     }
   }, [sex, layer, changeDiagram, highlight]);
 
@@ -191,10 +196,10 @@ export default function Diagram({
               top: expanded ? HIGH : LOW,
             }}
           />
-          {showLabels.includes(highlight) && (
+          {showLabels.includes(highlight.name) && (
             <img
               src={highlightPng}
-              alt={highlight}
+              alt={highlight.name}
               className="absolute z-0 opacity-70 pointer-events-none"
               style={{ top: expanded ? HIGH : LOW }}
             />

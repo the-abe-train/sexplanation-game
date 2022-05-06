@@ -1,12 +1,12 @@
 import maleLabels from "../data/male_labels.json";
 import femaleLabels from "../data/female_labels.json";
-import { Layer } from "../lib/types";
+import { Highlight, Layer } from "../lib/types";
 import { HIGH, LOW } from "../util/contstants";
 import { seaGreen, labelGray } from "../util/colours";
 
 type Props = {
   name: string;
-  setHighlight: React.Dispatch<React.SetStateAction<string>>;
+  setHighlight: React.Dispatch<React.SetStateAction<Highlight>>;
   sex: "Male" | "Female";
   layer: Layer;
   expanded: boolean;
@@ -42,7 +42,7 @@ export default function Label({
         viewBox="0 0 4800 3298"
         className="absolute pointer-events-none"
         style={{ top: expanded ? HIGH : LOW }}
-        onClick={() => setHighlight(name)}
+        onClick={() => setHighlight({ name, source: "label" })}
       >
         <rect
           className="cursor-pointer"

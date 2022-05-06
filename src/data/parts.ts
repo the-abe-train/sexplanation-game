@@ -111,7 +111,10 @@ export const parts: Part[] = [
       "This is the only part of the human body that's devoted entirely to pleasure.",
       "It wasn't until 2009 that scientists fully mapped this part's anatomy—which might not surprise you when you consider its function.",
     ],
-    diagrams: [{ sex: "Female", layer: "Outside" }],
+    diagrams: [
+      { sex: "Female", layer: "Outside" },
+      { sex: "Female", layer: "Inside" },
+    ],
   },
   {
     name: "Vestibular bulbs",

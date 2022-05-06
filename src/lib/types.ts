@@ -9,6 +9,11 @@ export type Answer = {
   part: string;
 };
 
+export type Highlight = {
+  name: string;
+  source: "list" | "label" | "guess" | "message" | "gameOver";
+};
+
 export type Layer =
   | "Outside"
   | "Inside"

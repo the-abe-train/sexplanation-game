@@ -3,6 +3,7 @@ import ClitoralCrura from "./Clitoral Crura.png";
 import VestibularBulb from "./Vestibular Bulb.png";
 import Vagina from "./Vagina.png";
 import Urethra from "./Urethra.png";
+import Clitoris from "./Clitoris.png";
 
 import { PictureIndex } from "../../../lib/types";
 
@@ -12,6 +13,7 @@ const highlights: PictureIndex = {
   "Vestibular bulbs": VestibularBulb,
   Vagina,
   Urethra,
+  Clitoris,
 };
 
 export default highlights;

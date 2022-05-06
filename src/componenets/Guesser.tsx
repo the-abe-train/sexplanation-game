@@ -2,7 +2,7 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import Select, { createFilter } from "react-select";
 import { Link } from "react-router-dom";
 import Button from "../componenets/Button";
-import { Part } from "../lib/types";
+import { Highlight, Part } from "../lib/types";
 import { ModeContext } from "../context/ModeContext";
 import { getSharedDiagrams } from "../util/maps";
 import invariant from "tiny-invariant";
@@ -69,7 +69,7 @@ function Input({ gameOver, setGuessName, guessName }: InputPros) {
 type Props = {
   setGuesses: React.Dispatch<React.SetStateAction<Part[]>>;
   guesses: Part[];
-  setHighlight: React.Dispatch<React.SetStateAction<string>>;
+  setHighlight: React.Dispatch<React.SetStateAction<Highlight>>;
   setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   gameOver: boolean;
   setError: React.Dispatch<React.SetStateAction<string>>;
@@ -124,7 +124,7 @@ export default function Guesser({
     if (validGuess) {
       setGuesses([...guesses, validGuess]);
       setGuessName("");
-      if (!gameOver) setHighlight(validGuess.name);
+      if (!gameOver) setHighlight({ name: validGuess.name, source: "guess" });
     }
   }
 
@@ -187,7 +187,7 @@ export default function Guesser({
   // Clicking the final message should take you to the answer diagram
   function revealAnswer() {
     if (gameOver) {
-      setHighlight(answer.part);
+      setHighlight({ name: answer.part, source: "message" });
     }
   }
 
