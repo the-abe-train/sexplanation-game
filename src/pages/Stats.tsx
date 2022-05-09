@@ -6,7 +6,6 @@ import { useState } from "react";
 import Button from "../componenets/Button";
 import Switch from "../componenets/Switch";
 import Chart from "../componenets/Chart";
-import { Link } from "react-router-dom";
 import { clueId, generateAnswer } from "../util/answer";
 import { mapGuessesToScore, mapNameToPart } from "../util/maps";
 import photo from "../images/photos/Genitle-with-tape.png";
@@ -69,7 +68,7 @@ export default function Stats() {
   async function shareScore() {
     const answer = generateAnswer();
     const colours = mapGuessesToScore(storedParts, answer.part);
-    let shareString = `#Genitle Clue ${clueId}: ${answer.clue}
+    let shareString = `#GENITLE Clue ${clueId}: ${answer.clue}
 🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
 ${colours} = ${todaysGuesses}
 
@@ -93,10 +92,10 @@ Want to guess? genitle.herraproductions.com`;
     }
   }
 
-  function enterPracticeMode() {
-    const practiceAnswer = generateAnswer(true);
-    localStorage.setItem("practice", JSON.stringify(practiceAnswer));
-  }
+  // function enterPracticeMode() {
+  //   const practiceAnswer = generateAnswer(true);
+  //   localStorage.setItem("practice", JSON.stringify(practiceAnswer));
+  // }
 
   // Styles
   const { photos } = styles;
@@ -148,7 +147,7 @@ Want to guess? genitle.herraproductions.com`;
       </section>
       <section className="flex flex-col justify-center w-fit mt-10 mx-auto">
         <Switch />
-        <div className="flex mt-3 justify-center">
+        {/* <div className="flex mt-3 justify-center">
           <Link to={`/game?practice_mode=true`}>
             <Button
               colour="#FFC8FF"
@@ -159,16 +158,16 @@ Want to guess? genitle.herraproductions.com`;
               Practice game
             </Button>
           </Link>
-        </div>
+        </div> */}
       </section>
-      <section className="flex flex-col justify-center space-y-4 mt-line-height">
+      <section className="flex flex-col justify-center space-y-4 mt-[24px]">
         <p className="text-center">
           Did your sex ed leave much to be desired? We decided to get a good
           one—no matter how awkward.
         </p>
         <div className="relative">
           <a
-            href="https://www.herraproductions.com/a-sexplanation"
+            href="https://www.herraproductions.com/a-sexplanation?utm_source=Genital+Wordle+Game&utm_medium=referral&utm_campaign=Genital+Wordle+Game"
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-transparent z-10"
           >
             <Button

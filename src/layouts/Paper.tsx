@@ -10,10 +10,10 @@ export default function Paper({ children }: { children: ReactNode }) {
   const practiceMode = !!params.get("practice_mode");
   const title = isDesktop ? (
     <>
-      Genitle: An <i>A Sexplanation</i> Game
+      GENITLE: An <i>A Sexplanation</i> Game
     </>
   ) : (
-    <>Genitle</>
+    <>GENITLE</>
   );
   return (
     <div className={styles.paper}>

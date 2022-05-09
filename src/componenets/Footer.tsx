@@ -12,7 +12,7 @@ export default function Footer() {
         <p>
           Check out{" "}
           <a
-            href="https://www.herraproductions.com/a-sexplanation"
+            href="https://www.herraproductions.com/a-sexplanation?utm_source=Genital+Wordle+Game&utm_medium=referral&utm_campaign=Genital+Wordle+Game"
             className="underline"
           >
             A Sexplanation: The Movie

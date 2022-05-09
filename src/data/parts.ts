@@ -156,7 +156,7 @@ export const parts: Part[] = [
   {
     name: "Anus",
     clues: [
-      "This part is one of the most sensitive in the body—and can detect slight variations in touch, pain, pleasure, temperature, tension, and pressure—which is helpful if you need to determine if something is a solid, liquid, or gas.",
+      "Extremely sensitive, this part can detect slight variations in touch, pain, pleasure, temperature, tension, and pressure—which helps you figure out if something is a solid, liquid, or gas.",
       "With one of the densest nerve ending concentrations in the body, this highly erogenous zone has a large nerve that connects to the clitoris and penis.",
     ],
     diagrams: [
@@ -272,7 +272,7 @@ export const parts: Part[] = [
     clues: [
       "This highly sensitive fold is a major erogenous zone and secures two parts together, much like the fold under the tongue anchors it to the mouth.",
       "This is considered the most sensitive part of the penis to light and soft touch—a source  of distinct pleasure.",
-      "Even those with spinal cord injuries feel pleasure when this part is stimulated—and can even achieve orgasm.",
+      "Even those with spinal cord injuries feel pleasure when this part on the penis is stimulated—and can even achieve orgasm.",
     ],
     diagrams: [{ sex: "Male", layer: "The Tip" }],
   },
