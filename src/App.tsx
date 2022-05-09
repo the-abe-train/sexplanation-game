@@ -4,6 +4,7 @@ import Footer from "./componenets/Footer";
 import Paper from "./layouts/Paper";
 import NotFound from "./pages/NotFound";
 import ReactGA4 from "react-ga4";
+import Privacy from "./pages/Privacy";
 
 const Game = lazy(() => import("./pages/Game"));
 const Intro = lazy(() => import("./pages/Intro"));
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Intro />} />
             <Route path="game" element={<Game />} />
             <Route path="stats" element={<Stats />} />
+            <Route path="privacy" element={<Privacy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

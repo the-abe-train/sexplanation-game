@@ -2,6 +2,8 @@ import Twitter from "../images/icons/twitter.svg";
 import GitHub from "../images/icons/github.svg";
 import Coffee from "../images/icons/coffee.svg";
 import Instagram from "../images/icons/instagram.svg";
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer
@@ -17,6 +19,12 @@ export default function Footer() {
           >
             A Sexplanation: The Movie
           </a>
+        </p>
+        <p>
+          View our{" "}
+          <Link to="/privacy" className="underline">
+            privacy policy
+          </Link>
         </p>
       </div>
       <div className="my-0">
