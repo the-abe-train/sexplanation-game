@@ -72,7 +72,7 @@ export default function Stats() {
 🔥${currentStreak} | Avg. Guesses: ${showAvgGuesses}
 ${colours} = ${todaysGuesses}
 
-Want to guess? genitle.herraproductions.com`;
+genitle.herraproductions.com`;
     console.log(shareString);
 
     if ("canShare" in navigator && isMobile && !isFirefox) {
