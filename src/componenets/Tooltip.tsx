@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import helpIcon from "../images/icons/help.svg";
 
 export default function Tooltip() {
   const [open, setOpen] = useState(false);
@@ -30,12 +29,18 @@ export default function Tooltip() {
       ref={wrapperRef}
       onClick={(e) => console.log(e.target)}
     >
-      <img
+      {/* <img
         src={helpIcon}
         alt="Help Icon"
         className="w-5 h-5"
         onClick={() => setOpen(!open)}
-      />
+      /> */}
+      <span
+        className="w-4 h-4 bg-black text-white rounded-full text-center text-xl"
+        onClick={() => setOpen(!open)}
+      >
+        *
+      </span>
       <div
         className={`absolute bottom-0 flex-col items-center w-52 bg-black ${
           open ? "flex" : "hidden"
@@ -52,8 +57,8 @@ export default function Tooltip() {
       text-white whitespace-no-wrap "
         >
           This game uses cisgender male and female anatomy—which means the sex
-          assigned at birth matches one’s gender identity. While it might be the
-          most typical anatomy, it’s completely NORMAL for biology to result in
+          assigned at birth matches one's gender identity. While it might be the
+          most typical anatomy, it's completely NORMAL for biology to result in
           a wide range of different bodies and gender identities.
         </p>
         <p
