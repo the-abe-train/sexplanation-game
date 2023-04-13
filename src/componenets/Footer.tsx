@@ -2,6 +2,7 @@ import Twitter from "../images/icons/twitter.svg";
 import GitHub from "../images/icons/github.svg";
 import Coffee from "../images/icons/coffee.svg";
 import Instagram from "../images/icons/instagram.svg";
+import Trainwreck from "../images/icons/trainwreck.svg";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
@@ -30,21 +31,22 @@ export default function Footer() {
       <div className="my-0">
         <p className="space-x-2 mb-2">
           Website by{" "}
-          <a href="https://the-abe-train.com" className="underline">
-            The Abe Train
+          <a href="https://trainwrecklabs.com" data-i18n="Footer1">
+            <span>Trainwreck Labs</span>
+            <img
+              src={Trainwreck}
+              width={20}
+              height={20}
+              className="ml-2 mb-[1px] inline"
+              alt="trainwreck"
+            />
           </a>
           <a
             href="https://twitter.com/theAbeTrain"
             aria-label="Twitter"
-            className="inline"
+            className="mx-3 inline"
           >
-            <img
-              src={Twitter}
-              alt="twitter"
-              className="inline"
-              width={14}
-              height={14}
-            />
+            <img src={Twitter} alt="Twitter" width={20} height={15} />
           </a>
           <a
             className="underline"
