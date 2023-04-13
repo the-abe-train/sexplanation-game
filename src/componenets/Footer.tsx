@@ -29,10 +29,10 @@ export default function Footer() {
         </p>
       </div>
       <div className="my-0">
-        <p className="space-x-2 mb-2">
-          Website by{" "}
+        <p className=" mb-2 flex">
+          <span>Web app by</span>
           <a href="https://trainwrecklabs.com" data-i18n="Footer1">
-            <span>Trainwreck Labs</span>
+            <span className="underline ml-1"> Trainwreck Labs</span>
             <img
               src={Trainwreck}
               width={20}
@@ -47,30 +47,6 @@ export default function Footer() {
             className="mx-3 inline"
           >
             <img src={Twitter} alt="Twitter" width={20} height={15} />
-          </a>
-          <a
-            className="underline"
-            href="https://github.com/the-abe-train/sexplanation-game"
-          >
-            <img
-              src={GitHub}
-              alt="github"
-              className="inline"
-              width={14}
-              height={14}
-            />
-          </a>
-          <a
-            className="underline"
-            href="https://www.buymeacoffee.com/theabetrain"
-          >
-            <img
-              src={Coffee}
-              alt="buy me a coffee"
-              className="inline"
-              width={14}
-              height={14}
-            />
           </a>
         </p>
         <p className="space-x-2 mb-2">
