@@ -11,7 +11,7 @@ export const parts: Part[] = [
   {
     name: "Fallopian tubes",
     clues: [
-      "This passageway is where a new person is formed.",
+      "This passageway is where an egg is fertilized.",
       "Named after a Catholic priest, this passageway contains nutrients for sperm.",
     ],
     diagrams: [{ sex: "Female", layer: "Deeper" }],
