@@ -84,10 +84,12 @@
       type="text/javascript"
     ></script>
     <script type="text/javascript">
-      twttr.conversion.trackPid("o8p5f", {
-        tw_sale_amount: 0,
-        tw_order_quantity: 0,
-      });
+      if (typeof twttr !== "undefined") {
+        twttr.conversion.trackPid("o8p5f", {
+          tw_sale_amount: 0,
+          tw_order_quantity: 0,
+        });
+      }
     </script>
     <noscript>
       <img

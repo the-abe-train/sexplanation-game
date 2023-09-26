@@ -13,6 +13,7 @@ import photo from "../images/photos/Genitle-with-tape.png";
 // Styles
 import styles from "../styles/button.module.css";
 import { MIDNIGHT, NOW } from "../util/contstants";
+import { Link } from "react-router-dom";
 
 export default function Stats() {
   // Guesses from local storage
@@ -92,10 +93,10 @@ genitle.herraproductions.com`;
     }
   }
 
-  // function enterPracticeMode() {
-  //   const practiceAnswer = generateAnswer(true);
-  //   localStorage.setItem("practice", JSON.stringify(practiceAnswer));
-  // }
+  function enterPracticeMode() {
+    const practiceAnswer = generateAnswer(true);
+    localStorage.setItem("practice", JSON.stringify(practiceAnswer));
+  }
 
   // Styles
   const { photos } = styles;
@@ -147,7 +148,7 @@ genitle.herraproductions.com`;
       </section>
       <section className="flex flex-col justify-center w-fit mt-10 mx-auto">
         <Switch />
-        {/* <div className="flex mt-3 justify-center">
+        <div className="flex mt-3 justify-center">
           <Link to={`/game?practice_mode=true`}>
             <Button
               colour="#FFC8FF"
@@ -158,7 +159,7 @@ genitle.herraproductions.com`;
               Practice game
             </Button>
           </Link>
-        </div> */}
+        </div>
       </section>
       <section className="flex flex-col justify-center space-y-4 mt-[24px]">
         <p className="text-center">
