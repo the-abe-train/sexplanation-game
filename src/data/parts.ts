@@ -35,7 +35,7 @@ export const parts: Part[] = [
     clues: [
       "People often misuse the name of this part to describe external sex organs, but it's actually an exclusively internal structure.",
       "This self-cleaning organ is naturally acidic—and any discharge at the end of the day is usually the result of its cleaning efforts.",
-      "This organ produces a compound called squalene as a lubricant—which is also found in shark livers to control buoyancy.",
+      // Removed incorrect squalene claim
     ],
     diagrams: [
       { sex: "Female", layer: "Deeper" },
@@ -134,7 +134,7 @@ export const parts: Part[] = [
   {
     name: "Clitoral crura",
     clues: [
-      `These muscular "legs" become engorged with blood during sexual arousal, helping increase lubrication.`,
+      `These erectile "legs" become engorged with blood during sexual arousal, helping increase lubrication.`, // Corrected from "muscular" to "erectile"
     ],
     diagrams: [{ sex: "Female", layer: "Inside" }],
   },
@@ -179,6 +179,7 @@ export const parts: Part[] = [
     clues: [
       "Derived from the Latin word for wrapper or covering, this term refers to all the cis female external organs, but is often mislabelled as the vagina.",
       `It's not the vagina—but culturally the term "vagina" has become synonymous with this part.`,
+      "The sebaceous glands in this external area produce squalene, a compound also found in shark livers to control buoyancy.", // Added corrected squalene information
     ],
     diagrams: [{ sex: "Female", layer: "Outside" }],
   },
